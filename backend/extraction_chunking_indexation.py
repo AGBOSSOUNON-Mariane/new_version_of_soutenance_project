@@ -1,5 +1,7 @@
 import os
 import re
+import json
+from datetime import datetime
 from pathlib import Path
 from typing import List, Dict, Any
 import docx
@@ -242,6 +244,39 @@ class BeninHeritageIndexer:
         
         return all_documents
     
+
+    def save_chunks_to_json(self, documents: List[Dict[str, Any]], output_dir: str = "chunks_backup"):
+        """
+        Sauvegarde tous les chunks dans un fichier JSON
+        
+        Args:
+            documents: Liste des documents/chunks
+            output_dir: Dossier de sauvegarde
+        """
+        # Créer le dossier si nécessaire
+        os.makedirs(output_dir, exist_ok=True)
+        
+        # Préparer les données pour JSON
+        chunks_data = []
+        for doc in documents:
+            chunks_data.append({
+                'text': doc['text'],
+                'metadata': doc['metadata']
+            })
+        
+        # Nom de fichier avec timestamp
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        output_file = os.path.join(output_dir, f"chunks_{timestamp}.json")
+        
+        # Sauvegarder
+        with open(output_file, 'w', encoding='utf-8') as f:
+            json.dump(chunks_data, f, ensure_ascii=False, indent=2)
+        
+        print(f"  ✅ Chunks sauvegardés dans: {output_file}")
+        print(f"  📊 Total: {len(chunks_data)} chunks")
+        
+        return output_file
+    
     def create_pinecone_index(self, dimension: int = 384):
         """
         Crée l'index Pinecone s'il n'existe pas
@@ -354,6 +389,10 @@ class BeninHeritageIndexer:
         # 2. Traiter tous les documents
         print("\n ÉTAPE 2: Extraction et chunking des documents")
         documents = self.process_all_documents(base_path)
+
+        # 3. SAUVEGARDE DES CHUNKS EN JSON (NOUVEAU)
+        print("\n ÉTAPE 3: Sauvegarde des chunks en JSON")
+        json_file = self.save_chunks_to_json(documents)
         
         # 3. Indexer dans Pinecone
         print("\n ÉTAPE 3: Indexation dans Pinecone")
@@ -361,6 +400,8 @@ class BeninHeritageIndexer:
         
         print("\n" + "=" * 60)
         print(" PIPELINE TERMINÉ AVEC SUCCÈS!")
+        print(f" 📁 Backup JSON: {json_file}")
+        print("=" * 60)
 
 
 if __name__ == "__main__":
