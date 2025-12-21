@@ -1,7 +1,7 @@
 """
 Système RAG Conversationnel avec Agent Intelligent
 Patrimoine Béninois - Version Production avec Persona
-VERSION CORRIGÉE - Détection d'intention améliorée
+VERSION CORRIGÉE V2 - Détection d'intention améliorée + Gestion hors-sujet
 """
 
 import os
@@ -141,6 +141,7 @@ class BeninHeritageConversationalAgent:
     """
     Agent conversationnel intelligent avec RAG intégré
     Gère : persona, contexte, détection d'intention, génération
+    VERSION CORRIGÉE V2
     """
     
     def __init__(
@@ -206,7 +207,7 @@ class BeninHeritageConversationalAgent:
         print("✅ Agent conversationnel Adjä prêt à dialoguer\n")
     
     # =========================================================================
-    # DÉTECTION D'INTENTION - VERSION CORRIGÉE
+    # DÉTECTION D'INTENTION - VERSION CORRIGÉE V2
     # =========================================================================
     
     def _normalize_text(self, text: str) -> str:
@@ -267,7 +268,7 @@ class BeninHeritageConversationalAgent:
     def _is_small_talk(self, query: str) -> bool:
         """
         Détecte les conversations générales (small talk)
-        NOUVEAU : Gère "comment vas-tu", "qui es-tu", etc.
+        Gère "comment vas-tu", "qui es-tu", etc.
         """
         query_normalized = self._normalize_text(query)
         
@@ -299,63 +300,117 @@ class BeninHeritageConversationalAgent:
         
         return False
     
+    def _is_off_topic(self, query: str) -> bool:
+        """
+        🆕 NOUVEAU : Détecte les sujets clairement hors patrimoine béninois
+        Permet d'éviter les appels RAG inutiles
+        """
+        query_lower = query.lower()
+        
+        off_topic_keywords = [
+            # Météo
+            'météo', 'weather', 'pluie', 'soleil', 'température', 'climat',
+            'temps qu\'il fait', 'prévisions',
+            
+            # Sport moderne (pas les Amazones/guerriers historiques)
+            'foot', 'football', 'sport', 'match', 'basket', 'tennis',
+            'champion', 'coupe', 'ligue', 'équipe nationale', 'can',
+            
+            # Technologie
+            'iphone', 'android', 'windows', 'ordinateur', 'internet',
+            'application', 'logiciel', 'wifi', 'smartphone',
+            
+            # Divertissement moderne
+            'netflix', 'youtube', 'tiktok', 'instagram', 'facebook',
+            'série', 'film récent', 'cinéma actuel',
+            
+            # Cuisine moderne (hors gastronomie traditionnelle)
+            'pizza', 'burger', 'mcdo', 'kfc', 'restaurant moderne',
+            
+            # Politique actuelle (hors histoire politique)
+            'élection actuelle', 'président actuel', 'talon', 'patrice',
+            
+            # Finance/économie moderne
+            'bitcoin', 'crypto', 'bourse', 'action', 'trading',
+            
+            # Divers
+            'covid', 'coronavirus', 'vaccin', 'santé publique',
+        ]
+        
+        # Vérifier présence d'au moins 1 keyword hors-sujet
+        for keyword in off_topic_keywords:
+            if keyword in query_lower:
+                return True
+        
+        return False
+    
     def _needs_rag(self, query: str) -> bool:
         """
         Détermine si la question nécessite le RAG
-        VERSION CORRIGÉE avec meilleure détection
+        VERSION CORRIGÉE V2 : Vérifie les keywords AVANT la longueur
+        
+        🔧 CORRECTION PRINCIPALE :
+        - Avant : Questions courtes → automatiquement pas de RAG
+        - Après : Vérifie les mots-clés patrimoniaux D'ABORD
         """
         query_normalized = self._normalize_text(query)
         query_words = query_normalized.split()
         
-        # 1. Questions très courtes (1-2 mots) → Pas de RAG
-        if len(query_words) <= 2:
-            return False
-        
-        # 2. Vérifier les mots-clés patrimoniaux
+        # 1️⃣ PRIORITÉ ABSOLUE : Vérifier les mots-clés patrimoniaux
+        #    (même si question très courte : "Ghézo ?", "Ouidah ?")
         heritage_keywords = [
             # Rois
             'roi', 'rois', 'ghézo', 'ghezo', 'guézo', 'béhanzin', 'behanzin', 
             'glèlè', 'glele', 'agadja', 'houégbadja', 'akaba', 'toffa',
-            'king', 'kings', 'souverain',
+            'king', 'kings', 'souverain', 'monarque',
             
             # Amazones
             'amazones', 'mino', 'agodjié', 'guerrières', 'amazons', 'warriors',
             
             # Lieux et monuments
             'palais', 'abomey', 'ouidah', 'ganvié', 'ganvie',
-            'porto novo', 'portonovo', 'dahomey',
+            'porto novo', 'portonovo', 'porto-novo', 'dahomey',
             'musée', 'museum', 'temple', 'basilique', 'mosquée',
-            'monument', 'site', 'palace',
+            'monument', 'site', 'palace', 'cité', 'ville',
             
             # Patrimoine
-            'route', 'esclaves', 'slaves', 'traite',
-            'histoire', 'history', 'culture', 'tradition',
+            'route', 'esclaves', 'slaves', 'traite', 'esclavage',
+            'histoire', 'history', 'culture', 'tradition', 'coutume',
             'heritage', 'patrimoine', 'légende', 'mythe', 'legend', 'myth',
-            'vodun', 'vaudou', 'voodoo', 'python',
+            'vodun', 'vaudou', 'voodoo', 'python', 'divinité',
             
             # Actions patrimoniales
             'raconte', 'parle', 'explique', 'décris', 'présente',
             'tell', 'explain', 'describe', 'talk about',
-            'récit', 'story', 'narration'
+            'récit', 'story', 'narration', 'histoire de'
         ]
         
-        # Si au moins un mot-clé patrimonial → RAG
+        # ✅ Si AU MOINS un mot-clé patrimonial → RAG IMMÉDIAT
+        #    Peu importe la longueur de la question !
         for keyword in heritage_keywords:
             if keyword in query_normalized:
-                return True
+                return True  # 🎯 PATRIMOINE DÉTECTÉ !
         
-        # 3. Questions avec verbes d'action patrimoniaux
-        action_verbs = ['raconte', 'parle', 'explique', 'décris', 'présente', 'tell', 'explain']
-        if any(verb in query_normalized for verb in action_verbs) and len(query_words) > 3:
+        # 2️⃣ Seulement APRÈS : Vérifier longueur pour questions génériques
+        #    (questions courtes SANS mots-clés patrimoniaux)
+        if len(query_words) <= 2:
+            return False  # Question courte sans keywords → small talk
+        
+        # 3️⃣ Questions avec verbes d'action patrimoniaux
+        action_verbs = [
+            'raconte', 'parle', 'explique', 'décris', 'présente',
+            'tell', 'explain', 'describe'
+        ]
+        if any(verb in query_normalized for verb in action_verbs):
             return True
         
-        # 4. Par défaut : Pas de RAG pour les questions courtes sans mots-clés
-        # (approche prudente mais pas trop agressive)
+        # 4️⃣ Questions courtes-moyennes (3-4 mots) sans keywords
+        #    → Probablement small talk
         if len(query_words) <= 4:
             return False
         
-        # 5. Questions longues (>4 mots) sans mots-clés → Probablement RAG
-        # (car conversation substantielle)
+        # 5️⃣ Questions longues (>4 mots) sans keywords détectés
+        #    → Par précaution, on active le RAG
         return True
     
     # =========================================================================
@@ -705,7 +760,7 @@ Tu peux :
     ) -> Dict[str, Any]:
         """
         Pipeline complet : Détection d'intention → Retrieval → Génération
-        VERSION CORRIGÉE avec détection améliorée
+        VERSION CORRIGÉE V2 avec gestion hors-sujet
         
         Args:
             query: Question de l'utilisateur
@@ -777,7 +832,7 @@ Tu peux :
                 'language': language
             }
         
-        # Cas 4 : Small talk (NOUVEAU - CRITIQUE)
+        # Cas 4 : Small talk
         if self._is_small_talk(query):
             if verbose:
                 print("🤖 Détection: Small talk")
@@ -791,6 +846,23 @@ Tu peux :
                 'sources': [],
                 'used_rag': False,
                 'intent': 'small_talk',
+                'language': language
+            }
+        
+        # 🆕 Cas 5 : Hors-sujet (NOUVEAU - critique)
+        if self._is_off_topic(query):
+            if verbose:
+                print("🤖 Détection: Hors-sujet")
+            response_text = self._generate_simple_response(query, "off_topic", language)
+            self.add_to_history("assistant", response_text)
+            return {
+                'success': True,
+                'query': query,
+                'response': response_text,
+                'images': [],
+                'sources': [],
+                'used_rag': False,
+                'intent': 'off_topic',
                 'language': language
             }
         
@@ -877,7 +949,7 @@ Tu peux :
     def _generate_simple_response(self, query: str, intent: str, language: str) -> str:
         """
         Génère une réponse simple sans RAG pour les cas spéciaux
-        VERSION CORRIGÉE avec cas 'small_talk' ajouté
+        VERSION CORRIGÉE V2 avec cas 'off_topic' ajouté
         """
         
         if language == "fr":
@@ -894,7 +966,6 @@ Tu peux :
                 return "Au revoir ! J'espère que cette découverte du patrimoine béninois t'a plu. Reviens quand tu veux pour en apprendre davantage. À bientôt !"
             
             elif intent == "small_talk":
-                # NOUVEAU CAS
                 query_lower = query.lower()
                 
                 # Comment vas-tu ?
@@ -929,6 +1000,36 @@ Tu peux :
                     return ("Je suis là pour partager avec toi les trésors du patrimoine béninois ! "
                             "N'hésite pas à me poser des questions sur nos rois, nos monuments, "
                             "nos traditions... Je suis à ton écoute ! 😊")
+            
+            elif intent == "off_topic":
+                # 🆕 NOUVEAU CAS : Hors-sujet
+                query_lower = query.lower()
+                
+                # Météo
+                if 'météo' in query_lower or 'weather' in query_lower or 'pluie' in query_lower:
+                    return ("Je suis spécialisée dans le patrimoine culturel du Bénin, pas dans la météo 😊 "
+                            "Mais si tu veux connaître l'histoire des villes comme Ouidah, Abomey, Porto-Novo, Ganvié je suis là pour toi !")
+                
+                # Sport
+                elif 'sport' in query_lower or 'foot' in query_lower or 'match' in query_lower:
+                    return ("Le sport moderne n'est pas mon domaine, mais je peux te raconter l'incroyable "
+                            "histoire des Amazones du Dahomey, ces guerrières-athlètes dont l'entraînement "
+                            "et la discipline étaient légendaires ! Leur force physique et leur courage "
+                            "dépassaient tout ce qu'on peut imaginer. Ça t'intéresse ?")
+                
+                # Technologie
+                elif any(tech in query_lower for tech in ['internet', 'ordinateur', 'téléphone', 'application']):
+                    return ("La technologie moderne n'est pas mon expertise 😊 Je me concentre sur le "
+                            "patrimoine historique et culturel du Bénin. Mais je peux te parler de "
+                            "l'ingéniosité ancestrale des Béninois, comme l'architecture des palais "
+                            "d'Abomey ou les techniques de construction des cités lacustres ! Intéressé·e ?")
+                
+                # Réponse générique hors-sujet
+                else:
+                    return ("Je suis Adjä, guide culturelle spécialisée dans le patrimoine béninois. "
+                            "Je me concentre sur l'histoire de nos rois, nos monuments, nos traditions... "
+                            "Ce sujet sort de mon expertise, mais n'hésite pas à me poser une question "
+                            "sur le Bénin ! 😊")
         
         else:  # English
             if intent == "greeting":
@@ -946,36 +1047,49 @@ Tu peux :
             elif intent == "small_talk":
                 query_lower = query.lower()
                 
-                # How are you?
                 if 'how are you' in query_lower or 'how do you do' in query_lower:
                     return ("I'm doing great, thank you for asking! As a guardian of Beninese stories, "
                             "I'm always enthusiastic about sharing our rich heritage. And you, are you "
                             "ready to discover a legend, a monument or a historical figure? 😊")
                 
-                # Who are you?
                 elif 'who are you' in query_lower or 'what are you' in query_lower:
                     return ("I'm Adjä, your virtual cultural guide. My role is to help you discover "
                             "Benin's heritage through living narratives about Abomey, Ouidah, Ganvié "
                             "and Porto-Novo. I'm here to tell the stories of our kings, traditions and "
                             "monuments. What would you like to know?")
                 
-                # Name
-                elif 'your name' in query_lower or 'you called' in query_lower:
+                elif 'your name' in query_lower:
                     return ("My name is Adjä! It's a Fon name meaning 'she who was born on market day'. "
                             "I'm proud to carry this name and represent Beninese culture. How can I "
                             "help you in your discovery?")
                 
-                # Capabilities
                 elif 'do you do' in query_lower or 'can you' in query_lower:
                     return ("I can tell you the fascinating history of Benin: the kings of Dahomey, "
                             "the Amazon warriors, the Slave Route, the lake cities... I answer your "
                             "questions with living narratives, images and historical sources. What "
                             "interests you?")
                 
-                # Generic response
                 else:
                     return ("I'm here to share with you the treasures of Benin's heritage! Feel free "
                             "to ask me questions about our kings, monuments, traditions... I'm listening! 😊")
+            
+            elif intent == "off_topic":
+                query_lower = query.lower()
+                
+                if 'weather' in query_lower or 'rain' in query_lower:
+                    return ("I'm specialized in Benin's cultural heritage, not weather 😊 But if you want "
+                            "to know the story of Ouidah, Abomey, Porto-Novo and Ganvié "
+                            " I'm here for you!")
+                
+                elif 'sport' in query_lower or 'football' in query_lower:
+                    return ("Modern sports aren't my domain, but I can tell you the incredible story of "
+                            "the Dahomey Amazons, warrior-athletes whose training and discipline were "
+                            "legendary! Interested?")
+                
+                else:
+                    return ("I'm Adjä, a cultural guide specialized in Benin's heritage. This topic is "
+                            "outside my expertise, but feel free to ask me about our kings, monuments, "
+                            "or traditions! 😊")
         
         return "Je suis là pour t'aider !" if language == "fr" else "I'm here to help!"
 
@@ -1029,20 +1143,78 @@ def display_response(result: Dict[str, Any]):
 # TESTS
 # =============================================================================
 
-def run_conversational_tests():
-    """Teste l'agent conversationnel"""
+def run_corrected_tests():
+    """🆕 Tests spécifiques pour vérifier les corrections"""
     
-    print("🚀 TEST DE L'AGENT CONVERSATIONNEL ADJÄ")
+    print("🔬 TESTS DE VALIDATION DES CORRECTIONS")
     print("="*80)
     
-    # Initialiser
     agent = BeninHeritageConversationalAgent(
         pinecone_api_key=os.getenv("PINECONE_API_KEY"),
         gemini_api_key=os.getenv("GEMINI_API_KEY"),
         index_name=os.getenv("INDEX_NAME", "benin-heritage")
     )
     
-    # Scénario conversationnel complet
+    # Tests critiques
+    
+
+
+    test_cases = [
+        # ✅ Doit activer RAG (questions courtes patrimoniales)
+        ("Ghézo ?", "fr", "RAG attendu (question courte patrimoniale)"),
+        ("Ouidah ?", "fr", "RAG attendu (question courte patrimoniale)"),
+        ("Les Amazones", "fr", "RAG attendu (2 mots patrimoniaux)"),
+        ("Palais","fr", "Trop vague, mais patrimonial"),
+        ("Histoire du Dahomey", "fr", "RAG attendu"),
+        
+        # ✅ Ne doit PAS activer RAG (hors-sujet)
+        ("météo à Cotonou", "fr", "Hors-sujet attendu (pas de RAG)"),
+        ("match de foot", "fr", "Hors-sujet attendu (pas de RAG)"),
+        ("iphone 15", "fr", "Hors-sujet attendu (pas de RAG)"),
+        
+        # ✅ Ne doit PAS activer RAG (small talk)
+        ("bonjour",  "fr", "Salutation attendue (pas de RAG)"),
+        ("comment vas-tu",  "fr", "small talk attendue (pas de RAG)"),
+        ("qui es-tu",  "fr", "small talk attendue (pas de RAG)"),
+        
+        # 🤔 Cas ambigus (à décider)
+        ("Histoire ?", "fr", "Trop vague, mais patrimonial"),  # Trop vague, mais patrimonial
+        ("Culture", "fr", "Trop vague, mais patrimonial"),      # Idem
+]
+    
+    print("\n🎯 CAS DE TEST CRITIQUES :")
+    print("="*80)
+    
+    for query, lang, expected in test_cases:
+        print(f"\n{'─'*80}")
+        print(f"📝 Test: {query}")
+        print(f"   Attendu: {expected}")
+        print(f"{'─'*80}")
+        
+        result = agent.generate_response(query, language=lang, verbose=True)
+        
+        print(f"\n✅ Résultat:")
+        print(f"   Intention détectée: {result['intent']}")
+        print(f"   RAG utilisé: {result['used_rag']}")
+        print(f"\n💬 Réponse (extrait): {result['response'][:150]}...")
+        
+        input("\n⏸️  Appuyez sur Entrée pour le test suivant...")
+    
+    print("\n✅ TESTS DE CORRECTION TERMINÉS !")
+
+
+def run_conversational_tests():
+    """Teste l'agent conversationnel"""
+    
+    print("🚀 TEST DE L'AGENT CONVERSATIONNEL ADJÄ")
+    print("="*80)
+    
+    agent = BeninHeritageConversationalAgent(
+        pinecone_api_key=os.getenv("PINECONE_API_KEY"),
+        gemini_api_key=os.getenv("GEMINI_API_KEY"),
+        index_name=os.getenv("INDEX_NAME", "benin-heritage")
+    )
+    
     conversation = [
         ("Bonjour !", "fr"),
         ("Comment vas-tu ?", "fr"),
@@ -1104,7 +1276,6 @@ def run_interactive_chat():
     print("💡 Tape 'exit', 'quit' ou 'q' pour quitter")
     print("💡 Tape 'reset' pour réinitialiser la conversation\n")
 
-    # Initialiser l'agent (une seule fois)
     agent = BeninHeritageConversationalAgent(
         pinecone_api_key=os.getenv("PINECONE_API_KEY"),
         gemini_api_key=os.getenv("GEMINI_API_KEY"),
@@ -1129,7 +1300,6 @@ def run_interactive_chat():
             agent.reset_conversation()
             continue
 
-        # Générer la réponse
         result = agent.generate_response(
             query=user_input,
             language="fr",
@@ -1139,7 +1309,6 @@ def run_interactive_chat():
         print("\n🤖 Adjä :")
         print(result["response"])
 
-        # Infos techniques
         print(f"\n📊 Intention: {result.get('intent')} | RAG: {result.get('used_rag', False)}")
 
         print("\n" + "─"*80 + "\n")
@@ -1156,19 +1325,22 @@ if __name__ == "__main__":
         exit(1)
     
     print("\n🎯 Choisissez un mode de test:")
-    print("1. Tests conversationnels complets (recommandé)")
-    print("2. Tests rapides")
-    print("3. Conversation interactive (chat libre)")
+    print("1. 🔬 Tests de validation des corrections (RECOMMANDÉ)")
+    print("2. Tests conversationnels complets")
+    print("3. Tests rapides")
+    print("4. Conversation interactive (chat libre)")
 
-    choice = input("\nVotre choix (1, 2 ou 3): ").strip()
+    choice = input("\nVotre choix (1, 2, 3 ou 4): ").strip()
 
     
     if choice == "1":
-        run_conversational_tests()
+        run_corrected_tests()
     elif choice == "2":
-        run_quick_tests()
+        run_conversational_tests()
     elif choice == "3":
+        run_quick_tests()
+    elif choice == "4":
         run_interactive_chat()
     else:
-        print("Choix invalide. Lancement du mode interactif...")
-        run_interactive_chat()
+        print("Choix invalide. Lancement du mode tests de correction...")
+        run_corrected_tests()
