@@ -1,2 +1,7 @@
 env/
 .env
+
+audio_outputs/
+
+
+__pycache__/
