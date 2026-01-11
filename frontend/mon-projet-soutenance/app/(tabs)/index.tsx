@@ -32,8 +32,8 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <Header 
-        title="Découvrez le Bénin" 
-        subtitle="Explorez l'héritage culturel exceptionnel"
+        title="Récits, rois et monuments du Bénin" 
+        subtitle="Explorez l'héritage vivant de 4 grands pôles culturels"
       />
       
       {/* Boutons de navigation rapide */}
@@ -73,7 +73,7 @@ export default function HomeScreen() {
           {/* Liste des sites */}
           <View style={styles.sitesContainer}>
             {sites.map((site, index) => (
-              <TouchableOpacity key={site.id} style={styles.siteCard}>
+              <View key={site.id} style={styles.siteCard}>
                 <Image 
                   source={site.image} 
                   style={styles.siteImage}
@@ -137,14 +137,14 @@ export default function HomeScreen() {
                     </TouchableOpacity>
                   </Link>
                 </View>
-              </TouchableOpacity>
+              </View>
             ))}
           </View>
         </View>
 
         {/* Section Assistant IA */}
         <Link href="./assistant" asChild>
-          <TouchableOpacity style={styles.assistantCard}>
+          <TouchableOpacity style={styles.assistantCard} activeOpacity={1}>
             <LinearGradient
               colors={[Colors.primary, Colors.secondary]}
               start={{ x: 0, y: 0 }}

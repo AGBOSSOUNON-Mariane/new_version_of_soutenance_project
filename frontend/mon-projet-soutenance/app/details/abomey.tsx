@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   View,
   Text,
@@ -9,13 +9,13 @@ import {
   ImageBackground,
   StatusBar,
   Dimensions,
-} from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { Ionicons } from '@expo/vector-icons';
-import { Link, useRouter } from 'expo-router';
-import { Colors } from '../../constants/Colors';
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons } from "@expo/vector-icons";
+import { Link, useRouter } from "expo-router";
+import { Colors } from "../../constants/Colors";
 
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get("window");
 
 export default function AbomeyDetailsScreen() {
   const router = useRouter();
@@ -23,126 +23,137 @@ export default function AbomeyDetailsScreen() {
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />
-      
-      {/* Header avec image de fond */}
-      <ImageBackground
-        source={require('../../assets/images/abomey.jpg')} // Remplace par ton image d'Abomey
-        style={styles.headerImage}
-        resizeMode="cover"
-      >
-        {/* Overlay sombre */}
-        <LinearGradient
-          colors={['rgba(0,0,0,0.3)', 'rgba(0,0,0,0.7)']}
-          style={styles.overlay}
-        >
-          {/* Boutons du header */}
-          <View style={styles.headerButtons}>
-            <TouchableOpacity 
-              style={styles.headerButton}
-              onPress={() => router.back()}
-            >
-              <Ionicons name="arrow-back" size={24} color={Colors.white} />
+
+      {/* 🆕 Boutons header FIXES en haut (en dehors du ScrollView) */}
+      <View style={styles.fixedHeader}>
+        <View style={styles.headerButtons}>
+          <TouchableOpacity
+            style={styles.headerButton}
+            onPress={() => router.back()}
+          >
+            <Ionicons name="arrow-back" size={24} color={Colors.white} />
+          </TouchableOpacity>
+
+          <View style={styles.rightButtons}>
+            <TouchableOpacity style={styles.headerButton}>
+              <Ionicons name="heart-outline" size={24} color={Colors.white} />
             </TouchableOpacity>
-            
-            <View style={styles.rightButtons}>
-              <TouchableOpacity style={styles.headerButton}>
-                <Ionicons name="heart-outline" size={24} color={Colors.white} />
-              </TouchableOpacity>
-              
-              <TouchableOpacity style={styles.headerButton}>
-                <Ionicons name="share-outline" size={24} color={Colors.white} />
-              </TouchableOpacity>
-            </View>
-          </View>
-          
-          {/* Informations du site */}
-          <View style={styles.siteHeaderInfo}>
-            <Text style={styles.siteName}>Abomey</Text>
-            
-            <View style={styles.siteStats}>
-              <View style={styles.statItem}>
-                <Ionicons name="star" size={16} color={Colors.star} />
-                <Text style={styles.statText}>4.8</Text>
-              </View>
-              
-              <View style={styles.statItem}>
-                <Ionicons name="people" size={16} color={Colors.white} />
-                <Text style={styles.statText}>2.3k</Text>
-              </View>
-              
-              <View style={styles.statItem}>
-                <Ionicons name="time" size={16} color={Colors.white} />
-                <Text style={styles.statText}>3h</Text>
-              </View>
-            </View>
-          </View>
-        </LinearGradient>
-      </ImageBackground>
 
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        {/* Description */}
-        <View style={styles.section}>
-          <Text style={styles.description}>
-            Les palais royaux d'Abomey sont un témoignage exceptionnel de l'ancien 
-            royaume du Dahomey. Ces palais, construits entre le XVIIe et le XIXe 
-            siècle, abritent aujourd'hui un musée fascinant qui retrace l'histoire de cette 
-            puissante civilisation africaine.
-          </Text>
-        </View>
-
-        {/* Points d'intérêt */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Points d'intérêt</Text>
-          
-          <View style={styles.interestPoints}>
-            <View style={styles.interestPoint}>
-              <View style={styles.pointDot} />
-              <Text style={styles.pointText}>Palais du roi Ghezo</Text>
-            </View>
-            
-            <View style={styles.interestPoint}>
-              <View style={styles.pointDot} />
-              <Text style={styles.pointText}>Trône royal en argent</Text>
-            </View>
-            
-            <View style={styles.interestPoint}>
-              <View style={styles.pointDot} />
-              <Text style={styles.pointText}>Bas-reliefs historiques</Text>
-            </View>
-            
-            <View style={styles.interestPoint}>
-              <View style={styles.pointDot} />
-              <Text style={styles.pointText}>Objets rituels du royaume</Text>
-            </View>
+            <TouchableOpacity style={styles.headerButton}>
+              <Ionicons name="share-outline" size={24} color={Colors.white} />
+            </TouchableOpacity>
           </View>
         </View>
+      </View>
 
-        {/* Assistant IA Call-to-action */}
-        <View style={styles.section}>
-          <View style={styles.assistantCard}>
-            <LinearGradient
-              colors={[Colors.primary, Colors.secondary]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-              style={styles.assistantGradient}
-            >
-              <Ionicons name="chatbubbles" size={32} color={Colors.white} />
-              <Text style={styles.assistantTitle}>Questions sur Abomey ?</Text>
-              <Text style={styles.assistantSubtitle}>
-                Notre assistant IA peut vous en dire plus
-              </Text>
-              
-              <Link href="../assistant" asChild>
-                <TouchableOpacity style={styles.askButton}>
-                  <Text style={styles.askButtonText}>Poser une question</Text>
-                </TouchableOpacity>
-              </Link>
-            </LinearGradient>
+      {/* 🔧 ScrollView qui contient TOUT (y compris l'image) */}
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+        bounces={true}
+      >
+        {/* 🔧 Image DANS le ScrollView */}
+        <ImageBackground
+          source={require("../../assets/images/abomey.jpg")}
+          style={styles.headerImage}
+          resizeMode="cover"
+        >
+          <LinearGradient
+            colors={["rgba(0,0,0,0.3)", "rgba(0,0,0,0.7)"]}
+            style={styles.overlay}
+          >
+            {/* Informations du site */}
+            <View style={styles.siteHeaderInfo}>
+              <Text style={styles.siteName}>Abomey</Text>
+
+              <View style={styles.siteStats}>
+                <View style={styles.statItem}>
+                  <Ionicons name="star" size={16} color={Colors.star} />
+                  <Text style={styles.statText}>4.8</Text>
+                </View>
+
+                <View style={styles.statItem}>
+                  <Ionicons name="people" size={16} color={Colors.white} />
+                  <Text style={styles.statText}>2.3k</Text>
+                </View>
+
+                <View style={styles.statItem}>
+                  <Ionicons name="time" size={16} color={Colors.white} />
+                  <Text style={styles.statText}>3h</Text>
+                </View>
+              </View>
+            </View>
+          </LinearGradient>
+        </ImageBackground>
+
+        {/* Contenu qui scroll */}
+        <View style={styles.content}>
+          {/* Description */}
+          <View style={styles.section}>
+            <Text style={styles.description}>
+              Les palais royaux d'Abomey sont un témoignage exceptionnel de
+              l'ancien royaume du Dahomey. Ces palais, construits entre le XVIIe
+              et le XIXe siècle, abritent aujourd'hui un musée fascinant qui
+              retrace l'histoire de cette puissante civilisation africaine.
+            </Text>
           </View>
+
+          {/* Points d'intérêt */}
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Points d'intérêt</Text>
+
+            <View style={styles.interestPoints}>
+              <View style={styles.interestPoint}>
+                <View style={styles.pointDot} />
+                <Text style={styles.pointText}>Palais du roi Ghezo</Text>
+              </View>
+
+              <View style={styles.interestPoint}>
+                <View style={styles.pointDot} />
+                <Text style={styles.pointText}>Les amazones du Dahomey</Text>
+              </View>
+
+              <View style={styles.interestPoint}>
+                <View style={styles.pointDot} />
+                <Text style={styles.pointText}>Musée historique d'Abomey</Text>
+              </View>
+
+              <View style={styles.interestPoint}>
+                <View style={styles.pointDot} />
+                <Text style={styles.pointText}>Palais royaux d'Abomey</Text>
+              </View>
+            </View>
+          </View>
+
+          {/* Assistant IA Call-to-action */}
+          <View style={styles.section}>
+            <View style={styles.assistantCard}>
+              <LinearGradient
+                colors={[Colors.primary, Colors.secondary]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={styles.assistantGradient}
+              >
+                <Ionicons name="chatbubbles" size={32} color={Colors.white} />
+                <Text style={styles.assistantTitle}>
+                  Questions sur Abomey ?
+                </Text>
+                <Text style={styles.assistantSubtitle}>
+                  Notre assistant IA peut vous en dire plus
+                </Text>
+
+                <Link href="../assistant" asChild>
+                  <TouchableOpacity style={styles.askButton}>
+                    <Text style={styles.askButtonText}>Poser une question</Text>
+                  </TouchableOpacity>
+                </Link>
+              </LinearGradient>
+            </View>
+          </View>
+
+          {/* Espacement pour la barre d'onglets */}
+          <View style={styles.bottomSpacing} />
         </View>
-        
-        {/* Espacement pour la barre d'onglets */}
-        <View style={styles.bottomSpacing} />
       </ScrollView>
     </View>
   );
@@ -153,32 +164,44 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.background,
   },
-  headerImage: {
-    width: width,
-    height: height * 0.5,
-  },
-  overlay: {
-    flex: 1,
-    justifyContent: 'space-between',
+  // 🆕 Header fixe au-dessus du ScrollView
+  fixedHeader: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 10,
+    paddingTop: 50,
+    paddingHorizontal: 20,
   },
   headerButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingTop: 50,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   rightButtons: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 10,
   },
   headerButton: {
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "rgba(0,0,0,0.4)", // 🔧 Plus sombre pour mieux voir
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  // 🆕 ScrollView
+  scrollView: {
+    flex: 1,
+  },
+  headerImage: {
+    width: width,
+    height: height * 0.5,
+  },
+  overlay: {
+    flex: 1,
+    justifyContent: "flex-end", // 🔧 Informations en bas
   },
   siteHeaderInfo: {
     paddingHorizontal: 20,
@@ -186,26 +209,25 @@ const styles = StyleSheet.create({
   },
   siteName: {
     fontSize: 48,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: Colors.white,
     marginBottom: 15,
   },
   siteStats: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 20,
   },
   statItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   statText: {
     color: Colors.white,
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
     marginLeft: 5,
   },
   content: {
-    flex: 1,
     backgroundColor: Colors.background,
   },
   section: {
@@ -219,7 +241,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: Colors.textDark,
     marginBottom: 20,
   },
@@ -227,8 +249,8 @@ const styles = StyleSheet.create({
     gap: 15,
   },
   interestPoint: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   pointDot: {
     width: 8,
@@ -243,15 +265,15 @@ const styles = StyleSheet.create({
   },
   assistantCard: {
     borderRadius: 20,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   assistantGradient: {
     padding: 25,
-    alignItems: 'center',
+    alignItems: "center",
   },
   assistantTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: Colors.white,
     marginTop: 10,
     marginBottom: 5,
@@ -260,7 +282,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: Colors.white,
     opacity: 0.9,
-    textAlign: 'center',
+    textAlign: "center",
     marginBottom: 20,
   },
   askButton: {
@@ -272,7 +294,7 @@ const styles = StyleSheet.create({
   askButtonText: {
     color: Colors.primary,
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   bottomSpacing: {
     height: 100,

@@ -42,13 +42,6 @@ export const Header: React.FC<HeaderProps> = ({
             {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
           </View>
           
-          <View style={styles.headerIcons}>
-            <Ionicons name="wifi" size={20} color={Colors.white} style={styles.icon} />
-            <View style={styles.languageContainer}>
-              <Ionicons name="language" size={16} color={Colors.white} />
-              <Text style={styles.languageText}>FR</Text>
-            </View>
-          </View>
         </View>
       </LinearGradient>
     </>
