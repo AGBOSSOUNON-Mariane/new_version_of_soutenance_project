@@ -87,6 +87,14 @@ AUDIO_DIR = Path("audio_outputs")
 AUDIO_DIR.mkdir(exist_ok=True)
 app.mount("/audio", StaticFiles(directory=str(AUDIO_DIR)), name="audio")
 
+
+# 🆕 SERVIR LES IMAGES
+IMAGES_DIR = Path("Donnees_soutenance")  # ← Ton dossier de données
+if IMAGES_DIR.exists():
+    app.mount("/images", StaticFiles(directory=str(IMAGES_DIR)), name="images")
+    print(f"✅ Images servies depuis: {IMAGES_DIR}")
+else:
+    print(f"⚠️ Dossier images introuvable: {IMAGES_DIR}")
 # =============================================================================
 # SERVICES
 # =============================================================================
@@ -262,85 +270,100 @@ async def health_check():
             }
         )
 
-@app.post("/chat", response_model=ChatResponse, tags=["Chat"])
+@app.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
-    """
-    🆕 Endpoint principal de conversation avec Adjä + TTS automatique
-    
-    **Nouveauté**: Génère automatiquement l'audio de la réponse si `generate_audio=True`
-    
-    Args:
-        - **message**: Question de l'utilisateur
-        - **session_id**: ID de session (optionnel)
-        - **language**: Langue (optionnel: null = auto-détection)
-        - **generate_audio**: Générer l'audio (défaut: True) 🆕
-        - **verbose**: Logs détaillés
-    
-    Returns:
-        ChatResponse avec texte + URL audio (si generate_audio=True)
-    """
+    """Endpoint principal avec TTS"""
     try:
-        # Générer ou récupérer session_id
         session_id = request.session_id or str(uuid.uuid4())
         
         # Détection langue
         if request.language is None:
-            detected_language = detect_language(request.message, default="fr")
-            if request.verbose:
-                print(f"🌍 Langue auto-détectée: {detected_language}")
+            detected_language = detect_language(request.message)
         else:
             detected_language = request.language
         
-        # Récupérer agent
-        agent = get_or_create_agent(session_id)
+        # 🆕 LOG REQUÊTE
+        print(f"\n{'='*80}")
+        print(f"📥 NOUVELLE REQUÊTE")
+        print(f"{'='*80}")
+        print(f"Session: {session_id}")
+        print(f"Message: {request.message}")
+        print(f"Langue: {detected_language}")
+        print(f"Générer audio: {request.generate_audio}")
+        print(f"Verbose: {request.verbose}")
         
-        # Générer la réponse textuelle
+        # Agent RAG
+        agent = get_or_create_agent(session_id)
         result = agent.generate_response(
             query=request.message,
             language=detected_language,
-            verbose=request.verbose
+            verbose=True  # ← FORCE VERBOSE ICI
         )
         
         if not result['success']:
-            raise HTTPException(
-                status_code=500,
-                detail=result.get('error', 'Erreur inconnue lors de la génération')
-            )
+            raise HTTPException(status_code=500, detail=result.get('error'))
         
-        # 🆕 GÉNÉRATION AUDIO (si demandé)
+        # 🆕 LOG RÉSULTAT RAG
+        print(f"\n{'─'*80}")
+        print(f"✅ RÉSULTAT RAG")
+        print(f"{'─'*80}")
+        print(f"Intent: {result.get('intent')}")
+        print(f"RAG utilisé: {result.get('used_rag')}")
+        print(f"Chunks: {result.get('chunks_used', 0)}")
+        print(f"Images: {len(result.get('images', []))}")
+        print(f"Sources: {len(result.get('sources', []))}")
+        print(f"Réponse (longueur): {len(result['response'])} caractères")
+        print(f"Réponse (100 premiers): {result['response'][:100]}...")
+        
+        if result.get('images'):
+            print(f"\n📸 Images retournées:")
+            for i, img in enumerate(result['images'][:5], 1):
+                print(f"   {i}. {img}")
+        
+        if result.get('sources'):
+            print(f"\n📚 Sources retournées:")
+            for i, src in enumerate(result['sources'][:5], 1):
+                print(f"   {i}. {src}")
+        
+        # Génération audio
         audio_url = None
         audio_filename = None
         audio_duration = None
         audio_available = False
-        
+
+ 
         if request.generate_audio:
-            if request.verbose:
-                print("🔊 Génération de l'audio...")
-            
+            print(f"\n🔊 Génération audio...")
             audio_result = tts_service.generate_audio(
                 text=result['response'],
-                language=detected_language,
-                force_regenerate=False
+                language=detected_language
             )
             
-            if audio_result.success:
+            # ✅ APRÈS (CORRIGÉ) - audio_result est un DICT, pas un objet
+            # Le service TTS retourne un dict Python
+            if isinstance(audio_result, dict) and audio_result.get('success'):
                 audio_available = True
-                audio_filename = audio_result.audio_filename
-                audio_duration = audio_result.duration_seconds
+                audio_filename = audio_result.get('audio_filename')
+                audio_duration = audio_result.get('duration_seconds')
                 
-                # Construire l'URL publique
-                # En production: remplacer par ton domaine
-                audio_url = f"http://localhost:8000/audio/{audio_filename}"
-                
-                if request.verbose:
-                    print(f"✅ Audio généré: {audio_filename}")
-                    print(f"   URL: {audio_url}")
-                    print(f"   Durée: {audio_duration}s")
+                if audio_filename:
+                    audio_url = f"http://10.229.92.13:8000/audio/{audio_filename}"
+                    print(f"✅ Audio: {audio_filename} ({audio_duration}s)")
             else:
-                if request.verbose:
-                    print(f"⚠️ Échec génération audio: {audio_result.error}")
+                error_msg = audio_result.get('error', 'Erreur inconnue') if isinstance(audio_result, dict) else 'Erreur audio'
+                print(f"⚠️ Audio non généré: {error_msg}")
         
-        # Construire la réponse
+        # 🆕 LOG RÉPONSE FINALE
+        print(f"\n{'='*80}")
+        print(f"📤 RÉPONSE ENVOYÉE AU CLIENT")
+        print(f"{'='*80}")
+        print(f"Texte: {len(result['response'])} caractères")
+        print(f"Images: {len(result.get('images', []))}")
+        print(f"Sources: {len(result.get('sources', []))}")
+        print(f"Audio: {audio_available}")
+        print(f"{'='*80}\n")
+        
+        # Réponse
         return ChatResponse(
             success=True,
             session_id=session_id,
@@ -353,7 +376,6 @@ async def chat(request: ChatRequest):
             language=detected_language,
             chunks_used=result.get('chunks_used'),
             timestamp=datetime.utcnow().isoformat(),
-            # 🆕 Champs audio
             audio_available=audio_available,
             audio_url=audio_url,
             audio_filename=audio_filename,
@@ -363,10 +385,8 @@ async def chat(request: ChatRequest):
     except HTTPException:
         raise
     except Exception as e:
-        raise HTTPException(
-            status_code=500,
-            detail=f"Erreur serveur: {str(e)}"
-        )
+        print(f"❌ ERREUR: {e}")
+        raise HTTPException(status_code=500, detail=f"Erreur: {str(e)}")
 
 # 🆕 ENDPOINT AUDIO DÉDIÉ
 @app.post("/generate-audio", tags=["Audio"])

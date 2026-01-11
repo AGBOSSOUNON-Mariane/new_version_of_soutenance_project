@@ -93,51 +93,46 @@ class TTSService:
         return self._get_audio_path(filename).exists()
     
     def generate_audio(
+            
         self,
         text: str,
         language: str = "fr",
         force_regenerate: bool = False
-    ) -> AudioResponse:
+    ) -> Dict:
         """
         Génère un fichier audio à partir du texte
         
-        Args:
-            text: Texte à convertir en audio
-            language: Code langue ('fr' ou 'en')
-            force_regenerate: Force la régénération même si fichier existe
-            
         Returns:
-            AudioResponse avec le chemin du fichier généré
-            
-        Examples:
-            >>> service = TTSService()
-            >>> result = service.generate_audio(
-            ...     "Bonjour, je suis Adjä !",
-            ...     language="fr"
-            ... )
-            >>> print(result.audio_path)
-            'audio_outputs/abc123def_fr.mp3'
+            Dict avec success, audio_path, audio_filename, duration_seconds, etc.
         """
         
-        # Validation
+        # Validation texte vide
         if not text or not text.strip():
-            return AudioResponse(
-                success=False,
-                text_length=0,
-                language=language,
-                error="Texte vide"
-            )
+            return {
+                "success": False,
+                "audio_path": None,
+                "audio_filename": None,
+                "duration_seconds": None,
+                "text_length": 0,
+                "language": language,
+                "cached": False,
+                "error": "Texte vide"
+            }
         
         text_clean = text.strip()
         
         # Vérifier langue supportée
         if language not in self.config.SUPPORTED_LANGUAGES:
-            return AudioResponse(
-                success=False,
-                text_length=len(text_clean),
-                language=language,
-                error=f"Langue '{language}' non supportée. Langues disponibles: {list(self.config.SUPPORTED_LANGUAGES.keys())}"
-            )
+            return {
+                "success": False,
+                "audio_path": None,
+                "audio_filename": None,
+                "duration_seconds": None,
+                "text_length": len(text_clean),
+                "language": language,
+                "cached": False,
+                "error": f"Langue '{language}' non supportée. Langues disponibles: {list(self.config.SUPPORTED_LANGUAGES.keys())}"
+            }
         
         try:
             # Générer nom de fichier
@@ -147,19 +142,17 @@ class TTSService:
             # Vérifier cache
             if self.config.ENABLE_CACHE and not force_regenerate and self._file_exists(filename):
                 print(f"🔊 Audio déjà en cache: {filename}")
-                
-                # Calculer durée approximative (optionnel)
                 duration = self._estimate_duration(text_clean, language)
                 
-                return AudioResponse(
-                    success=True,
-                    audio_path=str(audio_path),
-                    audio_filename=filename,
-                    duration_seconds=duration,
-                    text_length=len(text_clean),
-                    language=language,
-                    cached=True
-                )
+                return {
+                    "success": True,
+                    "audio_path": str(audio_path),
+                    "audio_filename": filename,
+                    "duration_seconds": duration,
+                    "text_length": len(text_clean),
+                    "language": language,
+                    "cached": True  # ✅ C'est du cache ici
+                }
             
             # Générer l'audio avec gTTS
             print(f"🔊 Génération audio: {filename}...")
@@ -178,24 +171,28 @@ class TTSService:
             # Calculer durée
             duration = self._estimate_duration(text_clean, language)
             
-            return AudioResponse(
-                success=True,
-                audio_path=str(audio_path),
-                audio_filename=filename,
-                duration_seconds=duration,
-                text_length=len(text_clean),
-                language=language,
-                cached=False
-            )
+            return {
+                "success": True,
+                "audio_path": str(audio_path),
+                "audio_filename": filename,
+                "duration_seconds": duration,
+                "text_length": len(text_clean),
+                "language": language,
+                "cached": False  # ✅ Nouveau fichier
+            }
             
         except Exception as e:
             print(f"❌ Erreur génération audio: {e}")
-            return AudioResponse(
-                success=False,
-                text_length=len(text_clean),
-                language=language,
-                error=str(e)
-            )
+            return {
+                "success": False,
+                "audio_path": None,
+                "audio_filename": None,
+                "duration_seconds": None,
+                "text_length": len(text_clean),
+                "language": language,
+                "cached": False,
+                "error": str(e)
+            }
     
     def _estimate_duration(self, text: str, language: str) -> float:
         """
