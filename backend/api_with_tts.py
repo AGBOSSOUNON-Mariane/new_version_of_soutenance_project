@@ -594,10 +594,7 @@ if __name__ == "__main__":
     print("📖 Documentation: http://localhost:8000/docs")
     print("🔊 Audio: http://localhost:8000/audio/{filename}")
     
-    uvicorn.run(
-        "api_with_tts:app",
-        host="0.0.0.0",
-        port=8000,
-        reload=True,
-        log_level="info"
-    )
+    import os
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
+
