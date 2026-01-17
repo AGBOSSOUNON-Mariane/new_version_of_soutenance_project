@@ -1,0 +1,14 @@
+{
+  "date": "2026-01-17T13:37:24.478544",
+  "total_tests": 30,
+  "errors_count": 0,
+  "custom_metrics": {
+    "intent_accuracy": 0.5333,
+    "rag_accuracy": 0.5333,
+    "rag_precision": 1.0,
+    "rag_recall": 0.3636
+  },
+  "ragas_metrics": {
+    "error": "All metrics must be initialised metric objects, e.g: metrics=[BleuScore(), AspectCritic()]"
+  }
+}

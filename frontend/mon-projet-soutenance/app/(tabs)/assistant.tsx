@@ -49,7 +49,7 @@ export default function AssistantScreen() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
-      text: "Bonjour ! Je suis Adjä, ta guide culturelle virtuelle. Que souhaites-tu savoir sur le patrimoine béninois ?",
+      text: "Bonjour ! Je suis ta guide culturelle virtuelle. Que souhaites-tu savoir sur le patrimoine béninois ?",
       sender: "assistant",
       timestamp: new Date().toLocaleTimeString("fr-FR", {
         hour: "2-digit",
@@ -271,7 +271,7 @@ export default function AssistantScreen() {
 
     const loadingMessage: Message = {
       id: (Date.now() + 1).toString(),
-      text: "🤔 Adjä réfléchit...",
+      text: "Je réfléchis...",
       sender: "assistant",
       timestamp: "",
       isLoading: true,
@@ -335,7 +335,7 @@ export default function AssistantScreen() {
       keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 0}
     >
       <Header
-        title="Assistant Adjä"
+        title="Assistant"
         subtitle={isConnected ? "✅ En ligne" : "❌ Hors ligne"}
       />
 

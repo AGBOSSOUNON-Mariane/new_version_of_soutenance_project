@@ -1,0 +1,312 @@
+{
+  "metadata": {
+    "project": "Adjä - Agent conversationnel patrimoine béninois",
+    "version": "1.0",
+    "date_created": "2025-01-16",
+    "total_questions": 30,
+    "description": "Dataset d'évaluation couvrant les 4 pôles patrimoniaux et différents types d'intentions"
+  },
+  
+  "test_cases": [
+    {
+      "id": 1,
+      "query": "Bonjour",
+      "expected_intent": "greeting",
+      "should_use_rag": false,
+      "pole": null,
+      "ground_truth": null,
+      "relevant_docs": [],
+      "note": "Test salutation simple"
+    },
+    {
+      "id": 2,
+      "query": "Bonjour, comment vas-tu ?",
+      "expected_intent": "small_talk",
+      "should_use_rag": false,
+      "pole": null,
+      "ground_truth": null,
+      "relevant_docs": [],
+      "note": "Test salutation avec small talk"
+    },
+    {
+      "id": 3,
+      "query": "Merci beaucoup !",
+      "expected_intent": "thanks",
+      "should_use_rag": false,
+      "pole": null,
+      "ground_truth": null,
+      "relevant_docs": [],
+      "note": "Test remerciement"
+    },
+    {
+      "id": 4,
+      "query": "Au revoir",
+      "expected_intent": "farewell",
+      "should_use_rag": false,
+      "pole": null,
+      "ground_truth": null,
+      "relevant_docs": [],
+      "note": "Test au revoir"
+    },
+    {
+      "id": 5,
+      "query": "Comment vas-tu ?",
+      "expected_intent": "small_talk",
+      "should_use_rag": false,
+      "pole": null,
+      "ground_truth": null,
+      "relevant_docs": [],
+      "note": "Test small talk"
+    },
+    {
+      "id": 6,
+      "query": "Qui es-tu ?",
+      "expected_intent": "small_talk",
+      "should_use_rag": false,
+      "pole": null,
+      "ground_truth": null,
+      "relevant_docs": [],
+      "note": "Test identité agent"
+    },
+    {
+      "id": 7,
+      "query": "Quel temps fait-il à Cotonou ?",
+      "expected_intent": "off_topic",
+      "should_use_rag": false,
+      "pole": null,
+      "ground_truth": null,
+      "relevant_docs": [],
+      "note": "Test hors-sujet météo"
+    },
+    {
+      "id": 8,
+      "query": "Match de foot ce soir",
+      "expected_intent": "off_topic",
+      "should_use_rag": false,
+      "pole": null,
+      "ground_truth": null,
+      "relevant_docs": [],
+      "note": "Test hors-sujet sport"
+    },
+    {
+      "id": 9,
+      "query": "Qui est le roi Ghézo ?",
+      "expected_intent": "heritage_question",
+      "should_use_rag": true,
+      "pole": "Abomey",
+      "ground_truth": "Ghézo (ou Guézo) fut roi du Dahomey de 1818 à 1858. Il est connu pour avoir restructuré le royaume, développé le commerce et créé un corps d'élite de guerrières, les Amazones du Dahomey.",
+      "relevant_docs": ["Guézo.docx"],
+      "note": "Question factuelle sur un roi - cas principal"
+    },
+    {
+      "id": 10,
+      "query": "Ghézo ?",
+      "expected_intent": "heritage_question",
+      "should_use_rag": true,
+      "pole": "Abomey",
+      "ground_truth": "Ghézo (ou Guézo) fut roi du Dahomey de 1818 à 1858.",
+      "relevant_docs": ["Guézo.docx"],
+      "note": "Question courte patrimoniale - test correction V2"
+    },
+    {
+      "id": 11,
+      "query": "Parle-moi du roi Béhanzin",
+      "expected_intent": "heritage_question",
+      "should_use_rag": true,
+      "pole": "Abomey",
+      "ground_truth": "Béhanzin fut le dernier roi indépendant du Dahomey, ayant régné de 1889 à 1894. Il résista farouchement à la colonisation française avant d'être exilé.",
+      "relevant_docs": ["Béhanzin.docx"],
+      "note": "Requête narrative"
+    },
+    {
+      "id": 12,
+      "query": "Raconte-moi l'histoire de Glèlè",
+      "expected_intent": "heritage_question",
+      "should_use_rag": true,
+      "pole": "Abomey",
+      "ground_truth": "Glèlè régna sur le Dahomey de 1858 à 1889. Il poursuivit l'œuvre de son père Ghézo et renforça le royaume.",
+      "relevant_docs": ["Glèlè.docx"],
+      "note": "Demande de récit"
+    },
+    {
+      "id": 13,
+      "query": "Qui sont les Amazones du Dahomey ?",
+      "expected_intent": "heritage_question",
+      "should_use_rag": true,
+      "pole": "Abomey",
+      "ground_truth": "Les Amazones du Dahomey, aussi appelées Mino ou Agodjié, étaient un corps d'élite de guerrières au service des rois du Dahomey. Elles étaient réputées pour leur courage et leur discipline.",
+      "relevant_docs": ["Amazones_du_Dahomey.docx"],
+      "note": "Question sur entité culturelle majeure"
+    },
+    {
+      "id": 14,
+      "query": "Les Amazones",
+      "expected_intent": "heritage_question",
+      "should_use_rag": true,
+      "pole": "Abomey",
+      "ground_truth": "Les Amazones du Dahomey étaient des guerrières d'élite.",
+      "relevant_docs": ["Amazones_du_Dahomey.docx"],
+      "note": "Question courte - 2 mots patrimoniaux"
+    },
+    {
+      "id": 15,
+      "query": "Qu'est-ce que les Palais royaux d'Abomey ?",
+      "expected_intent": "heritage_question",
+      "should_use_rag": true,
+      "pole": "Abomey",
+      "ground_truth": "Les Palais royaux d'Abomey sont un ensemble de structures construites par les différents rois du Dahomey entre le XVIIe et le XIXe siècle. Ils sont inscrits au patrimoine mondial de l'UNESCO.",
+      "relevant_docs": ["Palais_royaux_Abomey.docx"],
+      "note": "Question sur monument"
+    },
+    {
+      "id": 16,
+      "query": "Parle-moi de la Route des Esclaves à Ouidah",
+      "expected_intent": "heritage_question",
+      "should_use_rag": true,
+      "pole": "Ouidah",
+      "ground_truth": "La Route des Esclaves à Ouidah est un parcours mémoriel de 4 km qui retrace le chemin emprunté par les esclaves depuis leur capture jusqu'à leur embarquement. Elle comprend des monuments comme l'Arbre de l'Oubli, les Cases Zomaï et la Porte du Non-Retour.",
+      "relevant_docs": ["Route_des_Esclaves.docx", "Presentation_Ouidah.docx"],
+      "note": "Question sur lieu historique sensible"
+    },
+    {
+      "id": 17,
+      "query": "C'est quoi la Porte du Non-Retour ?",
+      "expected_intent": "heritage_question",
+      "should_use_rag": true,
+      "pole": "Ouidah",
+      "ground_truth": "La Porte du Non-Retour est un monument érigé à Ouidah en mémoire des esclaves déportés. Elle symbolise le dernier point de terre africaine que les captifs voyaient avant leur embarquement vers les Amériques.",
+      "relevant_docs": ["Porte_du_Non_Retour.docx"],
+      "note": "Question langage familier"
+    },
+    {
+      "id": 18,
+      "query": "Ouidah",
+      "expected_intent": "heritage_question",
+      "should_use_rag": true,
+      "pole": "Ouidah",
+      "ground_truth": "Ouidah est une ville historique du Bénin, connue pour son rôle dans la traite négrière et pour être un haut lieu de la culture vaudou.",
+      "relevant_docs": ["Presentation_Ouidah.docx"],
+      "note": "Question 1 mot - pôle géographique"
+    },
+    {
+      "id": 19,
+      "query": "Qu'est-ce que le Temple des Pythons ?",
+      "expected_intent": "heritage_question",
+      "should_use_rag": true,
+      "pole": "Ouidah",
+      "ground_truth": "Le Temple des Pythons est un lieu sacré du culte vodun à Ouidah où sont vénérés les pythons royaux, considérés comme sacrés dans la religion traditionnelle.",
+      "relevant_docs": ["Temple_des_Pythons.docx"],
+      "note": "Question spiritualité"
+    },
+    {
+      "id": 20,
+      "query": "Raconte-moi l'histoire de Ganvié",
+      "expected_intent": "heritage_question",
+      "should_use_rag": true,
+      "pole": "Ganvié",
+      "ground_truth": "Ganvié est une cité lacustre construite sur le lac Nokoué. Fondée au XVIIe siècle par des populations fuyant les razzias esclavagistes du royaume du Dahomey, elle est aujourd'hui la plus grande ville lacustre d'Afrique.",
+      "relevant_docs": ["Présentation_Ganvié.docx"],
+      "note": "Récit fondation ville"
+    },
+    {
+      "id": 21,
+      "query": "Ganvié",
+      "expected_intent": "heritage_question",
+      "should_use_rag": true,
+      "pole": "Ganvié",
+      "ground_truth": "Ganvié est une cité lacustre sur le lac Nokoué, souvent appelée la 'Venise de l'Afrique'.",
+      "relevant_docs": ["Présentation_Ganvié.docx"],
+      "note": "Question 1 mot - ville"
+    },
+    {
+      "id": 22,
+      "query": "Comment vivent les habitants de Ganvié ?",
+      "expected_intent": "heritage_question",
+      "should_use_rag": true,
+      "pole": "Ganvié",
+      "ground_truth": "Les habitants de Ganvié vivent dans des maisons sur pilotis et se déplacent en pirogue. Leur mode de vie est adapté à l'environnement lacustre, avec la pêche comme activité principale et un marché flottant.",
+      "relevant_docs": ["Mode_de_vie_des_habitants_de_Ganvié_et_marché_flottant.docx"],
+      "note": "Question mode de vie"
+    },
+    {
+      "id": 23,
+      "query": "Parle-moi de Porto-Novo",
+      "expected_intent": "heritage_question",
+      "should_use_rag": true,
+      "pole": "Porto Novo",
+      "ground_truth": "Porto-Novo est la capitale officielle du Bénin. Fondée au XVIe siècle, elle possède un riche patrimoine architectural mêlant influences afro-brésiliennes et coloniales, avec des monuments comme la Grande Mosquée et plusieurs musées.",
+      "relevant_docs": ["Présentation_Porto-Novo.docx"],
+      "note": "Présentation ville capitale"
+    },
+    {
+      "id": 24,
+      "query": "Qui est le roi Toffa ?",
+      "expected_intent": "heritage_question",
+      "should_use_rag": true,
+      "pole": "Porto Novo",
+      "ground_truth": "Toffa Ier fut roi de Porto-Novo de 1874 à 1908. Il signa un traité de protectorat avec la France en 1883.",
+      "relevant_docs": ["Toffa_Ier.docx"],
+      "note": "Question sur roi Porto-Novo"
+    },
+    {
+      "id": 25,
+      "query": "C'est quoi le Musée Honmè ?",
+      "expected_intent": "heritage_question",
+      "should_use_rag": true,
+      "pole": "Porto Novo",
+      "ground_truth": "Le Musée Honmè est installé dans l'ancien palais royal de Porto-Novo. Il expose des objets du patrimoine royal et de l'histoire de la ville.",
+      "relevant_docs": ["Musée_Honmè.docx"],
+      "note": "Question musée"
+    },
+    {
+      "id": 26,
+      "query": "Abomey",
+      "expected_intent": "heritage_question",
+      "should_use_rag": true,
+      "pole": "Abomey",
+      "ground_truth": "Abomey fut la capitale du puissant royaume du Dahomey du XVIIe au XIXe siècle. Elle abrite les célèbres Palais royaux inscrits au patrimoine mondial de l'UNESCO.",
+      "relevant_docs": ["Presentation_generale_Abomey.docx","Histoire_Abomey.docx"],
+      "note": "Question 1 mot - capitale historique"
+    },
+    {
+      "id": 27,
+      "query": "Quelle est l'histoire du royaume du Dahomey ?",
+      "expected_intent": "heritage_question",
+      "should_use_rag": true,
+      "pole": "Abomey",
+      "ground_truth": "Le royaume du Dahomey fut fondé au XVIIe siècle et devint l'un des royaumes les plus puissants d'Afrique de l'Ouest. Il fut gouverné par une succession de 12 rois jusqu'à la colonisation française en 1894.",
+      "relevant_docs": ["Histoire_Abomey.docx"],
+      "note": "Question histoire générale"
+    },
+    {
+      "id": 28,
+      "query": "Qu'est-ce que la Forêt Sacrée de Kpassè ?",
+      "expected_intent": "heritage_question",
+      "should_use_rag": true,
+      "pole": "Ouidah",
+      "ground_truth": "La Forêt Sacrée de Kpassè est un lieu de culte vodun à Ouidah où sont vénérées plusieurs divinités. Elle abrite des statues et autels dédiés aux voduns.",
+      "relevant_docs": ["Forêt_Sacrée_de_Kpassè.docx"],
+      "note": "Question spiritualité vodun"
+    },
+    {
+      "id": 29,
+      "query": "Palais",
+      "expected_intent": "heritage_question",
+      "should_use_rag": true,
+      "pole": null,
+      "ground_truth": "Il existe plusieurs palais royaux au Bénin, notamment les Palais royaux d'Abomey.",
+      "relevant_docs": ["Palais_royaux_Abomey.docx"],
+      "note": "Question très vague mais patrimoniale"
+    },
+    {
+      "id": 30,
+      "query": "Qu'est-ce que la Basilique de l'Immaculée Conception ?",
+      "expected_intent": "heritage_question",
+      "should_use_rag": true,
+      "pole": "Ouidah",
+      "ground_truth": "La Basilique de l'Immaculée Conception est une église catholique située à Ouidah, construite au début du XXe siècle. Elle est connue pour sa cloche miraculeuse.",
+      "relevant_docs": ["Basilique_de_l_Immaculée_Conception.docx"],
+      "note": "Question monument religieux"
+    }
+  ]
+}

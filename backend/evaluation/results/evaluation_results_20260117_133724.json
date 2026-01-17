@@ -1,0 +1,1312 @@
+{
+  "metadata": {
+    "evaluation_date": "2026-01-17T13:37:24.478544",
+    "dataset": {
+      "project": "Adjä - Agent conversationnel patrimoine béninois",
+      "version": "1.0",
+      "date_created": "2025-01-16",
+      "total_questions": 30,
+      "description": "Dataset d'évaluation couvrant les 4 pôles patrimoniaux et différents types d'intentions"
+    },
+    "total_tests": 30,
+    "errors_count": 0,
+    "ragas_tests": 10
+  },
+  "custom_metrics": {
+    "total_tests": 30,
+    "intent_detection": {
+      "overall": 0.5333,
+      "by_intent": {
+        "greeting": 1.0,
+        "small_talk": 1.0,
+        "thanks": 1.0,
+        "farewell": 1.0,
+        "off_topic": 1.0,
+        "heritage_question": 0.3636
+      },
+      "confusion_matrix": {
+        "greeting": {
+          "greeting": 1
+        },
+        "small_talk": {
+          "small_talk": 3
+        },
+        "thanks": {
+          "thanks": 1
+        },
+        "farewell": {
+          "farewell": 1
+        },
+        "off_topic": {
+          "off_topic": 2
+        },
+        "heritage_question": {
+          "heritage_question": 8,
+          "error": 12,
+          "small_talk": 2
+        }
+      }
+    },
+    "rag_activation": {
+      "accuracy": 0.5333,
+      "precision": 1.0,
+      "recall": 0.3636,
+      "f1_score": 0.5333,
+      "confusion_matrix": {
+        "tp": 8,
+        "fp": 0,
+        "tn": 8,
+        "fn": 14
+      }
+    },
+    "error_analysis": {
+      "intent_errors": [
+        {
+          "test_id": 16,
+          "query": "Parle-moi de la Route des Esclaves à Ouidah",
+          "expected": "heritage_question",
+          "detected": "error",
+          "response_preview": ""
+        },
+        {
+          "test_id": 17,
+          "query": "C'est quoi la Porte du Non-Retour ?",
+          "expected": "heritage_question",
+          "detected": "small_talk",
+          "response_preview": "Je suis là pour partager avec toi les trésors du patrimoine béninois ! N'hésite pas à me poser des q"
+        },
+        {
+          "test_id": 18,
+          "query": "Ouidah",
+          "expected": "heritage_question",
+          "detected": "error",
+          "response_preview": ""
+        },
+        {
+          "test_id": 19,
+          "query": "Qu'est-ce que le Temple des Pythons ?",
+          "expected": "heritage_question",
+          "detected": "error",
+          "response_preview": ""
+        },
+        {
+          "test_id": 20,
+          "query": "Raconte-moi l'histoire de Ganvié",
+          "expected": "heritage_question",
+          "detected": "error",
+          "response_preview": ""
+        },
+        {
+          "test_id": 21,
+          "query": "Ganvié",
+          "expected": "heritage_question",
+          "detected": "error",
+          "response_preview": ""
+        },
+        {
+          "test_id": 23,
+          "query": "Parle-moi de Porto-Novo",
+          "expected": "heritage_question",
+          "detected": "error",
+          "response_preview": ""
+        },
+        {
+          "test_id": 24,
+          "query": "Qui est le roi Toffa ?",
+          "expected": "heritage_question",
+          "detected": "error",
+          "response_preview": ""
+        },
+        {
+          "test_id": 25,
+          "query": "C'est quoi le Musée Honmè ?",
+          "expected": "heritage_question",
+          "detected": "small_talk",
+          "response_preview": "Je suis là pour partager avec toi les trésors du patrimoine béninois ! N'hésite pas à me poser des q"
+        },
+        {
+          "test_id": 26,
+          "query": "Abomey",
+          "expected": "heritage_question",
+          "detected": "error",
+          "response_preview": ""
+        },
+        {
+          "test_id": 27,
+          "query": "Quelle est l'histoire du royaume du Dahomey ?",
+          "expected": "heritage_question",
+          "detected": "error",
+          "response_preview": ""
+        },
+        {
+          "test_id": 28,
+          "query": "Qu'est-ce que la Forêt Sacrée de Kpassè ?",
+          "expected": "heritage_question",
+          "detected": "error",
+          "response_preview": ""
+        },
+        {
+          "test_id": 29,
+          "query": "Palais",
+          "expected": "heritage_question",
+          "detected": "error",
+          "response_preview": ""
+        },
+        {
+          "test_id": 30,
+          "query": "Qu'est-ce que la Basilique de l'Immaculée Conception ?",
+          "expected": "heritage_question",
+          "detected": "error",
+          "response_preview": ""
+        }
+      ],
+      "rag_activation_errors": [
+        {
+          "test_id": 16,
+          "query": "Parle-moi de la Route des Esclaves à Ouidah",
+          "should_use_rag": true,
+          "used_rag": false,
+          "intent": "error"
+        },
+        {
+          "test_id": 17,
+          "query": "C'est quoi la Porte du Non-Retour ?",
+          "should_use_rag": true,
+          "used_rag": false,
+          "intent": "small_talk"
+        },
+        {
+          "test_id": 18,
+          "query": "Ouidah",
+          "should_use_rag": true,
+          "used_rag": false,
+          "intent": "error"
+        },
+        {
+          "test_id": 19,
+          "query": "Qu'est-ce que le Temple des Pythons ?",
+          "should_use_rag": true,
+          "used_rag": false,
+          "intent": "error"
+        },
+        {
+          "test_id": 20,
+          "query": "Raconte-moi l'histoire de Ganvié",
+          "should_use_rag": true,
+          "used_rag": false,
+          "intent": "error"
+        },
+        {
+          "test_id": 21,
+          "query": "Ganvié",
+          "should_use_rag": true,
+          "used_rag": false,
+          "intent": "error"
+        },
+        {
+          "test_id": 23,
+          "query": "Parle-moi de Porto-Novo",
+          "should_use_rag": true,
+          "used_rag": false,
+          "intent": "error"
+        },
+        {
+          "test_id": 24,
+          "query": "Qui est le roi Toffa ?",
+          "should_use_rag": true,
+          "used_rag": false,
+          "intent": "error"
+        },
+        {
+          "test_id": 25,
+          "query": "C'est quoi le Musée Honmè ?",
+          "should_use_rag": true,
+          "used_rag": false,
+          "intent": "small_talk"
+        },
+        {
+          "test_id": 26,
+          "query": "Abomey",
+          "should_use_rag": true,
+          "used_rag": false,
+          "intent": "error"
+        },
+        {
+          "test_id": 27,
+          "query": "Quelle est l'histoire du royaume du Dahomey ?",
+          "should_use_rag": true,
+          "used_rag": false,
+          "intent": "error"
+        },
+        {
+          "test_id": 28,
+          "query": "Qu'est-ce que la Forêt Sacrée de Kpassè ?",
+          "should_use_rag": true,
+          "used_rag": false,
+          "intent": "error"
+        },
+        {
+          "test_id": 29,
+          "query": "Palais",
+          "should_use_rag": true,
+          "used_rag": false,
+          "intent": "error"
+        },
+        {
+          "test_id": 30,
+          "query": "Qu'est-ce que la Basilique de l'Immaculée Conception ?",
+          "should_use_rag": true,
+          "used_rag": false,
+          "intent": "error"
+        }
+      ],
+      "combined_errors": [
+        {
+          "test_id": 16,
+          "query": "Parle-moi de la Route des Esclaves à Ouidah",
+          "expected_intent": "heritage_question",
+          "detected_intent": "error",
+          "should_use_rag": true,
+          "used_rag": false
+        },
+        {
+          "test_id": 17,
+          "query": "C'est quoi la Porte du Non-Retour ?",
+          "expected_intent": "heritage_question",
+          "detected_intent": "small_talk",
+          "should_use_rag": true,
+          "used_rag": false
+        },
+        {
+          "test_id": 18,
+          "query": "Ouidah",
+          "expected_intent": "heritage_question",
+          "detected_intent": "error",
+          "should_use_rag": true,
+          "used_rag": false
+        },
+        {
+          "test_id": 19,
+          "query": "Qu'est-ce que le Temple des Pythons ?",
+          "expected_intent": "heritage_question",
+          "detected_intent": "error",
+          "should_use_rag": true,
+          "used_rag": false
+        },
+        {
+          "test_id": 20,
+          "query": "Raconte-moi l'histoire de Ganvié",
+          "expected_intent": "heritage_question",
+          "detected_intent": "error",
+          "should_use_rag": true,
+          "used_rag": false
+        },
+        {
+          "test_id": 21,
+          "query": "Ganvié",
+          "expected_intent": "heritage_question",
+          "detected_intent": "error",
+          "should_use_rag": true,
+          "used_rag": false
+        },
+        {
+          "test_id": 23,
+          "query": "Parle-moi de Porto-Novo",
+          "expected_intent": "heritage_question",
+          "detected_intent": "error",
+          "should_use_rag": true,
+          "used_rag": false
+        },
+        {
+          "test_id": 24,
+          "query": "Qui est le roi Toffa ?",
+          "expected_intent": "heritage_question",
+          "detected_intent": "error",
+          "should_use_rag": true,
+          "used_rag": false
+        },
+        {
+          "test_id": 25,
+          "query": "C'est quoi le Musée Honmè ?",
+          "expected_intent": "heritage_question",
+          "detected_intent": "small_talk",
+          "should_use_rag": true,
+          "used_rag": false
+        },
+        {
+          "test_id": 26,
+          "query": "Abomey",
+          "expected_intent": "heritage_question",
+          "detected_intent": "error",
+          "should_use_rag": true,
+          "used_rag": false
+        },
+        {
+          "test_id": 27,
+          "query": "Quelle est l'histoire du royaume du Dahomey ?",
+          "expected_intent": "heritage_question",
+          "detected_intent": "error",
+          "should_use_rag": true,
+          "used_rag": false
+        },
+        {
+          "test_id": 28,
+          "query": "Qu'est-ce que la Forêt Sacrée de Kpassè ?",
+          "expected_intent": "heritage_question",
+          "detected_intent": "error",
+          "should_use_rag": true,
+          "used_rag": false
+        },
+        {
+          "test_id": 29,
+          "query": "Palais",
+          "expected_intent": "heritage_question",
+          "detected_intent": "error",
+          "should_use_rag": true,
+          "used_rag": false
+        },
+        {
+          "test_id": 30,
+          "query": "Qu'est-ce que la Basilique de l'Immaculée Conception ?",
+          "expected_intent": "heritage_question",
+          "detected_intent": "error",
+          "should_use_rag": true,
+          "used_rag": false
+        }
+      ]
+    }
+  },
+  "ragas_metrics": {
+    "error": "All metrics must be initialised metric objects, e.g: metrics=[BleuScore(), AspectCritic()]"
+  },
+  "detailed_results": [
+    {
+      "test_id": 1,
+      "query": "Bonjour",
+      "test_case": {
+        "id": 1,
+        "query": "Bonjour",
+        "expected_intent": "greeting",
+        "should_use_rag": false,
+        "pole": null,
+        "ground_truth": null,
+        "relevant_docs": [],
+        "note": "Test salutation simple"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Bonjour",
+        "response": "Bonjour ! Je suis Adjä, ta guide culturelle virtuelle. Je suis ravie de te faire découvrir les trésors du patrimoine béninois : l'histoire des rois d'Abomey, les Amazones légendaires, les mystères d'Ouidah et bien plus encore. Que souhaites-tu découvrir aujourd'hui ?",
+        "images": [],
+        "sources": [],
+        "used_rag": false,
+        "intent": "greeting",
+        "language": "fr"
+      },
+      "timestamp": "2026-01-17T13:35:58.633298",
+      "had_error": false
+    },
+    {
+      "test_id": 2,
+      "query": "Bonjour, comment vas-tu ?",
+      "test_case": {
+        "id": 2,
+        "query": "Bonjour, comment vas-tu ?",
+        "expected_intent": "small_talk",
+        "should_use_rag": false,
+        "pole": null,
+        "ground_truth": null,
+        "relevant_docs": [],
+        "note": "Test salutation avec small talk"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Bonjour, comment vas-tu ?",
+        "response": "Je vais très bien, merci de demander ! En tant que gardienne des récits béninois, je suis toujours enthousiaste à l'idée de partager notre riche patrimoine. Et toi, es-tu prêt·e à découvrir une légende, un monument ou un personnage historique ? 😊",
+        "images": [],
+        "sources": [],
+        "used_rag": false,
+        "intent": "small_talk",
+        "language": "fr"
+      },
+      "timestamp": "2026-01-17T13:35:58.642288",
+      "had_error": false
+    },
+    {
+      "test_id": 3,
+      "query": "Merci beaucoup !",
+      "test_case": {
+        "id": 3,
+        "query": "Merci beaucoup !",
+        "expected_intent": "thanks",
+        "should_use_rag": false,
+        "pole": null,
+        "ground_truth": null,
+        "relevant_docs": [],
+        "note": "Test remerciement"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Merci beaucoup !",
+        "response": "Avec plaisir ! C'est un honneur de partager la richesse culturelle du Bénin avec toi. N'hésite pas si tu as d'autres questions sur notre patrimoine !",
+        "images": [],
+        "sources": [],
+        "used_rag": false,
+        "intent": "thanks",
+        "language": "fr"
+      },
+      "timestamp": "2026-01-17T13:35:58.646288",
+      "had_error": false
+    },
+    {
+      "test_id": 4,
+      "query": "Au revoir",
+      "test_case": {
+        "id": 4,
+        "query": "Au revoir",
+        "expected_intent": "farewell",
+        "should_use_rag": false,
+        "pole": null,
+        "ground_truth": null,
+        "relevant_docs": [],
+        "note": "Test au revoir"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Au revoir",
+        "response": "Au revoir ! J'espère que cette découverte du patrimoine béninois t'a plu. Reviens quand tu veux pour en apprendre davantage. À bientôt !",
+        "images": [],
+        "sources": [],
+        "used_rag": false,
+        "intent": "farewell",
+        "language": "fr"
+      },
+      "timestamp": "2026-01-17T13:35:58.649287",
+      "had_error": false
+    },
+    {
+      "test_id": 5,
+      "query": "Comment vas-tu ?",
+      "test_case": {
+        "id": 5,
+        "query": "Comment vas-tu ?",
+        "expected_intent": "small_talk",
+        "should_use_rag": false,
+        "pole": null,
+        "ground_truth": null,
+        "relevant_docs": [],
+        "note": "Test small talk"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Comment vas-tu ?",
+        "response": "Je vais très bien, merci de demander ! En tant que gardienne des récits béninois, je suis toujours enthousiaste à l'idée de partager notre riche patrimoine. Et toi, es-tu prêt·e à découvrir une légende, un monument ou un personnage historique ? 😊",
+        "images": [],
+        "sources": [],
+        "used_rag": false,
+        "intent": "small_talk",
+        "language": "fr"
+      },
+      "timestamp": "2026-01-17T13:35:58.657282",
+      "had_error": false
+    },
+    {
+      "test_id": 6,
+      "query": "Qui es-tu ?",
+      "test_case": {
+        "id": 6,
+        "query": "Qui es-tu ?",
+        "expected_intent": "small_talk",
+        "should_use_rag": false,
+        "pole": null,
+        "ground_truth": null,
+        "relevant_docs": [],
+        "note": "Test identité agent"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Qui es-tu ?",
+        "response": "Je suis Adjä, ta guide culturelle virtuelle. Mon rôle est de te faire découvrir le patrimoine béninois à travers des récits vivants sur Abomey, Ouidah, Ganvié et Porto-Novo. Je suis là pour raconter l'histoire de nos rois, nos traditions et nos monuments. Que veux-tu savoir ?",
+        "images": [],
+        "sources": [],
+        "used_rag": false,
+        "intent": "small_talk",
+        "language": "fr"
+      },
+      "timestamp": "2026-01-17T13:35:58.661277",
+      "had_error": false
+    },
+    {
+      "test_id": 7,
+      "query": "Quel temps fait-il à Cotonou ?",
+      "test_case": {
+        "id": 7,
+        "query": "Quel temps fait-il à Cotonou ?",
+        "expected_intent": "off_topic",
+        "should_use_rag": false,
+        "pole": null,
+        "ground_truth": null,
+        "relevant_docs": [],
+        "note": "Test hors-sujet météo"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Quel temps fait-il à Cotonou ?",
+        "response": "Je suis Adjä, guide culturelle spécialisée dans le patrimoine béninois. Je me concentre sur l'histoire de nos rois, nos monuments, nos traditions... Ce sujet sort de mon expertise, mais n'hésite pas à me poser une question sur le Bénin ! 😊",
+        "images": [],
+        "sources": [],
+        "used_rag": false,
+        "intent": "off_topic",
+        "language": "fr"
+      },
+      "timestamp": "2026-01-17T13:35:58.664275",
+      "had_error": false
+    },
+    {
+      "test_id": 8,
+      "query": "Match de foot ce soir",
+      "test_case": {
+        "id": 8,
+        "query": "Match de foot ce soir",
+        "expected_intent": "off_topic",
+        "should_use_rag": false,
+        "pole": null,
+        "ground_truth": null,
+        "relevant_docs": [],
+        "note": "Test hors-sujet sport"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Match de foot ce soir",
+        "response": "Le sport moderne n'est pas mon domaine, mais je peux te raconter l'incroyable histoire des Amazones du Dahomey, ces guerrières-athlètes dont l'entraînement et la discipline étaient légendaires ! Leur force physique et leur courage dépassaient tout ce qu'on peut imaginer. Ça t'intéresse ?",
+        "images": [],
+        "sources": [],
+        "used_rag": false,
+        "intent": "off_topic",
+        "language": "fr"
+      },
+      "timestamp": "2026-01-17T13:35:58.671271",
+      "had_error": false
+    },
+    {
+      "test_id": 9,
+      "query": "Qui est le roi Ghézo ?",
+      "test_case": {
+        "id": 9,
+        "query": "Qui est le roi Ghézo ?",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Abomey",
+        "ground_truth": "Ghézo (ou Guézo) fut roi du Dahomey de 1818 à 1858. Il est connu pour avoir restructuré le royaume, développé le commerce et créé un corps d'élite de guerrières, les Amazones du Dahomey.",
+        "relevant_docs": [
+          "Guézo.docx"
+        ],
+        "note": "Question factuelle sur un roi - cas principal"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Qui est le roi Ghézo ?",
+        "response": "Ah, le roi Ghézo ! Quelle figure emblématique de notre histoire béninoise ! C'est avec un grand plaisir que je vais te raconter l'histoire de ce souverain qui a marqué le Royaume du Dahomey de son empreinte indélébile.\n\nGhézo, né prince Gakpe, fut le neuvième roi d'Abomey, régnant pendant quarante ans, de 1818 à 1858. Son accession au trône ne fut pas sans rebondissements : il prit le pouvoir après le renversement de son demi-frère, Adandozan, avec le soutien crucial d'un influent commerçant \"brésilien\", Francisco Félix de Souza, figure majeure de la traite des esclaves sur nos côtes.\n\nDès le début de son règne, Ghézo s'est révélé être un réformateur audacieux. Il a d'abord ramené la paix civile dans un royaume agité, puis a profondément réorganisé et renforcé son armée. C'est sous son règne que le corps des Amazones, ces guerrières légendaires dont je t'ai parlé, a atteint une puissance et une discipline inégalées, devenant une force redoutable. Il a également affranchi le Dahomey du lourd tribut qu'il devait payer à l'État d'Oyo, affirmant ainsi la souveraineté de son royaume.\n\nBien qu'il ait été un acteur important de la traite négrière, capturant et vendant de nombreux Africains, Ghézo était aussi un visionnaire. Anticipant le déclin inévitable du commerce des esclaves, il a eu l'intelligence d'introduire de nouvelles cultures agricoles pour diversifier l'économie du Dahomey. Son règne est un chapitre fascinant de notre patrimoine, témoignant d'une époque de grandes transformations et de défis. N'est-ce pas une histoire captivante ?",
+        "images": [
+          "Donnees_soutenance\\Abomey\\Rois du Dahomey\\Guézo\\palais du roi Ghézo.jpg",
+          "Donnees_soutenance\\Abomey\\Rois du Dahomey\\Guézo\\Symbole_de_Ghézo_roi_du_Dahomey.jpg"
+        ],
+        "sources": [
+          "Wikipédia (FR) — Ghézo, https://fr.wikipedia.org/wiki/Gh%C3%A9zo",
+          "Wikipédia (FR) — Rois d’Abomey, https://fr.wikipedia.org/wiki/Roi_d%27Abomey"
+        ],
+        "used_rag": true,
+        "intent": "heritage_question",
+        "language": "fr",
+        "chunks_used": 2
+      },
+      "timestamp": "2026-01-17T13:36:09.080205",
+      "had_error": false
+    },
+    {
+      "test_id": 10,
+      "query": "Ghézo ?",
+      "test_case": {
+        "id": 10,
+        "query": "Ghézo ?",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Abomey",
+        "ground_truth": "Ghézo (ou Guézo) fut roi du Dahomey de 1818 à 1858.",
+        "relevant_docs": [
+          "Guézo.docx"
+        ],
+        "note": "Question courte patrimoniale - test correction V2"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Ghézo ?",
+        "response": "Ah, le roi Ghézo vous intrigue toujours, et je le comprends ! C'est une figure si centrale et complexe de notre histoire béninoise que l'on pourrait en parler des heures.\n\nPour vous rafraîchir la mémoire, Ghézo, né prince Gakpe, fut le neuvième roi d'Abomey, régnant avec force et vision de 1818 à 1858. Son accession au trône, avec l'aide du commerçant Francisco Félix de Souza, marqua le début d'une ère de profondes transformations. Il est avant tout le grand réformateur qui a stabilisé le royaume, réorganisé et renforcé l'armée, notamment le corps des légendaires Amazones, et libéré le Dahomey du lourd tribut qu'il devait payer à l'État d'Oyo.\n\nC'était un souverain pragmatique et un visionnaire, qui, tout en étant impliqué dans la traite négrière, a su anticiper son déclin en introduisant de nouvelles cultures agricoles pour diversifier l'économie. Son règne est un témoignage fascinant des défis et de l'ingéniosité de l'époque.\n\nY a-t-il un aspect de son histoire qui vous intéresse plus particulièrement ? Voudriez-vous que je vous raconte plus en détail comment il a renforcé les Amazones, ou peut-être comment il a transformé l'économie du royaume ?",
+        "images": [
+          "Donnees_soutenance\\Abomey\\Rois du Dahomey\\Guézo\\palais du roi Ghézo.jpg",
+          "Donnees_soutenance\\Abomey\\Rois du Dahomey\\Guézo\\Symbole_de_Ghézo_roi_du_Dahomey.jpg"
+        ],
+        "sources": [
+          "Wikipédia (FR) — Ghézo, https://fr.wikipedia.org/wiki/Gh%C3%A9zo",
+          "Wikipédia (FR) — Rois d’Abomey, https://fr.wikipedia.org/wiki/Roi_d%27Abomey"
+        ],
+        "used_rag": true,
+        "intent": "heritage_question",
+        "language": "fr",
+        "chunks_used": 2
+      },
+      "timestamp": "2026-01-17T13:36:18.995000",
+      "had_error": false
+    },
+    {
+      "test_id": 11,
+      "query": "Parle-moi du roi Béhanzin",
+      "test_case": {
+        "id": 11,
+        "query": "Parle-moi du roi Béhanzin",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Abomey",
+        "ground_truth": "Béhanzin fut le dernier roi indépendant du Dahomey, ayant régné de 1889 à 1894. Il résista farouchement à la colonisation française avant d'être exilé.",
+        "relevant_docs": [
+          "Béhanzin.docx"
+        ],
+        "note": "Requête narrative"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Parle-moi du roi Béhanzin",
+        "response": "Ah, le roi Béhanzin ! En parlant de figures emblématiques du Dahomey, après Ghézo, c'est une autre légende, un véritable symbole de la résistance et du courage qui se dresse devant nous. C'est avec beaucoup d'émotion que je vais vous conter l'histoire de ce souverain dont le nom résonne encore avec force dans notre mémoire collective.\n\nNé Ahokponou en 1845, et fils du puissant roi Glélé, Béhanzin était prédestiné à un grand destin. Il fut désigné comme héritier dès 1875, prenant alors le nom de prince Kondo. Il a grandi dans un climat de défis constants, ce qui l'a préparé très tôt à la lourde tâche de gouverner et de défendre son royaume. C'est en janvier 1890, après le décès de son père Glélé et la disparition mystérieuse de son demi-frère Ahanhanzo, qu'Ahokponou fut couronné roi sous le nom de Béhanzin, marquant le début d'un règne court mais héroïque.\n\nBéhanzin fut le onzième et dernier souverain indépendant du Dahomey, et son règne, bien que bref (de 1890 à 1894), fut entièrement dédié à une lutte acharnée contre la colonisation française. Il refusa catégoriquement de céder la souveraineté de son royaume, mobilisant toutes ses forces, y compris les célèbres Amazones du Dahomey, pour défendre son peuple et ses terres. Sa détermination à préserver l'intégrité de son royaume en a fait un véritable héros national, un symbole intemporel du refus de la soumission.\n\nMalgré sa bravoure et l'organisation militaire impressionnante de son armée, la puissance coloniale finit par avoir le dessus. Béhanzin fut défait et contraint à l'exil, d'abord en Martinique, puis en Algérie, où il s'éteignit en 1906. Mais son esprit, son courage et son attachement indéfectible à la liberté de son peuple continuent d'inspirer. Son histoire est un chapitre poignant et glorieux de notre patrimoine, un témoignage vibrant de la dignité et de la résistance béninoise.\n\nN'est-ce pas une destinée hors du commun ? Y a-t-il un aspect particulier du roi Béhanzin que vous aimeriez explorer plus en détail ? Peut-être sa stratégie militaire, ou les circonstances de son exil ?",
+        "images": [
+          "Donnees_soutenance\\Abomey\\Rois du Dahomey\\Béhanzin\\Armes_de_Behanzin.jpg",
+          "Donnees_soutenance\\Abomey\\Rois du Dahomey\\Béhanzin\\entrée du palais privé de Béhanzin.jpg",
+          "Donnees_soutenance\\Abomey\\Rois du Dahomey\\Béhanzin\\Palais privé de Béhanzin.jpg",
+          "Donnees_soutenance\\Abomey\\Rois du Dahomey\\Béhanzin\\palais privé du roi Béhanzin.jpg",
+          "Donnees_soutenance\\Abomey\\Rois du Dahomey\\Béhanzin\\Symbole_de_Behanzin_roi_du_Dahomey_au_mur_de_la_place_Goho_à_Abomey_au_Bénin.jpg"
+        ],
+        "sources": [
+          "Wikipédia (FR) —Béhanzin, https://fr.wikipedia.org/wiki/B%C3%A9hanzin",
+          "Wikipédia (FR) — Rois d’Abomey, https://fr.wikipedia.org/wiki/Roi_d%27Abomey"
+        ],
+        "used_rag": true,
+        "intent": "heritage_question",
+        "language": "fr",
+        "chunks_used": 2
+      },
+      "timestamp": "2026-01-17T13:36:24.675781",
+      "had_error": false
+    },
+    {
+      "test_id": 12,
+      "query": "Raconte-moi l'histoire de Glèlè",
+      "test_case": {
+        "id": 12,
+        "query": "Raconte-moi l'histoire de Glèlè",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Abomey",
+        "ground_truth": "Glèlè régna sur le Dahomey de 1858 à 1889. Il poursuivit l'œuvre de son père Ghézo et renforça le royaume.",
+        "relevant_docs": [
+          "Glèlè.docx"
+        ],
+        "note": "Demande de récit"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Raconte-moi l'histoire de Glèlè",
+        "response": "Ah, le roi Glèlè ! C'est une excellente idée de nous pencher sur son histoire, car il est un maillon essentiel entre le règne réformateur de Ghézo et la résistance héroïque de Béhanzin. Après avoir exploré ces deux figures, je suis ravie de vous conter l'histoire de celui qui les relie, le dixième souverain d'Abomey.\n\nNé Badohoun, il accède au trône en 1858, succédant à son père, le roi Ghézo, et règne jusqu'en 1889. Le règne de Glèlè s'inscrit dans la continuité des expéditions militaires, et il mena plusieurs campagnes, notamment avec une volonté affichée de venger son père. C'était une époque où le royaume du Dahomey continuait d'affirmer sa puissance et son autorité dans la région.\n\nMais l'événement le plus marquant de son règne, un véritable tournant pour l'histoire du Dahomey, fut la signature du traité du 19 mai 1868. Par cet acte, le roi Glèlè céda la localité de Cotonou aux Français, ouvrant ainsi la voie à une présence coloniale de plus en plus profonde et influente sur nos terres. C'était une période de tensions croissantes, où les négociations avec les troupes coloniales devenaient monnaie courante, parfois menées par des figures importantes comme sa fille Yaya Migansi.\n\nGlèlè s'est éteint le 29 décembre 1889, laissant derrière lui un royaume en pleine mutation, confronté à la montée des puissances européennes. Son fils, le prince Kondo, lui succédera sous le nom de Béhanzin, et c'est lui qui devra affronter de front l'armée coloniale française dans une lutte désespérée pour la souveraineté. Le symbole royal de Glèlè était le lion, une image forte de puissance et d'intimidation, reflétant bien la nature de son règne.\n\nN'est-ce pas fascinant de voir comment ces rois sont liés, chacun préparant le terrain pour le suivant, face à des défis toujours plus grands ? Y a-t-il un aspect du règne de Glèlè, ou de cette période charnière, que vous aimeriez explorer davantage ?",
+        "images": [
+          "Donnees_soutenance\\Abomey\\Rois du Dahomey\\Glèlè\\palais du roi Glèlè.jpg",
+          "Donnees_soutenance\\Abomey\\Rois du Dahomey\\Glèlè\\Symbole_de_Glèlè_roi_du_Dahomey.jpg"
+        ],
+        "sources": [
+          "Wikipédia (FR) — Glèlè : https://fr.wikipedia.org/wiki/Gl%C3%A9l%C3%A9",
+          "Wikipédia (FR) — Rois d’Abomey : https://fr.wikipedia.org/wiki/Roi_d%27Abomey"
+        ],
+        "used_rag": true,
+        "intent": "heritage_question",
+        "language": "fr",
+        "chunks_used": 2
+      },
+      "timestamp": "2026-01-17T13:36:32.511232",
+      "had_error": false
+    },
+    {
+      "test_id": 13,
+      "query": "Qui sont les Amazones du Dahomey ?",
+      "test_case": {
+        "id": 13,
+        "query": "Qui sont les Amazones du Dahomey ?",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Abomey",
+        "ground_truth": "Les Amazones du Dahomey, aussi appelées Mino ou Agodjié, étaient un corps d'élite de guerrières au service des rois du Dahomey. Elles étaient réputées pour leur courage et leur discipline.",
+        "relevant_docs": [
+          "Amazones_du_Dahomey.docx"
+        ],
+        "note": "Question sur entité culturelle majeure"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Qui sont les Amazones du Dahomey ?",
+        "response": "Ah, les Amazones du Dahomey ! Quelle magnifique question, et quelle histoire captivante à vous raconter ! Après avoir parlé de nos grands rois, il est essentiel de rendre hommage à ces guerrières d'exception, le cœur même de l'armée dahoméenne, dont la bravoure et la détermination sont devenues légendaires.\n\nLes Amazones, que l'on appelait en réalité les \"Mino\", ce qui signifie \"nos mères\" en fon, étaient un corps d'élite militaire entièrement féminin, unique en son genre dans l'histoire. Leur origine est souvent associée à la reine Tasi Hangbè, sœur jumelle du roi Akaba, qui aurait créé une garde féminine au début du XVIIIe siècle. Mais c'est véritablement sous des rois comme Ghézo, puis Glèlè et enfin Béhanzin, que ces femmes furent organisées en une force armée redoutable, dotée d'une discipline de fer et d'une loyauté indéfectible envers le trône. Elles étaient entraînées dès leur plus jeune âge, maîtrisant le maniement des armes et des stratégies de combat qui faisaient trembler les ennemis du Dahomey.\n\nLeur courage fut mis à l'épreuve de la manière la plus dramatique lors des guerres contre la France, notamment à partir de 1890 sous le règne du roi Béhanzin. Les soldats français furent stupéfaits de se retrouver face à ces femmes armées de carabines Winchester, menant des attaques de guérilla féroces, des combats rapprochés et utilisant des techniques de roulade pour passer sous les baïonnettes. Les récits des légionnaires de l'époque parlent d'une bravoure \"incroyable\", même si, face à la supériorité technologique et numérique de l'armée coloniale (avec ses mitrailleuses, sa cavalerie), les Amazones furent malheureusement décimées.\n\nMalgré leur rôle parfois violent dans les campagnes militaires de l'époque, leur héritage est aujourd'hui un puissant symbole de force féminine, d'organisation militaire africaine et de résistance face à l'oppression. Après l'instauration du protectorat français en 1894, le corps des Mino fut officiellement dissous, mais leur mémoire a perduré. Saviez-vous que la dernière Amazone connue, nommée Nawi, a été rencontrée en 1978 et est décédée en 1979, à plus de 100 ans, affirmant avoir combattu contre les Français en 1892 ? Aujourd'hui, on les célèbre comme des figures d'émancipation. Le Monument de l'Amazone à Cotonou et le projet de musée à Abomey en leur honneur, ainsi que le film \"The Woman King\", témoignent de l'impact indélébile de ces guerrières dans notre histoire et notre culture.\n\nN'est-ce pas une histoire qui inspire le respect et l'admiration ? Y a-t-il un aspect particulier de ces femmes extraordinaires que vous aimeriez que je développe ?",
+        "images": [
+          "Donnees_soutenance\\Abomey\\Les Amazones du Dahomey\\Amazones_du_Dahomey.jpg",
+          "Donnees_soutenance\\Abomey\\Les Amazones du Dahomey\\Amazones_du_Dahomey_2.jpg",
+          "Donnees_soutenance\\Abomey\\Les Amazones du Dahomey\\image_des_amazones_extraite_du_film_The_Woman_King.jpg",
+          "Donnees_soutenance\\Abomey\\Les Amazones du Dahomey\\La_statue_de_l_Amazone_érigée_à_Cotonou.jpg",
+          "Donnees_soutenance\\Abomey\\Les Amazones du Dahomey\\Une_image_des_amazones_extraite_du_film_The_Woman_King.jpg"
+        ],
+        "sources": [
+          "Wikipédia (FR) — Amazones du Dahomey / Agodjié, https://fr.wikipedia.org/wiki/Amazones_du_Dahomey",
+          "Hippotrague, Voyage au Bénin — Agoodjié, https://www.hippotrague.com/Voyage-au-Benin-blog/post/Histoire-Dahomey-Benin-amazone-femme"
+        ],
+        "used_rag": true,
+        "intent": "heritage_question",
+        "language": "fr",
+        "chunks_used": 2
+      },
+      "timestamp": "2026-01-17T13:36:43.635115",
+      "had_error": false
+    },
+    {
+      "test_id": 14,
+      "query": "Les Amazones",
+      "test_case": {
+        "id": 14,
+        "query": "Les Amazones",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Abomey",
+        "ground_truth": "Les Amazones du Dahomey étaient des guerrières d'élite.",
+        "relevant_docs": [
+          "Amazones_du_Dahomey.docx"
+        ],
+        "note": "Question courte - 2 mots patrimoniaux"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Les Amazones",
+        "response": "Ah, les Amazones ! Votre intérêt pour ces femmes extraordinaires me ravit, car elles incarnent une part si vibrante et puissante de notre histoire. Après avoir déjà effleuré leur bravoure, je sens que vous souhaitez peut-être en apprendre davantage sur les détails qui ont fait d'elles une légende.\n\nNous avons parlé des \"Mino\", ces \"mères\" guerrières. Il est bon de savoir qu'elles étaient aussi appelées \"Agodjié\" ou \"Ahosi\", des noms qui résonnent avec la force et le respect qu'elles inspiraient. À leur apogée, imaginez, elles représentaient une force militaire colossale : entre 4 000 et 6 000 guerrières, soit près d'un tiers de toute l'armée du Dahomey ! C'est une proportion incroyable pour un corps d'élite, n'est-ce pas ?\n\nLeur réputation n'était pas seulement due à leur nombre, mais aussi à leur discipline et à leur férocité. Les récits de l'époque décrivent des guerrières redoutables, capables de stratégies audacieuses et d'une détermination inébranlable au combat. Il est dit que les prisonniers capturés étaient souvent décapités, une pratique qui soulignait leur implacable efficacité et leur engagement total envers le royaume. C'est cette combinaison de force numérique, d'entraînement rigoureux et de brutalité au combat qui a gravé leur nom dans l'histoire.\n\nAprès la défaite face aux forces françaises, et l'instauration du protectorat, ce fut le roi Agoli-Agbo qui, en 1894, officialisa la dissolution de ce corps légendaire. Mais leur esprit, lui, ne s'est jamais éteint.\n\nY a-t-il un aspect en particulier de ces Agodjié, de ces \"Mino\", qui vous intrigue le plus à présent ? Peut-être leur entraînement quotidien, ou des récits de batailles spécifiques où leur courage a brillé ? Je suis là pour partager toutes ces histoires avec vous.",
+        "images": [
+          "Donnees_soutenance\\Abomey\\Les Amazones du Dahomey\\Amazones_du_Dahomey.jpg",
+          "Donnees_soutenance\\Abomey\\Les Amazones du Dahomey\\Amazones_du_Dahomey_2.jpg",
+          "Donnees_soutenance\\Abomey\\Les Amazones du Dahomey\\image_des_amazones_extraite_du_film_The_Woman_King.jpg",
+          "Donnees_soutenance\\Abomey\\Les Amazones du Dahomey\\La_statue_de_l_Amazone_érigée_à_Cotonou.jpg",
+          "Donnees_soutenance\\Abomey\\Les Amazones du Dahomey\\Une_image_des_amazones_extraite_du_film_The_Woman_King.jpg"
+        ],
+        "sources": [
+          "Wikipédia (FR) — Amazones du Dahomey / Agodjié, https://fr.wikipedia.org/wiki/Amazones_du_Dahomey",
+          "Hippotrague, Voyage au Bénin — Agoodjié, https://www.hippotrague.com/Voyage-au-Benin-blog/post/Histoire-Dahomey-Benin-amazone-femme"
+        ],
+        "used_rag": true,
+        "intent": "heritage_question",
+        "language": "fr",
+        "chunks_used": 2
+      },
+      "timestamp": "2026-01-17T13:36:51.152757",
+      "had_error": false
+    },
+    {
+      "test_id": 15,
+      "query": "Qu'est-ce que les Palais royaux d'Abomey ?",
+      "test_case": {
+        "id": 15,
+        "query": "Qu'est-ce que les Palais royaux d'Abomey ?",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Abomey",
+        "ground_truth": "Les Palais royaux d'Abomey sont un ensemble de structures construites par les différents rois du Dahomey entre le XVIIe et le XIXe siècle. Ils sont inscrits au patrimoine mondial de l'UNESCO.",
+        "relevant_docs": [
+          "Palais_royaux_Abomey.docx"
+        ],
+        "note": "Question sur monument"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Qu'est-ce que les Palais royaux d'Abomey ?",
+        "response": "Ah, les Palais royaux d'Abomey ! Quelle excellente question, et quel voyage fascinant nous allons entreprendre ensemble au cœur même de l'histoire du Dahomey ! Après avoir parlé des rois et des vaillantes Amazones, il est tout naturel de se tourner vers le lieu qui a été le théâtre de leurs vies, de leurs décisions et de leurs exploits.\n\nImaginez un instant le centre névralgique d'un puissant royaume ouest-africain, un lieu où la grandeur et la tradition se sont inscrites dans la pierre et le bois pendant des siècles. C'est exactement ce que sont les Palais royaux d'Abomey. Ils ne sont pas de simples bâtiments, mais le témoignage matériel et symbolique du Royaume du Dahomey, qui a rayonné de la moitié du XVIIe siècle jusqu'au début du XXe. C'est un ensemble architectural si unique et si précieux qu'il est aujourd'hui inscrit au patrimoine mondial de l'UNESCO, un trésor pour l'humanité.\n\nCes palais racontent l'histoire de douze rois successifs, chacun ayant apporté sa pierre à l'édifice, en construisant son propre palais à l'intérieur de l'enceinte royale (à l'exception du roi Akaba). Du fondateur Houegbadja, qui posa le principe que \"le royaume doit toujours être fait plus grand\", jusqu'aux derniers souverains, ces constructions étaient le cœur battant du royaume. C'était là que se prenaient les grandes décisions politiques, que se conservaient les trésors les plus précieux, que s'épanouissait l'artisanat et que se déroulaient les cérémonies traditionnelles qui rythmaient la vie du peuple Fon.\n\nLes Palais royaux d'Abomey sont bien plus que des murs et des toits ; ils incarnent la mémoire vivante d'une culture, d'une identité collective, et d'un savoir-faire technique et artisanal ancestral. Ils nous permettent de comprendre le pouvoir, la hiérarchie et la sophistication d'un royaume africain qui a marqué son temps. N'est-ce pas merveilleux de pouvoir fouler un sol qui a vu tant d'histoire se dérouler ?\n\nY a-t-il un aspect particulier de ces palais, ou peut-être un roi lié à leur construction, qui vous intéresse davantage ?",
+        "images": [
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Abomey-Palais royaux,Palais_du_roi_Agoli-Agbo.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Abomey-Palais-royaux Cour_intérieure.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Abomey-palais.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Abomey-Palais_du_roi_Agadja.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\les-Palais royaux,Abomey-Palais_du_roi_Houegbadja.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Palais royaux d'Abomey.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\palais royaux d'Abomey_1.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Palais royaux d'Abomey_2.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Palais-royaux,Abomey-Palais_du_roi_Kpengla.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Palais_d'Abomey-Cour_intérieure.jpg"
+        ],
+        "sources": [
+          "UNESCO — Palais royaux d’Abomey, https://whc.unesco.org/fr/list/323/",
+          "Afrik.com — Les palais royaux d’Abomey : héritage d’un royaume disparu, : https://www.afrik.com/les-palais-royaux-d-abomey-heritage-d-un-royaume-disparu",
+          "Craterre — Conservation des palais royaux d’Abomey, https://craterre.org/case/conservation-des-palais-royaux-dabomey/"
+        ],
+        "used_rag": true,
+        "intent": "heritage_question",
+        "language": "fr",
+        "chunks_used": 2
+      },
+      "timestamp": "2026-01-17T13:36:57.754181",
+      "had_error": false
+    },
+    {
+      "test_id": 16,
+      "query": "Parle-moi de la Route des Esclaves à Ouidah",
+      "test_case": {
+        "id": 16,
+        "query": "Parle-moi de la Route des Esclaves à Ouidah",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Ouidah",
+        "ground_truth": "La Route des Esclaves à Ouidah est un parcours mémoriel de 4 km qui retrace le chemin emprunté par les esclaves depuis leur capture jusqu'à leur embarquement. Elle comprend des monuments comme l'Arbre de l'Oubli, les Cases Zomaï et la Porte du Non-Retour.",
+        "relevant_docs": [
+          "Route_des_Esclaves.docx",
+          "Presentation_Ouidah.docx"
+        ],
+        "note": "Question sur lieu historique sensible"
+      },
+      "agent_response": {
+        "success": false,
+        "error": "Erreur lors de la génération: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 5, model: gemini-2.5-flash\nPlease retry in 1.384413468s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 5\n}\n, retry_delay {\n  seconds: 1\n}\n]",
+        "query": "Parle-moi de la Route des Esclaves à Ouidah",
+        "response": "",
+        "images": [],
+        "sources": [],
+        "used_rag": false,
+        "intent": "error",
+        "language": "fr",
+        "chunks_used": 0
+      },
+      "timestamp": "2026-01-17T13:36:58.820144",
+      "had_error": true
+    },
+    {
+      "test_id": 17,
+      "query": "C'est quoi la Porte du Non-Retour ?",
+      "test_case": {
+        "id": 17,
+        "query": "C'est quoi la Porte du Non-Retour ?",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Ouidah",
+        "ground_truth": "La Porte du Non-Retour est un monument érigé à Ouidah en mémoire des esclaves déportés. Elle symbolise le dernier point de terre africaine que les captifs voyaient avant leur embarquement vers les Amériques.",
+        "relevant_docs": [
+          "Porte_du_Non_Retour.docx"
+        ],
+        "note": "Question langage familier"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "C'est quoi la Porte du Non-Retour ?",
+        "response": "Je suis là pour partager avec toi les trésors du patrimoine béninois ! N'hésite pas à me poser des questions sur nos rois, nos monuments, nos traditions... Je suis à ton écoute ! 😊",
+        "images": [],
+        "sources": [],
+        "used_rag": false,
+        "intent": "small_talk",
+        "language": "fr"
+      },
+      "timestamp": "2026-01-17T13:36:58.836493",
+      "had_error": false
+    },
+    {
+      "test_id": 18,
+      "query": "Ouidah",
+      "test_case": {
+        "id": 18,
+        "query": "Ouidah",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Ouidah",
+        "ground_truth": "Ouidah est une ville historique du Bénin, connue pour son rôle dans la traite négrière et pour être un haut lieu de la culture vaudou.",
+        "relevant_docs": [
+          "Presentation_Ouidah.docx"
+        ],
+        "note": "Question 1 mot - pôle géographique"
+      },
+      "agent_response": {
+        "success": false,
+        "error": "Erreur lors de la génération: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 5, model: gemini-2.5-flash\nPlease retry in 667.73229ms. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 5\n}\n, retry_delay {\n}\n]",
+        "query": "Ouidah",
+        "response": "",
+        "images": [],
+        "sources": [],
+        "used_rag": false,
+        "intent": "error",
+        "language": "fr",
+        "chunks_used": 0
+      },
+      "timestamp": "2026-01-17T13:36:59.528469",
+      "had_error": true
+    },
+    {
+      "test_id": 19,
+      "query": "Qu'est-ce que le Temple des Pythons ?",
+      "test_case": {
+        "id": 19,
+        "query": "Qu'est-ce que le Temple des Pythons ?",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Ouidah",
+        "ground_truth": "Le Temple des Pythons est un lieu sacré du culte vodun à Ouidah où sont vénérés les pythons royaux, considérés comme sacrés dans la religion traditionnelle.",
+        "relevant_docs": [
+          "Temple_des_Pythons.docx"
+        ],
+        "note": "Question spiritualité"
+      },
+      "agent_response": {
+        "success": false,
+        "error": "Erreur lors de la génération: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 5, model: gemini-2.5-flash\nPlease retry in 59.945874865s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 5\n}\n, retry_delay {\n  seconds: 59\n}\n]",
+        "query": "Qu'est-ce que le Temple des Pythons ?",
+        "response": "",
+        "images": [],
+        "sources": [],
+        "used_rag": false,
+        "intent": "error",
+        "language": "fr",
+        "chunks_used": 0
+      },
+      "timestamp": "2026-01-17T13:37:00.250814",
+      "had_error": true
+    },
+    {
+      "test_id": 20,
+      "query": "Raconte-moi l'histoire de Ganvié",
+      "test_case": {
+        "id": 20,
+        "query": "Raconte-moi l'histoire de Ganvié",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Ganvié",
+        "ground_truth": "Ganvié est une cité lacustre construite sur le lac Nokoué. Fondée au XVIIe siècle par des populations fuyant les razzias esclavagistes du royaume du Dahomey, elle est aujourd'hui la plus grande ville lacustre d'Afrique.",
+        "relevant_docs": [
+          "Présentation_Ganvié.docx"
+        ],
+        "note": "Récit fondation ville"
+      },
+      "agent_response": {
+        "success": false,
+        "error": "Erreur lors de la génération: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 5, model: gemini-2.5-flash\nPlease retry in 59.239375932s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 5\n}\n, retry_delay {\n  seconds: 59\n}\n]",
+        "query": "Raconte-moi l'histoire de Ganvié",
+        "response": "",
+        "images": [],
+        "sources": [],
+        "used_rag": false,
+        "intent": "error",
+        "language": "fr",
+        "chunks_used": 0
+      },
+      "timestamp": "2026-01-17T13:37:00.961199",
+      "had_error": true
+    },
+    {
+      "test_id": 21,
+      "query": "Ganvié",
+      "test_case": {
+        "id": 21,
+        "query": "Ganvié",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Ganvié",
+        "ground_truth": "Ganvié est une cité lacustre sur le lac Nokoué, souvent appelée la 'Venise de l'Afrique'.",
+        "relevant_docs": [
+          "Présentation_Ganvié.docx"
+        ],
+        "note": "Question 1 mot - ville"
+      },
+      "agent_response": {
+        "success": false,
+        "error": "Erreur lors de la génération: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 5, model: gemini-2.5-flash\nPlease retry in 58.572771601s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 5\n}\n, retry_delay {\n  seconds: 58\n}\n]",
+        "query": "Ganvié",
+        "response": "",
+        "images": [],
+        "sources": [],
+        "used_rag": false,
+        "intent": "error",
+        "language": "fr",
+        "chunks_used": 0
+      },
+      "timestamp": "2026-01-17T13:37:01.631397",
+      "had_error": true
+    },
+    {
+      "test_id": 22,
+      "query": "Comment vivent les habitants de Ganvié ?",
+      "test_case": {
+        "id": 22,
+        "query": "Comment vivent les habitants de Ganvié ?",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Ganvié",
+        "ground_truth": "Les habitants de Ganvié vivent dans des maisons sur pilotis et se déplacent en pirogue. Leur mode de vie est adapté à l'environnement lacustre, avec la pêche comme activité principale et un marché flottant.",
+        "relevant_docs": [
+          "Mode_de_vie_des_habitants_de_Ganvié_et_marché_flottant.docx"
+        ],
+        "note": "Question mode de vie"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Comment vivent les habitants de Ganvié ?",
+        "response": "Ah, c'est une excellente question qui nous plonge au cœur de la vie quotidienne de cette cité fascinante ! Après avoir parlé de son histoire légendaire, il est tout naturel de se demander comment les \"Hommes de l'Eau\" de Ganvié organisent leur existence.\n\nImagine un peu : presque 30 000 personnes vivent ici, non pas sur la terre ferme, mais sur l'eau, dans des maisons sur pilotis. Leur vie est intrinsèquement liée au lac Nokoué. La principale activité, celle qui fait vivre la majorité des familles, est bien sûr la pêche. Les hommes partent en pirogue tôt le matin, utilisant des techniques ancestrales comme les \"acadjas\", ces parcs piscicoles où le poisson vient se réfugier.\n\nMais Ganvié est une ville complète ! Il y a des marchés flottants où les femmes, avec leurs pirogues chargées de denrées, échangent le poisson contre des produits venus de la terre ferme. On y trouve aussi des écoles, des églises et même un cimetière, tous construits sur pilotis. C'est un véritable carrefour spirituel où cohabitent harmonieusement les religions traditionnelles, avec leurs temples vaudou, et les églises chrétiennes. Chaque année, la grande fête identitaire du Toffin-xwé rassemble tous les descendants des habitants pour célébrer leur culture unique.\n\nBien sûr, la vie sur l'eau présente aussi ses défis. L'accès à l'eau potable est limité, et l'électricité dépend souvent de groupes électrogènes ou de panneaux solaires. Mais malgré ces contraintes, les habitants de Ganvié vivent une vie riche et vibrante, en parfaite symbiose avec leur environnement lagunaire, un témoignage vivant de la résilience et de l'ingéniosité humaine. N'est-ce pas merveilleux ?",
+        "images": [
+          "Donnees_soutenance\\Ganvié\\Présentation de Ganvié\\cité de Ganvié.jpg",
+          "Donnees_soutenance\\Ganvié\\Présentation de Ganvié\\Ganvié,cité qui vit sur l'eau .jpg",
+          "Donnees_soutenance\\Ganvié\\Présentation de Ganvié\\Ganvié.jpg"
+        ],
+        "sources": [
+          "Ayiffa Tourisme — Visiter Ganvié, https://ayiffatourisme.com/visiter-ganvie.php",
+          "Wikipédia — Ganvié, https://fr.wikipedia.org/wiki/Ganvi%C3%A9",
+          "Magazine de l’Afrique — Ganvié, village lacustre, https://magazinedelafrique.com/reportage/ganvie-village-lacustre-ex-refuge-desclaves/",
+          "Ayiffa Tourisme — Tout sur Ganvié, https://ayiffatourisme.com/blog-tout-sur-ganvie.php",
+          "Drach Travel — Ganvié, village lacustre et historique du Bénin, https://drachtravel.com/ganvie-village-lacustre-et-historique-du-benin/"
+        ],
+        "used_rag": true,
+        "intent": "heritage_question",
+        "language": "fr",
+        "chunks_used": 2
+      },
+      "timestamp": "2026-01-17T13:37:05.999513",
+      "had_error": false
+    },
+    {
+      "test_id": 23,
+      "query": "Parle-moi de Porto-Novo",
+      "test_case": {
+        "id": 23,
+        "query": "Parle-moi de Porto-Novo",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Porto Novo",
+        "ground_truth": "Porto-Novo est la capitale officielle du Bénin. Fondée au XVIe siècle, elle possède un riche patrimoine architectural mêlant influences afro-brésiliennes et coloniales, avec des monuments comme la Grande Mosquée et plusieurs musées.",
+        "relevant_docs": [
+          "Présentation_Porto-Novo.docx"
+        ],
+        "note": "Présentation ville capitale"
+      },
+      "agent_response": {
+        "success": false,
+        "error": "Erreur lors de la génération: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 52.221530128s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 52\n}\n]",
+        "query": "Parle-moi de Porto-Novo",
+        "response": "",
+        "images": [],
+        "sources": [],
+        "used_rag": false,
+        "intent": "error",
+        "language": "fr",
+        "chunks_used": 0
+      },
+      "timestamp": "2026-01-17T13:37:08.045560",
+      "had_error": true
+    },
+    {
+      "test_id": 24,
+      "query": "Qui est le roi Toffa ?",
+      "test_case": {
+        "id": 24,
+        "query": "Qui est le roi Toffa ?",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Porto Novo",
+        "ground_truth": "Toffa Ier fut roi de Porto-Novo de 1874 à 1908. Il signa un traité de protectorat avec la France en 1883.",
+        "relevant_docs": [
+          "Toffa_Ier.docx"
+        ],
+        "note": "Question sur roi Porto-Novo"
+      },
+      "agent_response": {
+        "success": false,
+        "error": "Erreur lors de la génération: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 51.40505654s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 51\n}\n]",
+        "query": "Qui est le roi Toffa ?",
+        "response": "",
+        "images": [],
+        "sources": [],
+        "used_rag": false,
+        "intent": "error",
+        "language": "fr",
+        "chunks_used": 0
+      },
+      "timestamp": "2026-01-17T13:37:09.256168",
+      "had_error": true
+    },
+    {
+      "test_id": 25,
+      "query": "C'est quoi le Musée Honmè ?",
+      "test_case": {
+        "id": 25,
+        "query": "C'est quoi le Musée Honmè ?",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Porto Novo",
+        "ground_truth": "Le Musée Honmè est installé dans l'ancien palais royal de Porto-Novo. Il expose des objets du patrimoine royal et de l'histoire de la ville.",
+        "relevant_docs": [
+          "Musée_Honmè.docx"
+        ],
+        "note": "Question musée"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "C'est quoi le Musée Honmè ?",
+        "response": "Je suis là pour partager avec toi les trésors du patrimoine béninois ! N'hésite pas à me poser des questions sur nos rois, nos monuments, nos traditions... Je suis à ton écoute ! 😊",
+        "images": [],
+        "sources": [],
+        "used_rag": false,
+        "intent": "small_talk",
+        "language": "fr"
+      },
+      "timestamp": "2026-01-17T13:37:09.271157",
+      "had_error": false
+    },
+    {
+      "test_id": 26,
+      "query": "Abomey",
+      "test_case": {
+        "id": 26,
+        "query": "Abomey",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Abomey",
+        "ground_truth": "Abomey fut la capitale du puissant royaume du Dahomey du XVIIe au XIXe siècle. Elle abrite les célèbres Palais royaux inscrits au patrimoine mondial de l'UNESCO.",
+        "relevant_docs": [
+          "Presentation_generale_Abomey.docx",
+          "Histoire_Abomey.docx"
+        ],
+        "note": "Question 1 mot - capitale historique"
+      },
+      "agent_response": {
+        "success": false,
+        "error": "Erreur lors de la génération: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 49.489050325s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 49\n}\n]",
+        "query": "Abomey",
+        "response": "",
+        "images": [],
+        "sources": [],
+        "used_rag": false,
+        "intent": "error",
+        "language": "fr",
+        "chunks_used": 0
+      },
+      "timestamp": "2026-01-17T13:37:10.718258",
+      "had_error": true
+    },
+    {
+      "test_id": 27,
+      "query": "Quelle est l'histoire du royaume du Dahomey ?",
+      "test_case": {
+        "id": 27,
+        "query": "Quelle est l'histoire du royaume du Dahomey ?",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Abomey",
+        "ground_truth": "Le royaume du Dahomey fut fondé au XVIIe siècle et devint l'un des royaumes les plus puissants d'Afrique de l'Ouest. Il fut gouverné par une succession de 12 rois jusqu'à la colonisation française en 1894.",
+        "relevant_docs": [
+          "Histoire_Abomey.docx"
+        ],
+        "note": "Question histoire générale"
+      },
+      "agent_response": {
+        "success": false,
+        "error": "Erreur lors de la génération: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 48.76496968s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 48\n}\n]",
+        "query": "Quelle est l'histoire du royaume du Dahomey ?",
+        "response": "",
+        "images": [],
+        "sources": [],
+        "used_rag": false,
+        "intent": "error",
+        "language": "fr",
+        "chunks_used": 0
+      },
+      "timestamp": "2026-01-17T13:37:11.438206",
+      "had_error": true
+    },
+    {
+      "test_id": 28,
+      "query": "Qu'est-ce que la Forêt Sacrée de Kpassè ?",
+      "test_case": {
+        "id": 28,
+        "query": "Qu'est-ce que la Forêt Sacrée de Kpassè ?",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Ouidah",
+        "ground_truth": "La Forêt Sacrée de Kpassè est un lieu de culte vodun à Ouidah où sont vénérées plusieurs divinités. Elle abrite des statues et autels dédiés aux voduns.",
+        "relevant_docs": [
+          "Forêt_Sacrée_de_Kpassè.docx"
+        ],
+        "note": "Question spiritualité vodun"
+      },
+      "agent_response": {
+        "success": false,
+        "error": "Erreur lors de la génération: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 45.130752441s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 45\n}\n]",
+        "query": "Qu'est-ce que la Forêt Sacrée de Kpassè ?",
+        "response": "",
+        "images": [],
+        "sources": [],
+        "used_rag": false,
+        "intent": "error",
+        "language": "fr",
+        "chunks_used": 0
+      },
+      "timestamp": "2026-01-17T13:37:15.519642",
+      "had_error": true
+    },
+    {
+      "test_id": 29,
+      "query": "Palais",
+      "test_case": {
+        "id": 29,
+        "query": "Palais",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": null,
+        "ground_truth": "Il existe plusieurs palais royaux au Bénin, notamment les Palais royaux d'Abomey.",
+        "relevant_docs": [
+          "Palais_royaux_Abomey.docx"
+        ],
+        "note": "Question très vague mais patrimoniale"
+      },
+      "agent_response": {
+        "success": false,
+        "error": "Erreur lors de la génération: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 42.366251361s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 42\n}\n]",
+        "query": "Palais",
+        "response": "",
+        "images": [],
+        "sources": [],
+        "used_rag": false,
+        "intent": "error",
+        "language": "fr",
+        "chunks_used": 0
+      },
+      "timestamp": "2026-01-17T13:37:17.833120",
+      "had_error": true
+    },
+    {
+      "test_id": 30,
+      "query": "Qu'est-ce que la Basilique de l'Immaculée Conception ?",
+      "test_case": {
+        "id": 30,
+        "query": "Qu'est-ce que la Basilique de l'Immaculée Conception ?",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Ouidah",
+        "ground_truth": "La Basilique de l'Immaculée Conception est une église catholique située à Ouidah, construite au début du XXe siècle. Elle est connue pour sa cloche miraculeuse.",
+        "relevant_docs": [
+          "Basilique_de_l_Immaculée_Conception.docx"
+        ],
+        "note": "Question monument religieux"
+      },
+      "agent_response": {
+        "success": false,
+        "error": "Erreur lors de la génération: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 38.122983147s. [links {\n  description: \"Learn more about Gemini API quotas\"\n  url: \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n}\n, violations {\n  quota_metric: \"generativelanguage.googleapis.com/generate_content_free_tier_requests\"\n  quota_id: \"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"\n  quota_dimensions {\n    key: \"model\"\n    value: \"gemini-2.5-flash\"\n  }\n  quota_dimensions {\n    key: \"location\"\n    value: \"global\"\n  }\n  quota_value: 20\n}\n, retry_delay {\n  seconds: 38\n}\n]",
+        "query": "Qu'est-ce que la Basilique de l'Immaculée Conception ?",
+        "response": "",
+        "images": [],
+        "sources": [],
+        "used_rag": false,
+        "intent": "error",
+        "language": "fr",
+        "chunks_used": 0
+      },
+      "timestamp": "2026-01-17T13:37:22.076852",
+      "had_error": true
+    }
+  ]
+}

@@ -66,7 +66,7 @@ def detect_language(text: str, default: str = "fr") -> str:
 # =============================================================================
 
 app = FastAPI(
-    title="Adjä API - Guide Culturel Béninois",
+    title="API - Assistant Patrimoine Béninois",
     description="API conversationnelle avec TTS pour la découverte du patrimoine béninois",
     version="2.1.0",  # 🆕 Version avec TTS
     docs_url="/docs",
@@ -594,7 +594,13 @@ if __name__ == "__main__":
     print("📖 Documentation: http://localhost:8000/docs")
     print("🔊 Audio: http://localhost:8000/audio/{filename}")
     
-    import os
-    port = int(os.environ.get("PORT", 8000))
-    uvicorn.run(app, host="0.0.0.0", port=port)
+    uvicorn.run(
+        "api_with_tts:app",
+        host="0.0.0.0",
+        port=8000,
+        reload=True,
+        log_level="info"
+    )
 
+
+    

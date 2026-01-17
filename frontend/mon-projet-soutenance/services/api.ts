@@ -11,7 +11,7 @@ import axios from 'axios';
 // Pour émulateur iOS: http://localhost:8000
 // Pour téléphone physique: http://192.168.X.X:8000 (remplace par ton IP)
 
-const API_BASE_URL = 'https://appli-mobile-backend.onrender.com'; // Change ça selon ton cas
+const API_BASE_URL = 'http://192.168.1.47:8000'; // Change ça selon ton cas
 
 // Créer une instance axios configurée
 const api = axios.create({

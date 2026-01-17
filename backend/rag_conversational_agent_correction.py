@@ -256,11 +256,14 @@ class BeninHeritageConversationalAgent:
         
         farewells = [
             'au revoir', 'bye', 'goodbye', 'à bientôt', 'à plus', 'see you',
-            'ciao', 'adieu', 'bonne journée', 'bonne soirée'
+            'ciao', 'adieu'
         ]
         
+        # ✅ CORRECTION: Vérifier AVANT de normaliser
+        query_lower = query.lower().strip()
+        
         for farewell in farewells:
-            if farewell.replace(' ', '') in query_normalized:
+            if farewell in query_lower:  # ✅ Pas de replace
                 return True
         
         return False
@@ -310,7 +313,7 @@ class BeninHeritageConversationalAgent:
         off_topic_keywords = [
             # Météo
             'météo', 'weather', 'pluie', 'soleil', 'température', 'climat',
-            'temps qu\'il fait', 'prévisions',
+            'temps qu\'il fait', 'prévisions','temps','temps fait',
             
             # Sport moderne (pas les Amazones/guerriers historiques)
             'foot', 'football', 'sport', 'match', 'basket', 'tennis',
@@ -325,7 +328,7 @@ class BeninHeritageConversationalAgent:
             'série', 'film récent', 'cinéma actuel',
             
             # Cuisine moderne (hors gastronomie traditionnelle)
-            'pizza', 'burger', 'mcdo', 'kfc', 'restaurant moderne',
+            'pizza', 'burger', 'mcdo', 'kfc', 'restaurant moderne','cuisine',
             
             # Politique actuelle (hors histoire politique)
             'élection actuelle', 'président actuel', 'talon', 'patrice',
@@ -939,11 +942,13 @@ Tu peux :
                 'success': False,
                 'error': f'Erreur lors de la génération: {str(e)}',
                 'query': query,
-                'response': None,
+                'response': "",
                 'images': [],
                 'sources': [],
                 'used_rag': False,
-                'language': language
+                'intent': 'error',
+                'language': language,
+                'chunks_used': 0
             }
     
     def _generate_simple_response(self, query: str, intent: str, language: str) -> str:
