@@ -286,9 +286,9 @@ class AdjaEvaluator:
         results = evaluate(
             dataset,
             metrics=[
-                context_precision,
-                faithfulness,
-                answer_relevancy
+                context_precision(),  # ← Ajouter ()
+                faithfulness(),
+                answer_relevancy()
             ]
         )
         
@@ -396,7 +396,7 @@ def main():
     
     evaluator = AdjaEvaluator(
         agent=agent,
-        test_dataset_path="test_dataset.json",
+        test_dataset_path="test_dataset_15.json",
         output_dir="results"
     )
     

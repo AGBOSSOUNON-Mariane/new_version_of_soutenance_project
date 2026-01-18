@@ -274,7 +274,17 @@ class BeninHeritageConversationalAgent:
         Gère "comment vas-tu", "qui es-tu", etc.
         """
         query_normalized = self._normalize_text(query)
+
+        # ✅ CORRECTION : Vérifier AVANT si c'est patrimonial
+        heritage_keywords = [
+            'porte', 'palais', 'roi', 'amazones', 'ouidah', 'ganvié', 
+            'abomey', 'porto', 'dahomey', 'temple', 'musée', 'monument'
+        ]
         
+        for keyword in heritage_keywords:
+            if keyword in query_normalized:
+                return False  # Pas du small talk, c'est patrimonial !
+            
         small_talk_patterns = [
             # Comment vas-tu
             'comment vas tu', 'comment vastu', 'comment allez vous', 'comment allezvous',

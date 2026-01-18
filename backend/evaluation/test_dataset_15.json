@@ -1,0 +1,162 @@
+{
+  "metadata": {
+    "project": "Adjä - Agent conversationnel patrimoine béninois",
+    "version": "1.1-optimized",
+    "date_created": "2025-01-17",
+    "total_questions": 15,
+    "description": "Dataset optimisé (15 questions) pour évaluation avec quota Gemini gratuit - Couvre tous les cas d'usage"
+  },
+  
+  "test_cases": [
+    {
+      "id": 1,
+      "query": "Bonjour",
+      "expected_intent": "greeting",
+      "should_use_rag": false,
+      "pole": null,
+      "ground_truth": null,
+      "relevant_docs": [],
+      "note": "Test salutation simple"
+    },
+    {
+      "id": 2,
+      "query": "Comment vas-tu ?",
+      "expected_intent": "small_talk",
+      "should_use_rag": false,
+      "pole": null,
+      "ground_truth": null,
+      "relevant_docs": [],
+      "note": "Test small talk"
+    },
+    {
+      "id": 3,
+      "query": "Merci beaucoup !",
+      "expected_intent": "thanks",
+      "should_use_rag": false,
+      "pole": null,
+      "ground_truth": null,
+      "relevant_docs": [],
+      "note": "Test remerciement"
+    },
+    {
+      "id": 4,
+      "query": "Au revoir",
+      "expected_intent": "farewell",
+      "should_use_rag": false,
+      "pole": null,
+      "ground_truth": null,
+      "relevant_docs": [],
+      "note": "Test au revoir"
+    },
+    {
+      "id": 5,
+      "query": "Quel temps fait-il à Cotonou ?",
+      "expected_intent": "off_topic",
+      "should_use_rag": false,
+      "pole": null,
+      "ground_truth": null,
+      "relevant_docs": [],
+      "note": "Test hors-sujet météo"
+    },
+    {
+      "id": 6,
+      "query": "Match de foot ce soir",
+      "expected_intent": "off_topic",
+      "should_use_rag": false,
+      "pole": null,
+      "ground_truth": null,
+      "relevant_docs": [],
+      "note": "Test hors-sujet sport"
+    },
+    {
+      "id": 7,
+      "query": "Qui est le roi Ghézo ?",
+      "expected_intent": "heritage_question",
+      "should_use_rag": true,
+      "pole": "Abomey",
+      "ground_truth": "Ghézo (ou Guézo) fut roi du Dahomey de 1818 à 1858. Il est connu pour avoir restructuré le royaume, développé le commerce et créé un corps d'élite de guerrières, les Amazones du Dahomey.",
+      "relevant_docs": ["Guézo.docx"],
+      "note": "Question factuelle Abomey - Roi"
+    },
+    {
+      "id": 8,
+      "query": "Ghézo ?",
+      "expected_intent": "heritage_question",
+      "should_use_rag": true,
+      "pole": "Abomey",
+      "ground_truth": "Ghézo (ou Guézo) fut roi du Dahomey de 1818 à 1858.",
+      "relevant_docs": ["Guézo.docx"],
+      "note": "Question courte patrimoniale - test correction V2"
+    },
+    {
+      "id": 9,
+      "query": "Qui sont les Amazones du Dahomey ?",
+      "expected_intent": "heritage_question",
+      "should_use_rag": true,
+      "pole": "Abomey",
+      "ground_truth": "Les Amazones du Dahomey, aussi appelées Mino ou Agodjié, étaient un corps d'élite de guerrières au service des rois du Dahomey. Elles étaient réputées pour leur courage et leur discipline.",
+      "relevant_docs": ["Amazones_du_Dahomey.docx"],
+      "note": "Question Abomey - Amazones"
+    },
+    {
+      "id": 10,
+      "query": "Les Amazones",
+      "expected_intent": "heritage_question",
+      "should_use_rag": true,
+      "pole": "Abomey",
+      "ground_truth": "Les Amazones du Dahomey étaient des guerrières d'élite.",
+      "relevant_docs": ["Amazones_du_Dahomey.docx"],
+      "note": "Question courte - 2 mots patrimoniaux"
+    },
+    {
+      "id": 11,
+      "query": "C'est quoi la Porte du Non-Retour ?",
+      "expected_intent": "heritage_question",
+      "should_use_rag": true,
+      "pole": "Ouidah",
+      "ground_truth": "La Porte du Non-Retour est un monument érigé à Ouidah en mémoire des esclaves déportés. Elle symbolise le dernier point de terre africaine que les captifs voyaient avant leur embarquement vers les Amériques.",
+      "relevant_docs": ["Porte_du_Non_Retour.docx"],
+      "note": "Question Ouidah - Langage familier 'C'est quoi'"
+    },
+    {
+      "id": 12,
+      "query": "Ouidah",
+      "expected_intent": "heritage_question",
+      "should_use_rag": true,
+      "pole": "Ouidah",
+      "ground_truth": "Ouidah est une ville historique du Bénin, connue pour son rôle dans la traite négrière et pour être un haut lieu de la culture vaudou.",
+      "relevant_docs": ["Presentation_Ouidah.docx"],
+      "note": "Question Ouidah - 1 mot (pôle géographique)"
+    },
+    {
+      "id": 13,
+      "query": "Comment vivent les habitants de Ganvié ?",
+      "expected_intent": "heritage_question",
+      "should_use_rag": true,
+      "pole": "Ganvié",
+      "ground_truth": "Les habitants de Ganvié vivent dans des maisons sur pilotis et se déplacent en pirogue. Leur mode de vie est adapté à l'environnement lacustre, avec la pêche comme activité principale et un marché flottant.",
+      "relevant_docs": ["Mode_de_vie_des_habitants_de_Ganvié_et_marché_flottant.docx"],
+      "note": "Question Ganvié - Mode de vie"
+    },
+    {
+      "id": 14,
+      "query": "Ganvié",
+      "expected_intent": "heritage_question",
+      "should_use_rag": true,
+      "pole": "Ganvié",
+      "ground_truth": "Ganvié est une cité lacustre sur le lac Nokoué, souvent appelée la 'Venise de l'Afrique'.",
+      "relevant_docs": ["Présentation_Ganvié.docx"],
+      "note": "Question Ganvié - 1 mot (ville)"
+    },
+    {
+      "id": 15,
+      "query": "Qui est le roi Toffa ?",
+      "expected_intent": "heritage_question",
+      "should_use_rag": true,
+      "pole": "Porto Novo",
+      "ground_truth": "Toffa Ier fut roi de Porto-Novo de 1874 à 1908. Il signa un traité de protectorat avec la France en 1883.",
+      "relevant_docs": ["Toffa_Ier.docx"],
+      "note": "Question Porto-Novo - Roi"
+    }
+  ]
+}
