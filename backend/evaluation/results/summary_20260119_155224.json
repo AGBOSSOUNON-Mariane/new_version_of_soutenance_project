@@ -1,0 +1,19 @@
+{
+  "date": "2026-01-19T15:52:24.722468",
+  "total_tests": 30,
+  "errors_count": 0,
+  "ragas_llm": "gemini-2.0-flash-exp",
+  "ragas_embeddings": "models/embedding-001",
+  "ragas_version": "0.4.3",
+  "custom_metrics": {
+    "intent_accuracy": 1.0,
+    "rag_accuracy": 1.0,
+    "rag_precision": 1.0,
+    "rag_recall": 1.0
+  },
+  "ragas_metrics": {
+    "context_precision": 0.952380952285714,
+    "faithfulness": 0.7434668647654925,
+    "answer_relevancy": 0.7600565724346862
+  }
+}

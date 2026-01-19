@@ -96,7 +96,7 @@ class ResultsVisualizer:
         
         ax.set_ylim(0, 1.1)
         ax.set_ylabel('Score', fontsize=12, fontweight='bold')
-        ax.set_title('Vue d\'ensemble des métriques d\'évaluation - Agent Adjä', 
+        ax.set_title('Vue d\'ensemble des métriques d\'évaluation - Agent', 
                      fontsize=14, fontweight='bold', pad=20)
         ax.axhline(y=0.8, color='red', linestyle='--', alpha=0.5, label='Seuil 80%')
         ax.legend()
@@ -279,7 +279,7 @@ class ResultsVisualizer:
         # Plot
         fig, ax = plt.subplots(figsize=(8, 8), subplot_kw=dict(projection='polar'))
         
-        ax.plot(angles, values, 'o-', linewidth=2, color='#3498db', label='Adjä')
+        ax.plot(angles, values, 'o-', linewidth=2, color='#3498db', label='Agent')
         ax.fill(angles, values, alpha=0.25, color='#3498db')
         
         # Labels
@@ -353,7 +353,7 @@ class ResultsVisualizer:
             ax2.set_ylim(0, 1)
             ax2.axis('off')
         
-        plt.suptitle('Performance globale de l\'agent Adjä', 
+        plt.suptitle('Performance globale de l\'agent', 
                      fontsize=16, fontweight='bold', y=1.02)
         plt.tight_layout()
         plt.savefig(self.output_dir / "06_combined_comparison.png", dpi=300, bbox_inches='tight')
@@ -370,7 +370,7 @@ class ResultsVisualizer:
         latex = r"""
 \begin{table}[h]
 \centering
-\caption{Résultats de l'évaluation de l'agent conversationnel Adjä}
+\caption{Résultats de l'évaluation de l'agent conversationnel}
 \label{tab:evaluation_results}
 \begin{tabular}{|l|c|c|}
 \hline

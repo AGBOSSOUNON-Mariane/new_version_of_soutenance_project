@@ -1,6 +1,6 @@
 """
 Script principal d'évaluation de l'agent conversationnel Adjä
-VERSION CORRIGÉE - Protection complète contre agent_response = None
+VERSION COMPATIBLE RAGAS 0.4.3 avec Gemini (LLM + Embeddings)
 """
 
 import os
@@ -10,18 +10,20 @@ from typing import List, Dict, Any, Optional
 from datetime import datetime
 from pathlib import Path
 
-# RAGAS
+# RAGAS 0.4.3 avec Gemini
 try:
     from ragas import evaluate
-    from ragas.metrics.collections import (
+    from ragas.metrics import (
         context_precision,
         faithfulness,
         answer_relevancy
     )
     from datasets import Dataset
+    from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
     RAGAS_AVAILABLE = True
-except ImportError:
-    print("⚠️  RAGAS non installé. Seules les métriques custom seront calculées.")
+except ImportError as e:
+    print(f"⚠️  RAGAS non installé complètement: {e}")
+    print("   Installez: pip install ragas langchain-google-genai")
     RAGAS_AVAILABLE = False
 
 # Custom metrics
@@ -37,7 +39,7 @@ load_dotenv()
 class AdjaEvaluator:
     """
     Évaluateur complet pour l'agent Adjä
-    VERSION CORRIGÉE avec gestion robuste des erreurs
+    VERSION COMPATIBLE RAGAS 0.4.3
     """
     
     def __init__(
@@ -59,6 +61,37 @@ class AdjaEvaluator:
         self.custom_calculator = CustomMetricsCalculator()
         self.detailed_results = []
         
+        # 🔧 Configuration de Gemini pour RAGAS 0.4.3 (LLM + Embeddings)
+        self.ragas_llm = None
+        self.ragas_embeddings = None
+        
+        if RAGAS_AVAILABLE:
+            try:
+                print("🤖 Configuration de Gemini pour RAGAS 0.4.3...")
+                gemini_api_key = os.getenv("GEMINI_API_KEY")
+                
+                if not gemini_api_key:
+                    print("❌ GEMINI_API_KEY manquante dans .env")
+                else:
+                    # LLM pour les évaluations
+                    self.ragas_llm = ChatGoogleGenerativeAI(
+                        model="gemini-2.0-flash-exp",
+                        google_api_key=gemini_api_key,
+                        temperature=0
+                    )
+                    
+                    # 🔧 Embeddings Gemini (pour remplacer OpenAI)
+                    self.ragas_embeddings = GoogleGenerativeAIEmbeddings(
+                        model="models/embedding-001",
+                        google_api_key=gemini_api_key
+                    )
+                    
+                    print("✅ RAGAS configuré avec Gemini (LLM + Embeddings)")
+            except Exception as e:
+                print(f"⚠️  Impossible de configurer RAGAS avec Gemini: {e}")
+                self.ragas_llm = None
+                self.ragas_embeddings = None
+        
         print(f"✅ Évaluateur initialisé")
         print(f"   Dataset: {len(self.test_cases)} questions")
         print(f"   Sortie: {self.output_dir}")
@@ -66,14 +99,6 @@ class AdjaEvaluator:
     def _create_error_response(self, query: str, error_msg: str, language: str = "fr") -> Dict[str, Any]:
         """
         Crée une réponse d'erreur standardisée
-        
-        Args:
-            query: Question posée
-            error_msg: Message d'erreur
-            language: Langue
-            
-        Returns:
-            Dictionnaire de réponse d'erreur
         """
         return {
             "success": False,
@@ -94,7 +119,7 @@ class AdjaEvaluator:
         save_responses: bool = True
     ) -> Dict[str, Any]:
         """
-        Lance l'évaluation complète avec gestion robuste des erreurs
+        Lance l'évaluation complète avec Gemini pour RAGAS
         """
         
         print("\n" + "="*80)
@@ -119,7 +144,7 @@ class AdjaEvaluator:
                 print(f"[{i}/{total}] Test: {query}")
                 print(f"{'─'*80}")
             
-            # Générer réponse avec l'agent (PROTECTION COMPLÈTE)
+            # Générer réponse avec l'agent
             agent_response = None
             
             try:
@@ -129,27 +154,27 @@ class AdjaEvaluator:
                     verbose=False
                 )
                 
-                # 🔧 PROTECTION 1: Agent renvoie None
+                # Protection contre None
                 if agent_response is None:
                     errors_count += 1
                     print(f"⚠️  ERREUR: L'agent a renvoyé None pour: '{query}'")
                     agent_response = self._create_error_response(
                         query, 
-                        "Agent returned None - Bug dans generate_response()",
+                        "Agent returned None",
                         "fr"
                     )
                 
-                # 🔧 PROTECTION 2: Agent renvoie autre chose qu'un dict
+                # Protection contre type incorrect
                 elif not isinstance(agent_response, dict):
                     errors_count += 1
-                    print(f"⚠️  ERREUR: L'agent a renvoyé type {type(agent_response)} au lieu de dict")
+                    print(f"⚠️  ERREUR: Type {type(agent_response)} au lieu de dict")
                     agent_response = self._create_error_response(
                         query,
-                        f"Agent returned {type(agent_response)} instead of dict",
+                        f"Agent returned {type(agent_response)}",
                         "fr"
                     )
                 
-                # ✅ Réponse valide
+                # Réponse valide
                 else:
                     if verbose:
                         print(f"Intent détectée: {agent_response.get('intent', 'N/A')}")
@@ -159,10 +184,10 @@ class AdjaEvaluator:
                 
             except Exception as e:
                 errors_count += 1
-                print(f"❌ Exception lors de la génération: {type(e).__name__}: {str(e)}")
+                print(f"❌ Exception: {type(e).__name__}: {str(e)}")
                 agent_response = self._create_error_response(
                     query,
-                    f"Exception: {type(e).__name__}: {str(e)}",
+                    f"Exception: {type(e).__name__}",
                     "fr"
                 )
             
@@ -180,7 +205,7 @@ class AdjaEvaluator:
             # Ajouter au calculateur custom
             self.custom_calculator.add_result(test_case, agent_response)
             
-            # Préparer pour RAGAS (seulement si succès + ground_truth)
+            # Préparer pour RAGAS
             if (
                 test_case["should_use_rag"] 
                 and test_case.get("ground_truth")
@@ -196,7 +221,7 @@ class AdjaEvaluator:
         
         print(f"\n✅ {total} tests exécutés")
         if errors_count > 0:
-            print(f"⚠️  {errors_count} erreurs détectées (agent a renvoyé None ou exception)")
+            print(f"⚠️  {errors_count} erreurs détectées")
         
         # Métriques custom
         print("\n" + "="*80)
@@ -206,22 +231,26 @@ class AdjaEvaluator:
         custom_metrics = self.custom_calculator.generate_summary()
         self.custom_calculator.print_summary()
         
-        # Métriques RAGAS
+        # Métriques RAGAS avec Gemini
         ragas_metrics = {}
         
-        if RAGAS_AVAILABLE and ragas_data["question"]:
+        if RAGAS_AVAILABLE and self.ragas_llm and self.ragas_embeddings and ragas_data["question"]:
             print("\n" + "="*80)
-            print("📊 CALCUL DES MÉTRIQUES RAGAS")
+            print("📊 CALCUL DES MÉTRIQUES RAGAS (avec Gemini)")
             print("="*80)
             
             try:
                 ragas_metrics = self._calculate_ragas_metrics(ragas_data, verbose)
             except Exception as e:
                 print(f"❌ Erreur RAGAS: {e}")
+                import traceback
+                traceback.print_exc()
                 ragas_metrics = {"error": str(e)}
         else:
             if not RAGAS_AVAILABLE:
                 print("\n⚠️  RAGAS non disponible")
+            elif not self.ragas_llm or not self.ragas_embeddings:
+                print("\n⚠️  Gemini non configuré complètement pour RAGAS")
             else:
                 print(f"\n⚠️  Aucune question valide pour RAGAS ({len(ragas_data['question'])} questions)")
         
@@ -232,7 +261,10 @@ class AdjaEvaluator:
                 "dataset": self.metadata,
                 "total_tests": total,
                 "errors_count": errors_count,
-                "ragas_tests": len(ragas_data["question"])
+                "ragas_tests": len(ragas_data["question"]),
+                "ragas_llm": "gemini-2.0-flash-exp" if self.ragas_llm else None,
+                "ragas_embeddings": "models/embedding-001" if self.ragas_embeddings else None,
+                "ragas_version": "0.4.3"
             },
             "custom_metrics": custom_metrics,
             "ragas_metrics": ragas_metrics,
@@ -263,48 +295,49 @@ class AdjaEvaluator:
                 contexts = [""]
         
         if not contexts:
-            contexts = [""]
+            contexts = ["No context retrieved"]
         
         return contexts
     
-    def _calculate_ragas_metrics(
-        self,
-        ragas_data: Dict[str, List],
-        verbose: bool = True
-    ) -> Dict[str, float]:
-        """Calcule les métriques RAGAS"""
-        
-        if verbose:
-            print(f"Questions à évaluer: {len(ragas_data['question'])}")
+    def _calculate_ragas_metrics(self, ragas_data, verbose=True):
+        """Version simplifiée qui extrait correctement les scores"""
         
         dataset = Dataset.from_dict(ragas_data)
         
-        if verbose:
-            print("Calcul des métriques RAGAS en cours...")
-            print("(Cela peut prendre quelques minutes)")
+        try:
+            results = evaluate(
+                dataset,
+                metrics=[context_precision, faithfulness, answer_relevancy],
+                llm=self.ragas_llm,
+                embeddings=self.ragas_embeddings
+            )
+        except Exception as e:
+            return {"error": str(e)}
         
-        results = evaluate(
-            dataset,
-            metrics=[
-                context_precision(),  # ← Ajouter ()
-                faithfulness(),
-                answer_relevancy()
-            ]
-        )
+        # D'après votre debug, les scores sont dans _repr_dict
+        scores = {}
         
-        metrics = {
-            "context_precision": float(results.get("context_precision", 0)),
-            "faithfulness": float(results.get("faithfulness", 0)),
-            "answer_relevancy": float(results.get("answer_relevancy", 0))
-        }
+        if hasattr(results, '_repr_dict'):
+            scores = results._repr_dict.copy()
+            print(f"✅ Scores extraits de _repr_dict: {scores}")
         
-        if verbose:
-            print("\n✅ Métriques RAGAS calculées:")
-            print(f"   Context Precision: {metrics['context_precision']:.4f}")
-            print(f"   Faithfulness:      {metrics['faithfulness']:.4f}")
-            print(f"   Answer Relevancy:  {metrics['answer_relevancy']:.4f}")
+        elif hasattr(results, 'scores'):
+            # Alternative: calculer depuis results.scores
+            if isinstance(results.scores, list) and len(results.scores) > 0:
+                for metric_name in ["context_precision", "faithfulness", "answer_relevancy"]:
+                    values = []
+                    for row in results.scores:
+                        if metric_name in row:
+                            try:
+                                values.append(float(row[metric_name]))
+                            except:
+                                pass
+                    
+                    if values:
+                        scores[metric_name] = sum(values) / len(values)
         
-        return metrics
+        return scores
+
     
     def _save_results(self, results: Dict[str, Any]):
         """Sauvegarde les résultats"""
@@ -321,6 +354,9 @@ class AdjaEvaluator:
             "date": results["metadata"]["evaluation_date"],
             "total_tests": results["metadata"]["total_tests"],
             "errors_count": results["metadata"]["errors_count"],
+            "ragas_llm": results["metadata"]["ragas_llm"],
+            "ragas_embeddings": results["metadata"]["ragas_embeddings"],
+            "ragas_version": results["metadata"]["ragas_version"],
             "custom_metrics": {
                 "intent_accuracy": results["custom_metrics"]["intent_detection"]["overall"],
                 "rag_accuracy": results["custom_metrics"]["rag_activation"]["accuracy"],
@@ -353,10 +389,12 @@ class AdjaEvaluator:
         
         if results["ragas_metrics"] and "error" not in results["ragas_metrics"]:
             ragas = results["ragas_metrics"]
-            print(f"\n📊 MÉTRIQUES RAGAS:")
+            print(f"\n📊 MÉTRIQUES RAGAS (Gemini - v0.4.3):")
             print(f"   Context Precision: {ragas['context_precision']:.4f}")
             print(f"   Faithfulness:      {ragas['faithfulness']:.4f}")
             print(f"   Answer Relevancy:  {ragas['answer_relevancy']:.4f}")
+        elif results["ragas_metrics"] and "error" in results["ragas_metrics"]:
+            print(f"\n⚠️  RAGAS: {results['ragas_metrics']['error']}")
         
         errors = custom["error_analysis"]
         print(f"\n❌ ERREURS:")
@@ -365,7 +403,7 @@ class AdjaEvaluator:
         
         if results["metadata"]["errors_count"] > 0:
             print(f"\n⚠️  BUGS AGENT:")
-            print(f"   {results['metadata']['errors_count']} questions ont causé un crash (None ou exception)")
+            print(f"   {results['metadata']['errors_count']} questions ont causé un crash")
         
         print("\n" + "="*80)
         print("✅ ÉVALUATION TERMINÉE")
@@ -376,7 +414,9 @@ def main():
     """Point d'entrée principal"""
     
     print("🔧 Configuration de l'évaluation...")
+    print("📌 RAGAS version: 0.4.3")
     
+    # Vérifier les clés API
     if not os.getenv("PINECONE_API_KEY"):
         print("❌ PINECONE_API_KEY manquante dans .env")
         return
@@ -387,7 +427,7 @@ def main():
     
     # Importer l'agent
     from rag_conversational_agent_correction import BeninHeritageConversationalAgent
-
+    
     agent = BeninHeritageConversationalAgent(
         pinecone_api_key=os.getenv("PINECONE_API_KEY"),
         gemini_api_key=os.getenv("GEMINI_API_KEY"),
@@ -396,7 +436,7 @@ def main():
     
     evaluator = AdjaEvaluator(
         agent=agent,
-        test_dataset_path="test_dataset_15.json",
+        test_dataset_path="test_dataset.json",
         output_dir="results"
     )
     
@@ -411,3 +451,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

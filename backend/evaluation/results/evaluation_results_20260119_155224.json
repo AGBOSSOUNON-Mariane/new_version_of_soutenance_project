@@ -1,0 +1,1140 @@
+{
+  "metadata": {
+    "evaluation_date": "2026-01-19T15:52:24.722468",
+    "dataset": {
+      "project": "Adjä - Agent conversationnel patrimoine béninois",
+      "version": "1.0",
+      "date_created": "2025-01-16",
+      "total_questions": 30,
+      "description": "Dataset d'évaluation couvrant les 4 pôles patrimoniaux et différents types d'intentions"
+    },
+    "total_tests": 30,
+    "errors_count": 0,
+    "ragas_tests": 22,
+    "ragas_llm": "gemini-2.0-flash-exp",
+    "ragas_embeddings": "models/embedding-001",
+    "ragas_version": "0.4.3"
+  },
+  "custom_metrics": {
+    "total_tests": 30,
+    "intent_detection": {
+      "overall": 1.0,
+      "by_intent": {
+        "greeting": 1.0,
+        "small_talk": 1.0,
+        "thanks": 1.0,
+        "farewell": 1.0,
+        "off_topic": 1.0,
+        "heritage_question": 1.0
+      },
+      "confusion_matrix": {
+        "greeting": {
+          "greeting": 1
+        },
+        "small_talk": {
+          "small_talk": 3
+        },
+        "thanks": {
+          "thanks": 1
+        },
+        "farewell": {
+          "farewell": 1
+        },
+        "off_topic": {
+          "off_topic": 2
+        },
+        "heritage_question": {
+          "heritage_question": 22
+        }
+      }
+    },
+    "rag_activation": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "confusion_matrix": {
+        "tp": 22,
+        "fp": 0,
+        "tn": 8,
+        "fn": 0
+      }
+    },
+    "error_analysis": {
+      "intent_errors": [],
+      "rag_activation_errors": [],
+      "combined_errors": []
+    }
+  },
+  "ragas_metrics": {
+    "context_precision": 0.952380952285714,
+    "faithfulness": 0.7434668647654925,
+    "answer_relevancy": 0.7600565724346862
+  },
+  "detailed_results": [
+    {
+      "test_id": 1,
+      "query": "Bonjour",
+      "test_case": {
+        "id": 1,
+        "query": "Bonjour",
+        "expected_intent": "greeting",
+        "should_use_rag": false,
+        "pole": null,
+        "ground_truth": null,
+        "relevant_docs": [],
+        "note": "Test salutation simple"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Bonjour",
+        "response": "Bonjour ! Je suis Adjä, ta guide culturelle virtuelle. Je suis ravie de te faire découvrir les trésors du patrimoine béninois : l'histoire des rois d'Abomey, les Amazones légendaires, les mystères d'Ouidah et bien plus encore. Que souhaites-tu découvrir aujourd'hui ?",
+        "images": [],
+        "sources": [],
+        "used_rag": false,
+        "intent": "greeting",
+        "language": "fr"
+      },
+      "timestamp": "2026-01-19T15:41:49.893797",
+      "had_error": false
+    },
+    {
+      "test_id": 2,
+      "query": "Bonjour, comment vas-tu ?",
+      "test_case": {
+        "id": 2,
+        "query": "Bonjour, comment vas-tu ?",
+        "expected_intent": "small_talk",
+        "should_use_rag": false,
+        "pole": null,
+        "ground_truth": null,
+        "relevant_docs": [],
+        "note": "Test salutation avec small talk"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Bonjour, comment vas-tu ?",
+        "response": "Je vais très bien, merci de demander ! En tant que gardienne des récits béninois, je suis toujours enthousiaste à l'idée de partager notre riche patrimoine. Et toi, es-tu prêt·e à découvrir une légende, un monument ou un personnage historique ? 😊",
+        "images": [],
+        "sources": [],
+        "used_rag": false,
+        "intent": "small_talk",
+        "language": "fr"
+      },
+      "timestamp": "2026-01-19T15:41:49.900516",
+      "had_error": false
+    },
+    {
+      "test_id": 3,
+      "query": "Merci beaucoup !",
+      "test_case": {
+        "id": 3,
+        "query": "Merci beaucoup !",
+        "expected_intent": "thanks",
+        "should_use_rag": false,
+        "pole": null,
+        "ground_truth": null,
+        "relevant_docs": [],
+        "note": "Test remerciement"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Merci beaucoup !",
+        "response": "Avec plaisir ! C'est un honneur de partager la richesse culturelle du Bénin avec toi. N'hésite pas si tu as d'autres questions sur notre patrimoine !",
+        "images": [],
+        "sources": [],
+        "used_rag": false,
+        "intent": "thanks",
+        "language": "fr"
+      },
+      "timestamp": "2026-01-19T15:41:49.905516",
+      "had_error": false
+    },
+    {
+      "test_id": 4,
+      "query": "Au revoir",
+      "test_case": {
+        "id": 4,
+        "query": "Au revoir",
+        "expected_intent": "farewell",
+        "should_use_rag": false,
+        "pole": null,
+        "ground_truth": null,
+        "relevant_docs": [],
+        "note": "Test au revoir"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Au revoir",
+        "response": "Au revoir ! J'espère que cette découverte du patrimoine béninois t'a plu. Reviens quand tu veux pour en apprendre davantage. À bientôt !",
+        "images": [],
+        "sources": [],
+        "used_rag": false,
+        "intent": "farewell",
+        "language": "fr"
+      },
+      "timestamp": "2026-01-19T15:41:49.912512",
+      "had_error": false
+    },
+    {
+      "test_id": 5,
+      "query": "Comment vas-tu ?",
+      "test_case": {
+        "id": 5,
+        "query": "Comment vas-tu ?",
+        "expected_intent": "small_talk",
+        "should_use_rag": false,
+        "pole": null,
+        "ground_truth": null,
+        "relevant_docs": [],
+        "note": "Test small talk"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Comment vas-tu ?",
+        "response": "Je vais très bien, merci de demander ! En tant que gardienne des récits béninois, je suis toujours enthousiaste à l'idée de partager notre riche patrimoine. Et toi, es-tu prêt·e à découvrir une légende, un monument ou un personnage historique ? 😊",
+        "images": [],
+        "sources": [],
+        "used_rag": false,
+        "intent": "small_talk",
+        "language": "fr"
+      },
+      "timestamp": "2026-01-19T15:41:49.916506",
+      "had_error": false
+    },
+    {
+      "test_id": 6,
+      "query": "Qui es-tu ?",
+      "test_case": {
+        "id": 6,
+        "query": "Qui es-tu ?",
+        "expected_intent": "small_talk",
+        "should_use_rag": false,
+        "pole": null,
+        "ground_truth": null,
+        "relevant_docs": [],
+        "note": "Test identité agent"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Qui es-tu ?",
+        "response": "Je suis Adjä, ta guide culturelle virtuelle. Mon rôle est de te faire découvrir le patrimoine béninois à travers des récits vivants sur Abomey, Ouidah, Ganvié et Porto-Novo. Je suis là pour raconter l'histoire de nos rois, nos traditions et nos monuments. Que veux-tu savoir ?",
+        "images": [],
+        "sources": [],
+        "used_rag": false,
+        "intent": "small_talk",
+        "language": "fr"
+      },
+      "timestamp": "2026-01-19T15:41:49.920504",
+      "had_error": false
+    },
+    {
+      "test_id": 7,
+      "query": "Quel temps fait-il à Cotonou ?",
+      "test_case": {
+        "id": 7,
+        "query": "Quel temps fait-il à Cotonou ?",
+        "expected_intent": "off_topic",
+        "should_use_rag": false,
+        "pole": null,
+        "ground_truth": null,
+        "relevant_docs": [],
+        "note": "Test hors-sujet météo"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Quel temps fait-il à Cotonou ?",
+        "response": "Je suis Adjä, guide culturelle spécialisée dans le patrimoine béninois. Je me concentre sur l'histoire de nos rois, nos monuments, nos traditions... Ce sujet sort de mon expertise, mais n'hésite pas à me poser une question sur le Bénin ! 😊",
+        "images": [],
+        "sources": [],
+        "used_rag": false,
+        "intent": "off_topic",
+        "language": "fr"
+      },
+      "timestamp": "2026-01-19T15:41:49.927501",
+      "had_error": false
+    },
+    {
+      "test_id": 8,
+      "query": "Match de foot ce soir",
+      "test_case": {
+        "id": 8,
+        "query": "Match de foot ce soir",
+        "expected_intent": "off_topic",
+        "should_use_rag": false,
+        "pole": null,
+        "ground_truth": null,
+        "relevant_docs": [],
+        "note": "Test hors-sujet sport"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Match de foot ce soir",
+        "response": "Le sport moderne n'est pas mon domaine, mais je peux te raconter l'incroyable histoire des Amazones du Dahomey, ces guerrières-athlètes dont l'entraînement et la discipline étaient légendaires ! Leur force physique et leur courage dépassaient tout ce qu'on peut imaginer. Ça t'intéresse ?",
+        "images": [],
+        "sources": [],
+        "used_rag": false,
+        "intent": "off_topic",
+        "language": "fr"
+      },
+      "timestamp": "2026-01-19T15:41:49.931497",
+      "had_error": false
+    },
+    {
+      "test_id": 9,
+      "query": "Qui est le roi Ghézo ?",
+      "test_case": {
+        "id": 9,
+        "query": "Qui est le roi Ghézo ?",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Abomey",
+        "ground_truth": "Ghézo (ou Guézo) fut roi du Dahomey de 1818 à 1858. Il est connu pour avoir restructuré le royaume, développé le commerce et créé un corps d'élite de guerrières, les Amazones du Dahomey.",
+        "relevant_docs": [
+          "Guézo.docx"
+        ],
+        "note": "Question factuelle sur un roi - cas principal"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Qui est le roi Ghézo ?",
+        "response": "Ah, le roi Ghézo ! Quelle excellente question ! C'est un personnage absolument fascinant et l'un des plus grands bâtisseurs du royaume du Dahomey. On ne peut parler de l'histoire d'Abomey sans évoquer son règne !\n\nImaginez un peu : Ghézo, né prince Gakpe, est devenu le neuvième roi d'Abomey et a régné pendant quarante ans, de 1818 à 1858. Il est le fils du roi Agonglo et le demi-frère d'Adandozan. Son accession au trône n'a pas été des plus simples, elle a même été marquée par l'intervention d'un célèbre commerçant \"brésilien\", Francisco Félix de Souza, qui a joué un rôle déterminant dans son ascension.\n\nDès qu'il a pris les rênes, le roi Ghézo a entrepris des réformes profondes qui ont transformé le royaume. Il a d'abord ramené la paix civile après une période de tensions, puis il a réorganisé et renforcé l'armée de manière spectaculaire, notamment avec le corps des redoutables Amazones du Dahomey, dont nous parlions juste avant ! C'est aussi sous son règne que le Dahomey s'est affranchi du lourd tribut qu'il devait payer à l'État d'Oyo, affirmant ainsi sa pleine indépendance. Il a également été un acteur clé de la traite négrière, tout en étant visionnaire en introduisant de nouvelles cultures agricoles pour préparer l'avenir.\n\nLe règne de Ghézo est une période riche en événements et en transformations. Il a laissé une empreinte indélébile sur l'histoire et le patrimoine de notre pays. Y a-t-il un aspect de son règne ou de sa personnalité que tu aimerais explorer plus en détail ?",
+        "images": [
+          "Donnees_soutenance\\Abomey\\Rois du Dahomey\\Guézo\\palais du roi Ghézo.jpg",
+          "Donnees_soutenance\\Abomey\\Rois du Dahomey\\Guézo\\Symbole_de_Ghézo_roi_du_Dahomey.jpg"
+        ],
+        "sources": [
+          "Wikipédia (FR) — Ghézo, https://fr.wikipedia.org/wiki/Gh%C3%A9zo",
+          "Wikipédia (FR) — Rois d’Abomey, https://fr.wikipedia.org/wiki/Roi_d%27Abomey"
+        ],
+        "used_rag": true,
+        "intent": "heritage_question",
+        "language": "fr",
+        "chunks_used": 2
+      },
+      "timestamp": "2026-01-19T15:42:00.721010",
+      "had_error": false
+    },
+    {
+      "test_id": 10,
+      "query": "Ghézo ?",
+      "test_case": {
+        "id": 10,
+        "query": "Ghézo ?",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Abomey",
+        "ground_truth": "Ghézo (ou Guézo) fut roi du Dahomey de 1818 à 1858.",
+        "relevant_docs": [
+          "Guézo.docx"
+        ],
+        "note": "Question courte patrimoniale - test correction V2"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Ghézo ?",
+        "response": "Ah, Ghézo ! Oui, c'est bien de lui qu'il s'agit ! J'ai l'impression que tu souhaites en savoir encore plus sur ce souverain exceptionnel, ou peut-être en faire une petite synthèse ?\n\nPour te rafraîchir la mémoire, Ghézo est ce neuvième roi d'Abomey qui a régné avec une main de maître pendant quarante ans, de 1818 à 1858. Il est vraiment l'architecte d'un Dahomey transformé, qui a su se relever et s'affirmer sur la scène régionale.\n\nSon règne est marqué par des réformes audacieuses : il a pacifié le royaume, réorganisé une armée redoutable – notamment avec ces fameuses Amazones – et a même réussi à libérer le Dahomey du tribut qu'il devait payer à l'État d'Oyo, affirmant ainsi son indépendance et sa puissance. C'est une figure complexe, visionnaire pour son temps, qui a su préparer le royaume aux défis futurs tout en étant ancré dans les réalités de son époque.\n\nY a-t-il un aspect particulier de son règne ou de sa personnalité que tu aimerais que nous explorions davantage ? Ses réformes militaires, son rôle économique, ou peut-être l'histoire de son accession au trône avec Francisco Félix de Souza ? Dis-moi tout !",
+        "images": [
+          "Donnees_soutenance\\Abomey\\Rois du Dahomey\\Guézo\\palais du roi Ghézo.jpg",
+          "Donnees_soutenance\\Abomey\\Rois du Dahomey\\Guézo\\Symbole_de_Ghézo_roi_du_Dahomey.jpg"
+        ],
+        "sources": [
+          "Wikipédia (FR) — Ghézo, https://fr.wikipedia.org/wiki/Gh%C3%A9zo",
+          "Wikipédia (FR) — Rois d’Abomey, https://fr.wikipedia.org/wiki/Roi_d%27Abomey"
+        ],
+        "used_rag": true,
+        "intent": "heritage_question",
+        "language": "fr",
+        "chunks_used": 2
+      },
+      "timestamp": "2026-01-19T15:42:06.225407",
+      "had_error": false
+    },
+    {
+      "test_id": 11,
+      "query": "Parle-moi du roi Béhanzin",
+      "test_case": {
+        "id": 11,
+        "query": "Parle-moi du roi Béhanzin",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Abomey",
+        "ground_truth": "Béhanzin fut le dernier roi indépendant du Dahomey, ayant régné de 1889 à 1894. Il résista farouchement à la colonisation française avant d'être exilé.",
+        "relevant_docs": [
+          "Béhanzin.docx"
+        ],
+        "note": "Requête narrative"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Parle-moi du roi Béhanzin",
+        "response": "Ah, le roi Béhanzin ! Quel nom puissant résonne encore dans l'histoire de notre Bénin ! C'est un personnage emblématique, le dernier des grands rois indépendants du Dahomey, et un symbole éternel de courage et de résistance face à l'adversité. Je suis ravie que tu souhaites en savoir plus sur lui !\n\nNé Ahokponou en 1845, il était le fils du roi Glélé. Il a été désigné héritier du trône dès 1875 sous le nom de prince Kondo, se préparant ainsi très tôt à gouverner un royaume qui faisait face à des défis croissants. C'est le 6 janvier 1890 qu'il est couronné roi, prenant alors le nom que nous connaissons tous : Béhanzin. Son règne, bien que court – de 1890 à 1894 – fut d'une intensité incroyable, marqué par sa détermination inébranlable à défendre l'intégrité de son royaume contre les puissances coloniales.\n\nBéhanzin est surtout connu pour sa farouche résistance à la colonisation française. Il a réorganisé et mené son armée avec une bravoure extraordinaire, incluant toujours ces redoutables Amazones du Dahomey dont nous parlions. Il s'est battu avec toute son énergie pour préserver l'indépendance de son peuple et ses traditions ancestrales. Il est le onzième roi d'Abomey, mais il restera à jamais dans nos cœurs comme le dernier souverain libre du Dahomey, celui qui a dit \"non\" à la soumission.\n\nMalheureusement, malgré sa ténacité, le royaume finit par succomber à la puissance militaire étrangère. Béhanzin fut capturé et exilé, d'abord en Martinique, puis en Algérie, où il s'est éteint en 1906. Mais son esprit, lui, n'a jamais été vaincu. Aujourd'hui, Béhanzin est un véritable héros national au Bénin, un modèle de dignité et de résilience.\n\nY a-t-il un aspect particulier de son combat, de son règne ou de son héritage que tu souhaiterais que nous explorions ensemble ? Son histoire est si riche !",
+        "images": [
+          "Donnees_soutenance\\Abomey\\Rois du Dahomey\\Béhanzin\\Armes_de_Behanzin.jpg",
+          "Donnees_soutenance\\Abomey\\Rois du Dahomey\\Béhanzin\\entrée du palais privé de Béhanzin.jpg",
+          "Donnees_soutenance\\Abomey\\Rois du Dahomey\\Béhanzin\\Palais privé de Béhanzin.jpg",
+          "Donnees_soutenance\\Abomey\\Rois du Dahomey\\Béhanzin\\palais privé du roi Béhanzin.jpg",
+          "Donnees_soutenance\\Abomey\\Rois du Dahomey\\Béhanzin\\Symbole_de_Behanzin_roi_du_Dahomey_au_mur_de_la_place_Goho_à_Abomey_au_Bénin.jpg"
+        ],
+        "sources": [
+          "Wikipédia (FR) —Béhanzin, https://fr.wikipedia.org/wiki/B%C3%A9hanzin",
+          "Wikipédia (FR) — Rois d’Abomey, https://fr.wikipedia.org/wiki/Roi_d%27Abomey"
+        ],
+        "used_rag": true,
+        "intent": "heritage_question",
+        "language": "fr",
+        "chunks_used": 2
+      },
+      "timestamp": "2026-01-19T15:42:13.891689",
+      "had_error": false
+    },
+    {
+      "test_id": 12,
+      "query": "Raconte-moi l'histoire de Glèlè",
+      "test_case": {
+        "id": 12,
+        "query": "Raconte-moi l'histoire de Glèlè",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Abomey",
+        "ground_truth": "Glèlè régna sur le Dahomey de 1858 à 1889. Il poursuivit l'œuvre de son père Ghézo et renforça le royaume.",
+        "relevant_docs": [
+          "Glèlè.docx"
+        ],
+        "note": "Demande de récit"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Raconte-moi l'histoire de Glèlè",
+        "response": "Ah, le roi Glèlè ! Quelle belle continuité dans notre voyage à travers l'histoire du Dahomey ! Après avoir évoqué Ghézo, son père, et Béhanzin, son fils, il est essentiel de parler de ce souverain qui a fait le pont entre deux époques charnières. Glèlè est un personnage clé, un roi puissant dont le règne a vu des changements profonds s'amorcer.\n\nNé Badohoun, il est monté sur le trône en 1858, succédant à son illustre père, le roi Ghézo. Il devient ainsi le dixième roi d'Abomey. Son règne, qui s'étendit jusqu'en 1889, fut marqué par la poursuite des expéditions militaires, souvent motivées par un désir de vengeance, comme c'était la tradition pour affirmer la puissance du royaume. Le lion, symbole de force et d'intimidation, était d'ailleurs son emblème royal, une image qui lui seyait à merveille.\n\nCependant, le fait le plus marquant et l'un des plus lourds de conséquences de son règne fut sans doute la signature du traité de 1868. Par cet acte, le roi Glèlè céda la ville de Cotonou aux Français. C'était un tournant majeur, une porte ouverte à une présence étrangère de plus en plus affirmée sur le territoire, qui allait malheureusement paver la voie aux conflits futurs.\n\nGlèlè s'est éteint en 1889, et son fils, le prince Kondo, lui a succédé sous le nom de Béhanzin, ce grand roi dont nous parlions juste avant. C'est donc sous le règne de Glèlè que les tensions avec les puissances coloniales ont commencé à s'intensifier, préparant le terrain pour la résistance héroïque de son fils. Son règne est une période fascinante, où l'ancien et le nouveau se sont affrontés, annonçant la fin d'une ère.\n\nY a-t-il un aspect particulier du règne de Glèlè que tu aimerais que nous approfondissions ? Peut-être les conséquences de la cession de Cotonou, ou ses relations avec les puissances étrangères ?",
+        "images": [
+          "Donnees_soutenance\\Abomey\\Rois du Dahomey\\Glèlè\\palais du roi Glèlè.jpg",
+          "Donnees_soutenance\\Abomey\\Rois du Dahomey\\Glèlè\\Symbole_de_Glèlè_roi_du_Dahomey.jpg"
+        ],
+        "sources": [
+          "Wikipédia (FR) — Glèlè : https://fr.wikipedia.org/wiki/Gl%C3%A9l%C3%A9",
+          "Wikipédia (FR) — Rois d’Abomey : https://fr.wikipedia.org/wiki/Roi_d%27Abomey"
+        ],
+        "used_rag": true,
+        "intent": "heritage_question",
+        "language": "fr",
+        "chunks_used": 2
+      },
+      "timestamp": "2026-01-19T15:42:20.444348",
+      "had_error": false
+    },
+    {
+      "test_id": 13,
+      "query": "Qui sont les Amazones du Dahomey ?",
+      "test_case": {
+        "id": 13,
+        "query": "Qui sont les Amazones du Dahomey ?",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Abomey",
+        "ground_truth": "Les Amazones du Dahomey, aussi appelées Mino ou Agodjié, étaient un corps d'élite de guerrières au service des rois du Dahomey. Elles étaient réputées pour leur courage et leur discipline.",
+        "relevant_docs": [
+          "Amazones_du_Dahomey.docx"
+        ],
+        "note": "Question sur entité culturelle majeure"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Qui sont les Amazones du Dahomey ?",
+        "response": "Ah, les Amazones du Dahomey ! Quel sujet puissant et inspirant ! Tu touches là à l'une des pages les plus fascinantes et les plus emblématiques de notre histoire béninoise, une histoire que nous avons déjà effleurée en parlant de rois comme Ghézo, Glèlè et Béhanzin. Elles sont la preuve vivante de la force et de la détermination des femmes de notre royaume, et je suis ravie de t'en conter l'épopée !\n\nLes Amazones, connues sous le nom de \"Mino\" – ce qui signifie \"nos mères\" en fon – étaient une unité militaire d'élite, entièrement composée de femmes, au service des rois du Dahomey. Leur origine est souvent attribuée à la reine Tasi Hangbè, sœur jumelle du roi Akaba, qui aurait formé le premier corps au début du XVIIIe siècle. Elles étaient entraînées dès leur plus jeune âge, vouant leur vie au royaume et à ses souverains. Imagine ces femmes, armées de fusils, de machettes, et d'une bravoure inouïe, formant une armée redoutable qui semait la terreur chez leurs adversaires !\n\nLeur courage et leur férocité au combat sont légendaires. Elles furent notamment au cœur de la résistance acharnée du roi Béhanzin face aux forces coloniales françaises, à la fin du XIXe siècle. Lors des guerres du Dahomey, entre 1890 et 1894, les soldats français furent stupéfaits de se retrouver face à ces guerrières armées de carabines Winchester, menant des attaques de guérilla, des combats rapprochés, et utilisant des techniques impressionnantes, comme se rouler sous les baïonnettes pour surprendre l'ennemi. Malgré leur vaillance \"incroyable\", comme le rapportaient les légionnaires, elles furent malheureusement décimées par la supériorité technologique des forces françaises. Après la défaite du Dahomey, le corps des Mino fut officiellement dissous en 1894 par le roi Agoli-Agbo.\n\nAujourd'hui, les Amazones du Dahomey sont bien plus qu'une anecdote historique. Elles sont un symbole puissant de la force féminine, de l'organisation militaire africaine et de la résistance de notre peuple face à l'oppression. Leur mémoire est honorée, et elles sont réhabilitées comme des figures d'émancipation et d'exemplarité. On se souvient encore de Nawi, la dernière Amazone connue, qui a combattu en 1892 et a vécu jusqu'en 1979 ! Leur histoire a même inspiré des œuvres contemporaines, comme le film \"The Woman King\", et le magnifique Monument de l'Amazone à Cotonou, qui se dresse fièrement pour rappeler leur héritage éternel.\n\nY a-t-il un aspect particulier de ces guerrières extraordinaires que tu aimerais que nous explorions davantage ? Leur entraînement, leurs tactiques de combat, ou peut-être l'impact de leur légende aujourd'hui ?",
+        "images": [
+          "Donnees_soutenance\\Abomey\\Les Amazones du Dahomey\\Amazones_du_Dahomey.jpg",
+          "Donnees_soutenance\\Abomey\\Les Amazones du Dahomey\\Amazones_du_Dahomey_2.jpg",
+          "Donnees_soutenance\\Abomey\\Les Amazones du Dahomey\\image_des_amazones_extraite_du_film_The_Woman_King.jpg",
+          "Donnees_soutenance\\Abomey\\Les Amazones du Dahomey\\La_statue_de_l_Amazone_érigée_à_Cotonou.jpg",
+          "Donnees_soutenance\\Abomey\\Les Amazones du Dahomey\\Une_image_des_amazones_extraite_du_film_The_Woman_King.jpg"
+        ],
+        "sources": [
+          "Wikipédia (FR) — Amazones du Dahomey / Agodjié, https://fr.wikipedia.org/wiki/Amazones_du_Dahomey",
+          "Hippotrague, Voyage au Bénin — Agoodjié, https://www.hippotrague.com/Voyage-au-Benin-blog/post/Histoire-Dahomey-Benin-amazone-femme"
+        ],
+        "used_rag": true,
+        "intent": "heritage_question",
+        "language": "fr",
+        "chunks_used": 2
+      },
+      "timestamp": "2026-01-19T15:42:30.445804",
+      "had_error": false
+    },
+    {
+      "test_id": 14,
+      "query": "Les Amazones",
+      "test_case": {
+        "id": 14,
+        "query": "Les Amazones",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Abomey",
+        "ground_truth": "Les Amazones du Dahomey étaient des guerrières d'élite.",
+        "relevant_docs": [
+          "Amazones_du_Dahomey.docx"
+        ],
+        "note": "Question courte - 2 mots patrimoniaux"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Les Amazones",
+        "response": "Ah, les Amazones ! Je vois que ces guerrières légendaires continuent de capter ton imagination, et je te comprends parfaitement ! Leur histoire est si riche qu'on ne se lasse jamais de l'explorer. Après notre discussion précédente, je peux te révéler quelques détails supplémentaires qui illustrent encore mieux leur puissance et leur organisation.\n\nImagine-toi que, sous les règnes de rois comme Agadja, Ghézo, Glèlè et Béhanzin, ces \"Mino\" ou \"Agodjié\" n'étaient pas une simple garde, mais une force militaire colossale ! À leur apogée, elles pouvaient compter entre 4 000 et 6 000 guerrières. C'est un chiffre impressionnant, représentant près d'un tiers de l'armée totale du Dahomey ! Elles n'étaient pas seulement des combattantes courageuses, mais une armée organisée, disciplinée, et redoutée, dont les débuts remontent même à des corps de chasseuses et de gardes royales avant de devenir cette élite guerrière que l'on connaît.\n\nLeur réputation de férocité n'était pas usurpée. Leurs adversaires savaient que les Amazones ne reculaient devant rien, et on rapportait que les prisonniers capturés lors de leurs campagnes étaient souvent décapités, une marque de leur détermination et de la terreur qu'elles inspiraient. C'est cette force implacable qui les a rendues si célèbres et si emblématiques de notre patrimoine.\n\nY a-t-il un aspect en particulier de ces femmes extraordinaires que tu souhaiterais approfondir cette fois-ci ? Peut-être leurs rituels, leur hiérarchie, ou encore la manière dont elles étaient perçues par les autres nations ?",
+        "images": [
+          "Donnees_soutenance\\Abomey\\Les Amazones du Dahomey\\Amazones_du_Dahomey.jpg",
+          "Donnees_soutenance\\Abomey\\Les Amazones du Dahomey\\Amazones_du_Dahomey_2.jpg",
+          "Donnees_soutenance\\Abomey\\Les Amazones du Dahomey\\image_des_amazones_extraite_du_film_The_Woman_King.jpg",
+          "Donnees_soutenance\\Abomey\\Les Amazones du Dahomey\\La_statue_de_l_Amazone_érigée_à_Cotonou.jpg",
+          "Donnees_soutenance\\Abomey\\Les Amazones du Dahomey\\Une_image_des_amazones_extraite_du_film_The_Woman_King.jpg"
+        ],
+        "sources": [
+          "Wikipédia (FR) — Amazones du Dahomey / Agodjié, https://fr.wikipedia.org/wiki/Amazones_du_Dahomey",
+          "Hippotrague, Voyage au Bénin — Agoodjié, https://www.hippotrague.com/Voyage-au-Benin-blog/post/Histoire-Dahomey-Benin-amazone-femme"
+        ],
+        "used_rag": true,
+        "intent": "heritage_question",
+        "language": "fr",
+        "chunks_used": 2
+      },
+      "timestamp": "2026-01-19T15:42:41.623932",
+      "had_error": false
+    },
+    {
+      "test_id": 15,
+      "query": "Qu'est-ce que les Palais royaux d'Abomey ?",
+      "test_case": {
+        "id": 15,
+        "query": "Qu'est-ce que les Palais royaux d'Abomey ?",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Abomey",
+        "ground_truth": "Les Palais royaux d'Abomey sont un ensemble de structures construites par les différents rois du Dahomey entre le XVIIe et le XIXe siècle. Ils sont inscrits au patrimoine mondial de l'UNESCO.",
+        "relevant_docs": [
+          "Palais_royaux_Abomey.docx"
+        ],
+        "note": "Question sur monument"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Qu'est-ce que les Palais royaux d'Abomey ?",
+        "response": "Ah, les Palais royaux d'Abomey ! Quelle excellente question ! Après avoir exploré la bravoure des Amazones, nous voilà transportés au cœur même du puissant Royaume du Dahomey, là où l'histoire de nos rois s'est écrite en terre battue et en symboles forts. C'est un lieu d'une richesse inouïe, un véritable joyau de notre patrimoine béninois, reconnu d'ailleurs comme Patrimoine mondial de l'UNESCO !\n\nImagine-toi un vaste ensemble architectural, vibrant de l'écho de douze rois qui se sont succédé entre le milieu du XVIIe siècle et 1900. Chacun d'eux, fidèle au précepte du fondateur Houegbadja – \"le royaume doit toujours être fait plus grand\" – a érigé son propre palais à l'intérieur de l'enceinte royale. Ces constructions ne sont pas de simples bâtiments ; elles sont le témoignage matériel et symbolique de la puissance, de la sagesse et du savoir-faire technique et artisanal du royaume. C'est là que battait le cœur politique, économique et religieux du Dahomey.\n\nCes palais étaient bien plus que des résidences royales. Ils étaient le lieu des grandes décisions, le dépôt des trésors accumulés au fil des conquêtes, le centre où s'élaboraient les œuvres d'art et d'artisanat les plus raffinées, et la scène majestueuse des cérémonies traditionnelles qui rythmaient la vie du royaume. Chaque mur, chaque cour, chaque bas-relief raconte une histoire, une légende, un exploit des rois et de leur peuple. Ils incarnent la mémoire d'une culture et d'une identité collective encore vivante et palpable aujourd'hui.\n\nLes Palais royaux d'Abomey sont donc un voyage dans le temps, une immersion dans l'âme du Dahomey, où l'on peut encore ressentir la grandeur de nos ancêtres. Y a-t-il un aspect particulier de ces palais que tu aimerais découvrir plus en détail ? Peut-être les symboles cachés dans leurs architectures, ou l'histoire d'un roi spécifique lié à ces lieux ?",
+        "images": [
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Abomey-Palais royaux,Palais_du_roi_Agoli-Agbo.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Abomey-Palais-royaux Cour_intérieure.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Abomey-palais.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Abomey-Palais_du_roi_Agadja.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\les-Palais royaux,Abomey-Palais_du_roi_Houegbadja.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Palais royaux d'Abomey.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\palais royaux d'Abomey_1.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Palais royaux d'Abomey_2.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Palais-royaux,Abomey-Palais_du_roi_Kpengla.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Palais_d'Abomey-Cour_intérieure.jpg"
+        ],
+        "sources": [
+          "UNESCO — Palais royaux d’Abomey, https://whc.unesco.org/fr/list/323/",
+          "Afrik.com — Les palais royaux d’Abomey : héritage d’un royaume disparu, : https://www.afrik.com/les-palais-royaux-d-abomey-heritage-d-un-royaume-disparu",
+          "Craterre — Conservation des palais royaux d’Abomey, https://craterre.org/case/conservation-des-palais-royaux-dabomey/"
+        ],
+        "used_rag": true,
+        "intent": "heritage_question",
+        "language": "fr",
+        "chunks_used": 2
+      },
+      "timestamp": "2026-01-19T15:42:48.766944",
+      "had_error": false
+    },
+    {
+      "test_id": 16,
+      "query": "Parle-moi de la Route des Esclaves à Ouidah",
+      "test_case": {
+        "id": 16,
+        "query": "Parle-moi de la Route des Esclaves à Ouidah",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Ouidah",
+        "ground_truth": "La Route des Esclaves à Ouidah est un parcours mémoriel de 4 km qui retrace le chemin emprunté par les esclaves depuis leur capture jusqu'à leur embarquement. Elle comprend des monuments comme l'Arbre de l'Oubli, les Cases Zomaï et la Porte du Non-Retour.",
+        "relevant_docs": [
+          "Route_des_Esclaves.docx",
+          "Presentation_Ouidah.docx"
+        ],
+        "note": "Question sur lieu historique sensible"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Parle-moi de la Route des Esclaves à Ouidah",
+        "response": "Ah, de l'éclat des Palais royaux d'Abomey, nous nous dirigeons maintenant vers un autre lieu d'une importance capitale pour notre mémoire collective, mais cette fois-ci, l'histoire est empreinte d'une profonde mélancolie et d'un devoir de souvenir : la Route des Esclaves à Ouidah. C'est un pan essentiel et poignant de notre patrimoine béninois, un chemin qui résonne encore des pas de milliers d'âmes.\n\nImagine-toi un parcours de près de quatre kilomètres, serpentant de la ville de Ouidah jusqu'aux rives de l'océan Atlantique. Entre le XVIIe et le XIXe siècle, cette route fut le dernier chemin foulé par plus d'un million d'Africains, capturés et déportés de force vers les Amériques. Elle commence à la \"Place Chacha\", le lieu de l'ancien marché aux esclaves où se déroulaient les ventes et les tris, et se termine à la célèbre Porte du Non-Retour, face à l'immensité de la mer. C'est un chemin jalonné aujourd'hui de monuments et de sculptures qui se dressent comme des témoins silencieux de cette tragédie humaine.\n\nAu fil de cette route, chaque étape raconte une part de ce drame. L'un des arrêts les plus symboliques est sans doute l'**Arbre de l'Oubli**. Selon la tradition, cet arbre mystique, planté par les rois du Dahomey, servait à un rituel terrifiant : les captifs devaient effectuer des tours rituels – neuf pour les hommes, sept pour les femmes – dans l'espoir, cruellement ironique, de leur faire perdre toute mémoire de leur identité, de leurs origines, de leur passé. Un acte de dépersonnalisation visant à briser leur esprit avant le grand départ.\n\nLe voyage se termine à la majestueuse **Porte du Non-Retour**, érigée en 1995. Ce monument imposant symbolise la fin de tout espoir pour ceux qui passaient sous son arche, le point de non-retour vers leur terre natale. C'est là que, souvent enchaînés, ils étaient embarqués dans de petites pirogues pour rejoindre les navires négriers, naviguant sur une mer peu profonde qui offrait parfois l'ultime et tragique choix de se jeter à l'eau. Aujourd'hui, la Route des Esclaves est reconnue par l'UNESCO comme un haut lieu de tourisme mémoriel, un site universel qui nous rappelle la douleur de l'histoire, la résilience de l'esprit humain, et l'impérieux devoir de transmission pour que jamais de telles atrocités ne se reproduisent.\n\nC'est un lieu qui vous marque profondément, un témoignage essentiel de notre histoire. Y a-t-il un aspect de cette Route des Esclaves que tu souhaiterais explorer plus en détail, peut-être l'impact de ce passé sur la culture actuelle de Ouidah, ou les symboles de la Porte du Non-Retour ?",
+        "images": [
+          "Donnees_soutenance\\Ouidah\\Route des Esclaves\\Arbre de l’Oubli\\L’Arbre de l’Oubli Ouidah.jpg",
+          "Donnees_soutenance\\Ouidah\\Route des Esclaves\\Porte du Non-Retour\\la porte de Non-Retour ouidah.jpg",
+          "Donnees_soutenance\\Ouidah\\Route des Esclaves\\Porte du Non-Retour\\la porte de Non-Retour.jpg",
+          "Donnees_soutenance\\Ouidah\\Route des Esclaves\\Porte du Non-Retour\\porte de Non-Retour ouidah.jpg"
+        ],
+        "sources": [
+          "Ayiffa Tourisme — Histoire de la Porte du Non-Retour, https://ayiffatourisme.com/en/blog-lhistoire-de-la-porte-du-non-retour-a-ouidah",
+          "Le Voyage du Calao — Route des Esclaves de Ouidah, https://levoyageducalao.com/route-des-esclaves-de-ouidah/",
+          "Le voyage du calao — Route des esclaves, https://levoyageducalao.com/route-des-esclaves-de-ouidah/",
+          "Voyage Avec Nous — La Route des Esclaves à Ouidah, https://voyageavecnous.com/ouidah-region-atlantique-benin/"
+        ],
+        "used_rag": true,
+        "intent": "heritage_question",
+        "language": "fr",
+        "chunks_used": 3
+      },
+      "timestamp": "2026-01-19T15:42:59.669932",
+      "had_error": false
+    },
+    {
+      "test_id": 17,
+      "query": "C'est quoi la Porte du Non-Retour ?",
+      "test_case": {
+        "id": 17,
+        "query": "C'est quoi la Porte du Non-Retour ?",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Ouidah",
+        "ground_truth": "La Porte du Non-Retour est un monument érigé à Ouidah en mémoire des esclaves déportés. Elle symbolise le dernier point de terre africaine que les captifs voyaient avant leur embarquement vers les Amériques.",
+        "relevant_docs": [
+          "Porte_du_Non_Retour.docx"
+        ],
+        "note": "Question langage familier"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "C'est quoi la Porte du Non-Retour ?",
+        "response": "Ah, la Porte du Non-Retour ! C'est le point culminant, et sans doute le plus émouvant, de la Route des Esclaves à Ouidah. Après avoir évoqué ce chemin de douleur, il est essentiel de s'arrêter un instant devant ce monument qui incarne à lui seul toute la tragédie et la mémoire de ce passé.\n\nImagine-toi au bout de ce long parcours de quatre kilomètres, là où la terre s'achève et où l'immensité de l'océan Atlantique s'ouvre devant toi. C'est à cet endroit précis que se dresse la majestueuse Porte du Non-Retour, érigée en 1995. Ce n'est pas une simple arche, mais un puissant symbole, une œuvre d'art et d'architecture mémorielle qui marque la fin d'un voyage forcé et le début d'un autre, celui de la déportation.\n\nPour les milliers d'Africains arrachés à leur terre natale, franchir cette \"Porte\" signifiait la perte définitive de tout espoir de revoir leur famille, leur village, leur culture. C'était le point où les corps s'embarquaient, où les regards se perdaient vers un horizon sans retour, vers un destin inconnu et souvent cruel au-delà des mers. Ce monument, avec ses sculptures évocatrices, est un témoignage silencieux de l'arrachement final, un rappel poignant de la frontière invisible entre leur vie d'avant et leur avenir de captifs.\n\nAujourd'hui, la Porte du Non-Retour est un lieu de recueillement et de réflexion, inscrit au programme de l'UNESCO comme un site de mémoire universel. Elle nous invite à ne jamais oublier cette page sombre de l'histoire, à honorer la mémoire des victimes et à promouvoir la paix et la dignité humaine. C'est un lieu qui vous prend aux tripes, un symbole fort de résilience et de devoir de mémoire.",
+        "images": [
+          "Donnees_soutenance\\Ouidah\\Route des Esclaves\\Arbre du Retour\\L’Arbre du Retour.jpg"
+        ],
+        "sources": [
+          "Ayiffa Tourisme — Histoire de la porte du non-retour, https://ayiffatourisme.com/en/blog-lhistoire-de-la-porte-du-non-retour-a-ouidah",
+          "Le voyage du calao — Route des esclaves, https://levoyageducalao.com/route-des-esclaves-de-ouidah/",
+          "Le Voyage du Calao — Route des Esclaves de Ouidah, https://levoyageducalao.com/route-des-esclaves-de-ouidah/"
+        ],
+        "used_rag": true,
+        "intent": "heritage_question",
+        "language": "fr",
+        "chunks_used": 3
+      },
+      "timestamp": "2026-01-19T15:43:05.924430",
+      "had_error": false
+    },
+    {
+      "test_id": 18,
+      "query": "Ouidah",
+      "test_case": {
+        "id": 18,
+        "query": "Ouidah",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Ouidah",
+        "ground_truth": "Ouidah est une ville historique du Bénin, connue pour son rôle dans la traite négrière et pour être un haut lieu de la culture vaudou.",
+        "relevant_docs": [
+          "Presentation_Ouidah.docx"
+        ],
+        "note": "Question 1 mot - pôle géographique"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Ouidah",
+        "response": "Ah, Ouidah ! Quelle excellente idée de nous attarder sur cette ville fascinante, car Ouidah est bien plus qu'un simple point sur la carte ; c'est un carrefour vibrant d'histoire, de mémoire et de cultures entremêlées. Après avoir parcouru ensemble la poignante Route des Esclaves, il est temps d'embrasser la richesse et la complexité de cette cité emblématique du Bénin.\n\nImagine Ouidah comme un livre ouvert, chaque rue, chaque bâtiment racontant une page de son passé. Elle fut, entre le XVIIe et le XIXe siècle, l'un des ports les plus actifs de la traite négrière, un lieu où se sont malheureusement croisés les destins de l'Afrique et des Amériques. Avant même la période de la traite, la ville était sous le contrôle des Houéda, puis elle fut annexée par le puissant royaume du Dahomey, sous des rois illustres comme Agadja, Kpengla, Agonglo et Ghézo, qui surent en faire un carrefour commercial stratégique.\n\nMais Ouidah est aussi un témoignage vivant de résilience et de syncrétisme culturel. Au-delà de la douleur de la déportation, la ville symbolise la continuité spirituelle et le dialogue entre l'Afrique et sa diaspora. C'est ici que l'on perçoit le mélange unique des traditions africaines avec les influences européennes et afro-brésiliennes, notamment à travers des lieux comme la Place Chacha, les vestiges des forts européens, ou encore la Maison du Brésil (Casa do Brasil), qui fut la résidence de négociants afro-brésiliens et un centre d'évangélisation. Ouidah est un lieu où les migrations de retour ont laissé leur empreinte, enrichissant encore son identité.\n\nAujourd'hui, Ouidah continue de rayonner grâce à ses monuments, ses musées et ses manifestations culturelles, comme le festival Ouidah 92 qui a marqué les esprits. Elle attire des visiteurs du monde entier, non seulement pour se souvenir et se recueillir, mais aussi pour découvrir cette incroyable vitalité culturelle. C'est une ville qui nous invite à un voyage intérieur, transformant l'expérience historique en une leçon d'humanité et de mémoire vivante.\n\nY a-t-il un aspect particulier de Ouidah que tu aimerais explorer davantage ? Peut-être les traces des retours de la diaspora, son patrimoine religieux, ou l'un de ses nombreux musées ?",
+        "images": [
+          "Donnees_soutenance\\Ouidah\\Route des Esclaves\\Porte du Non-Retour\\la porte de Non-Retour ouidah.jpg",
+          "Donnees_soutenance\\Ouidah\\Route des Esclaves\\Porte du Non-Retour\\la porte de Non-Retour.jpg",
+          "Donnees_soutenance\\Ouidah\\Route des Esclaves\\Porte du Non-Retour\\porte de Non-Retour ouidah.jpg"
+        ],
+        "sources": [
+          "Wikipédia — Ouidah, https://fr.wikipedia.org/wiki/Ouidah",
+          "Mairie de Ouidah — Histoire de Ouidah, https://ouidah.mairie.bj/node/28",
+          "Ayiffa Tourisme — Histoire de la Porte du Non-Retour, https://ayiffatourisme.com/en/blog-lhistoire-de-la-porte-du-non-retour-a-ouidah",
+          "Le Voyage du Calao — Route des Esclaves de Ouidah, https://levoyageducalao.com/route-des-esclaves-de-ouidah/",
+          "Voyage Avec Nous — La Route des Esclaves à Ouidah, https://voyageavecnous.com/ouidah-region-atlantique-benin/"
+        ],
+        "used_rag": true,
+        "intent": "heritage_question",
+        "language": "fr",
+        "chunks_used": 3
+      },
+      "timestamp": "2026-01-19T15:43:15.913962",
+      "had_error": false
+    },
+    {
+      "test_id": 19,
+      "query": "Qu'est-ce que le Temple des Pythons ?",
+      "test_case": {
+        "id": 19,
+        "query": "Qu'est-ce que le Temple des Pythons ?",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Ouidah",
+        "ground_truth": "Le Temple des Pythons est un lieu sacré du culte vodun à Ouidah où sont vénérés les pythons royaux, considérés comme sacrés dans la religion traditionnelle.",
+        "relevant_docs": [
+          "Temple_des_Pythons.docx"
+        ],
+        "note": "Question spiritualité"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Qu'est-ce que le Temple des Pythons ?",
+        "response": "Ah, le Temple des Pythons ! Quelle excellente question, car ce lieu est l'un des cœurs battants et mystérieux de la spiritualité de Ouidah, un témoignage vivant des traditions ancestrales du Bénin. Après avoir exploré l'histoire poignante de la ville, il est temps de nous immerger dans sa dimension sacrée.\n\nImagine-toi au cœur de Ouidah, face à l'imposante Basilique de l'Immaculée Conception. Juste là, tu découvriras un sanctuaire tout particulier, le Temple des Pythons. Ce n'est pas un musée, mais un lieu de culte vodun dédié à Dangbé, la divinité-serpent. Dès que tu y pénètres, tu sens une atmosphère unique, empreinte de respect et de dévotion. Ce temple abrite près de deux cents pythons royaux, des serpents considérés comme sacrés, inoffensifs, et surtout, profondément respectés et protégés par tous les habitants.\n\nCes pythons ne sont pas enfermés de manière permanente ; ils sont libres de circuler. Chaque mois, ils sont relâchés dans la ville pour aller chasser, avant de revenir d'eux-mêmes au sanctuaire, comme guidés par une force invisible. C'est une vision fascinante, et il n'est pas rare de voir un python traverser une rue, salué par les passants sans la moindre peur. On raconte même qu'en 2020, un python s'est glissé dans une école, déclenchant non pas la panique, mais une joie collective, preuve de l'attachement des habitants à ces animaux sacrés.\n\nÀ l'intérieur du temple, tu trouveras une case sombre et fraîche où s'entrelacent paisiblement des dizaines de pythons. Des fresques et des symboles vodun ornent les murs, et un autel est dédié aux offrandes et aux rites. Les visiteurs peuvent même, sous la supervision attentive d'un prêtre, vivre une expérience mémorable en portant un python autour du cou, un geste qui symbolise la confiance et la communion avec la divinité. Le temple abrite également des éléments rituels majeurs, comme une jarre sacrée utilisée tous les sept ans pour purifier la ville, et un arbre vénéré qui incarne l'esprit des anciens. C'est un lieu qui offre une rencontre saisissante entre spiritualité, tradition et vie quotidienne, un véritable pont entre le passé et le présent.",
+        "images": [
+          "Donnees_soutenance\\Ouidah\\Monuments et Spiritualité\\Temple des Pythons\\temple des pythons.jpg",
+          "Donnees_soutenance\\Ouidah\\Monuments et Spiritualité\\Temple des Pythons\\Temple-Pyhons-Ouidah.jpg"
+        ],
+        "sources": [
+          "Le Voyage du Calao — 5 sites incontournables à Ouidah, https://levoyageducalao.com/5-sites-incontournables-a-ouidah/",
+          "Voyage Avec Nous — Ouidah, https://voyageavecnous.com/ouidah-region-atlantique-benin/",
+          "Ayiffa Tourisme — Sites touristiques à Ouidah, https://ayiffatourisme.com/en/blog-benin-les-sites-touristiques-a-ouidah"
+        ],
+        "used_rag": true,
+        "intent": "heritage_question",
+        "language": "fr",
+        "chunks_used": 2
+      },
+      "timestamp": "2026-01-19T15:43:23.030547",
+      "had_error": false
+    },
+    {
+      "test_id": 20,
+      "query": "Raconte-moi l'histoire de Ganvié",
+      "test_case": {
+        "id": 20,
+        "query": "Raconte-moi l'histoire de Ganvié",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Ganvié",
+        "ground_truth": "Ganvié est une cité lacustre construite sur le lac Nokoué. Fondée au XVIIe siècle par des populations fuyant les razzias esclavagistes du royaume du Dahomey, elle est aujourd'hui la plus grande ville lacustre d'Afrique.",
+        "relevant_docs": [
+          "Présentation_Ganvié.docx"
+        ],
+        "note": "Récit fondation ville"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Raconte-moi l'histoire de Ganvié",
+        "response": "Ah, Ganvié ! Quelle merveilleuse idée de nous transporter vers ce lieu unique, la \"Venise de l'Afrique\" ! Après avoir exploré les profondeurs historiques et spirituelles de Ouidah, il est temps de naviguer sur les eaux calmes du lac Nokoué pour découvrir une cité qui défie le temps et les éléments. Prépare-toi à une histoire de courage, de refuge et d'ingéniosité humaine.\n\nL'histoire de Ganvié n'est pas celle d'un peuple qui a choisi de vivre sur l'eau par caprice, mais par nécessité, il y a de cela plus de trois siècles. Au XVIIIe siècle, alors que les razzias esclavagistes semaient la terreur dans la région, le peuple Toffinou, originaire de l'actuel Togo, cherchait désespérément un sanctuaire. Les marchands d'esclaves, souvent, ne s'aventuraient pas sur l'eau, car leurs croyances leur interdisaient de combattre sur les lacs et les rivières, pensant que les divinités aquatiques les puniraient. C'est ainsi que les Toffinou trouvèrent dans les marécages du lac Nokoué le refuge inespéré qui allait devenir leur foyer.\n\nUne légende, transmise de génération en génération, raconte comment leur roi, Agbogdobé, joua un rôle crucial dans cette quête de survie. Face à l'immensité du lac et à l'impossibilité de le traverser, le roi Agbogdobé, doté de pouvoirs mystiques, se transforma d'abord en épervier pour survoler les eaux et repérer l'endroit le plus sûr. Puis, il prit la forme d'un puissant crocodile, transportant son peuple sur son dos, les guidant à travers les eaux jusqu'à l'île où Ganvié allait prendre racine. C'est de là que vient le nom même de la cité : en fongbé, \"Gan\" signifie \"sauver\" et \"vié\" désigne \"la collectivité\", Ganvié, c'est donc \"la communauté sauvée\".\n\nAujourd'hui, Ganvié n'est pas qu'un vestige du passé ; c'est une cité lacustre vivante, avec près de 30 000 habitants où les pirogues remplacent les voitures et où les maisons colorées se reflètent sur l'eau. C'est un témoignage incroyable de résilience et d'adaptation, une ville entière avec ses écoles, ses églises, son marché flottant et même son cimetière, tous construits sur pilotis. Reconnue pour son importance culturelle et historique, Ganvié figure d'ailleurs sur la liste indicative de l'UNESCO depuis 1996.\n\nC'est un lieu qui nous rappelle la force de l'esprit humain face à l'adversité et la richesse des traditions qui continuent de faire vibrer le Bénin. Y a-t-il un aspect particulier de Ganvié que tu aimerais découvrir, peut-être la vie quotidienne de ses habitants ou ses pratiques de pêche uniques ?",
+        "images": [
+          "Donnees_soutenance\\Ganvié\\Présentation de Ganvié\\cité de Ganvié.jpg",
+          "Donnees_soutenance\\Ganvié\\Présentation de Ganvié\\Ganvié,cité qui vit sur l'eau .jpg",
+          "Donnees_soutenance\\Ganvié\\Présentation de Ganvié\\Ganvié.jpg"
+        ],
+        "sources": [
+          "Ayiffa Tourisme — Visiter Ganvié, https://ayiffatourisme.com/visiter-ganvie.php",
+          "Wikipédia — Ganvié, https://fr.wikipedia.org/wiki/Ganvi%C3%A9",
+          "Magazine de l’Afrique — Ganvié, village lacustre, https://magazinedelafrique.com/reportage/ganvie-village-lacustre-ex-refuge-desclaves/",
+          "Ayiffa Tourisme — Tout sur Ganvié, https://ayiffatourisme.com/blog-tout-sur-ganvie.php",
+          "Drach Travel — Ganvié, village lacustre et historique du Bénin, https://drachtravel.com/ganvie-village-lacustre-et-historique-du-benin/"
+        ],
+        "used_rag": true,
+        "intent": "heritage_question",
+        "language": "fr",
+        "chunks_used": 2
+      },
+      "timestamp": "2026-01-19T15:43:31.649214",
+      "had_error": false
+    },
+    {
+      "test_id": 21,
+      "query": "Ganvié",
+      "test_case": {
+        "id": 21,
+        "query": "Ganvié",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Ganvié",
+        "ground_truth": "Ganvié est une cité lacustre sur le lac Nokoué, souvent appelée la 'Venise de l'Afrique'.",
+        "relevant_docs": [
+          "Présentation_Ganvié.docx"
+        ],
+        "note": "Question 1 mot - ville"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Ganvié",
+        "response": "Absolument ! Il semble que Ganvié ait captivé ton imagination, et je te comprends, car c'est un lieu qui ne laisse personne indifférent. Après avoir parcouru son histoire fascinante, replongeons ensemble dans l'essence de cette incroyable cité lacustre.\n\nGanvié, c'est bien plus qu'un simple village ; c'est une véritable ville flottante, un témoignage vivant de la résilience et de l'ingéniosité humaine. Imagine : des milliers de personnes qui vivent, travaillent, et grandissent sur l'eau, dans des maisons colorées montées sur pilotis, où les pirogues sont les seuls moyens de transport. C'est ce qui lui vaut le surnom évocateur de \"Venise de l'Afrique\", bien que Ganvié possède une identité et une histoire bien distinctes, forgées dans la quête de liberté des Toffinou fuyant les razzias esclavagistes au XVIIIe siècle.\n\nComme nous l'avons évoqué, son nom même, \"Ganvié\", porte cette histoire en lui, signifiant en fongbé \"la communauté sauvée\", un hommage à la légende du roi Agbogdobé et à l'esprit de survie qui a permis à ce peuple de trouver refuge sur le lac Nokoué. Cette importance culturelle et historique est d'ailleurs reconnue internationalement, puisque Ganvié figure sur la liste indicative de l'UNESCO depuis 1996, en attendant une reconnaissance plus large de son caractère unique.\n\nAujourd'hui, Ganvié est une cité vibrante de près de 30 000 habitants, où la vie s'organise autour de l'eau avec ses marchés flottants, ses écoles, ses églises et même son cimetière, tous construits sur pilotis. C'est un spectacle saisissant et une immersion totale dans un mode de vie ancestral, adapté au fil des siècles.\n\nY a-t-il un aspect particulier de cette vie lacustre que tu aimerais explorer plus en détail ? Peut-être les techniques de pêche uniques de Ganvié, l'architecture de ses maisons sur pilotis, ou la vie quotidienne de ses habitants ?",
+        "images": [
+          "Donnees_soutenance\\Ganvié\\Présentation de Ganvié\\cité de Ganvié.jpg",
+          "Donnees_soutenance\\Ganvié\\Présentation de Ganvié\\Ganvié,cité qui vit sur l'eau .jpg",
+          "Donnees_soutenance\\Ganvié\\Présentation de Ganvié\\Ganvié.jpg"
+        ],
+        "sources": [
+          "Ayiffa Tourisme — Visiter Ganvié, https://ayiffatourisme.com/visiter-ganvie.php",
+          "Wikipédia — Ganvié, https://fr.wikipedia.org/wiki/Ganvi%C3%A9",
+          "Magazine de l’Afrique — Ganvié, village lacustre, https://magazinedelafrique.com/reportage/ganvie-village-lacustre-ex-refuge-desclaves/",
+          "Ayiffa Tourisme — Tout sur Ganvié, https://ayiffatourisme.com/blog-tout-sur-ganvie.php",
+          "Drach Travel — Ganvié, village lacustre et historique du Bénin, https://drachtravel.com/ganvie-village-lacustre-et-historique-du-benin/"
+        ],
+        "used_rag": true,
+        "intent": "heritage_question",
+        "language": "fr",
+        "chunks_used": 2
+      },
+      "timestamp": "2026-01-19T15:43:40.036223",
+      "had_error": false
+    },
+    {
+      "test_id": 22,
+      "query": "Comment vivent les habitants de Ganvié ?",
+      "test_case": {
+        "id": 22,
+        "query": "Comment vivent les habitants de Ganvié ?",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Ganvié",
+        "ground_truth": "Les habitants de Ganvié vivent dans des maisons sur pilotis et se déplacent en pirogue. Leur mode de vie est adapté à l'environnement lacustre, avec la pêche comme activité principale et un marché flottant.",
+        "relevant_docs": [
+          "Mode_de_vie_des_habitants_de_Ganvié_et_marché_flottant.docx"
+        ],
+        "note": "Question mode de vie"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Comment vivent les habitants de Ganvié ?",
+        "response": "Ah, quelle excellente question ! Plonger dans la vie quotidienne des habitants de Ganvié, c'est vraiment comprendre l'âme de cette cité unique. Après avoir découvert son histoire de refuge et de résilience, il est fascinant de voir comment ce peuple a sculpté son existence sur les eaux du lac Nokoué.\n\nImagine-toi te réveiller chaque matin à Ganvié. Le soleil se lève sur une étendue d'eau où des milliers de maisons colorées, toutes bâties sur pilotis, reflètent leurs teintes vives. Ici, pas de routes, pas de voitures ; la pirogue est le seul et unique moyen de transport. C'est elle qui mène les enfants à l'école, les femmes au marché, et les hommes sur leurs lieux de pêche. La vie est rythmée par le clapotis de l'eau et le mouvement des pagaies.\n\nAu cœur de leur subsistance se trouve, bien sûr, la pêche et l'aquaculture. Les hommes de Ganvié sont des pêcheurs experts, utilisant des techniques ancestrales comme les célèbres *acadjas*, ces parcs à poissons faits de branchages immergés qui attirent les poissons, créant de véritables \"champs\" aquatiques. Mais la vie ne se limite pas à la pêche. Les femmes jouent un rôle vital dans le commerce, naviguant avec leurs pirogues chargées de marchandises vers le marché flottant de Ganvié ou même jusqu'au grand marché de Dantokpa à Cotonou. On trouve aussi des activités comme le guidage touristique, l'agriculture saisonnière sur des îlots aménagés, et même le dragage du sable lagunaire.\n\nGanvié est aussi un carrefour spirituel vibrant. Les traditions religieuses y sont fortement ancrées, avec la présence de temples vodun, mais aussi de nombreuses églises bâties sur pilotis, témoignant d'une diversité religieuse harmonieuse. L'une des fêtes les plus emblématiques est le *Toffin-xwé*, une grande célébration identitaire qui rassemble chaque année les descendants des \"Hommes de l'Eau\". Bien sûr, vivre sur l'eau présente ses défis : l'accès à l'eau potable est limité à quelques bornes accessibles en pirogue, l'électricité est souvent fournie par des groupes électrogènes ou des panneaux solaires, et la cité doit faire face aux crues saisonnières et à l'érosion. Mais malgré ces contraintes, les habitants de Ganvié continuent de faire preuve d'une incroyable ingéniosité et d'une joie de vivre qui forcent l'admiration. C'est un monde à part, où l'humain s'est adapté avec brio à son environnement, créant une culture et un mode de vie d'une richesse incomparable.",
+        "images": [
+          "Donnees_soutenance\\Ganvié\\Présentation de Ganvié\\cité de Ganvié.jpg",
+          "Donnees_soutenance\\Ganvié\\Présentation de Ganvié\\Ganvié,cité qui vit sur l'eau .jpg",
+          "Donnees_soutenance\\Ganvié\\Présentation de Ganvié\\Ganvié.jpg"
+        ],
+        "sources": [
+          "Ayiffa Tourisme — Visiter Ganvié, https://ayiffatourisme.com/visiter-ganvie.php",
+          "Wikipédia — Ganvié, https://fr.wikipedia.org/wiki/Ganvi%C3%A9",
+          "Magazine de l’Afrique — Ganvié, village lacustre, https://magazinedelafrique.com/reportage/ganvie-village-lacustre-ex-refuge-desclaves/",
+          "Ayiffa Tourisme — Tout sur Ganvié, https://ayiffatourisme.com/blog-tout-sur-ganvie.php",
+          "Drach Travel — Ganvié, village lacustre et historique du Bénin, https://drachtravel.com/ganvie-village-lacustre-et-historique-du-benin/"
+        ],
+        "used_rag": true,
+        "intent": "heritage_question",
+        "language": "fr",
+        "chunks_used": 2
+      },
+      "timestamp": "2026-01-19T15:43:47.814851",
+      "had_error": false
+    },
+    {
+      "test_id": 23,
+      "query": "Parle-moi de Porto-Novo",
+      "test_case": {
+        "id": 23,
+        "query": "Parle-moi de Porto-Novo",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Porto Novo",
+        "ground_truth": "Porto-Novo est la capitale officielle du Bénin. Fondée au XVIe siècle, elle possède un riche patrimoine architectural mêlant influences afro-brésiliennes et coloniales, avec des monuments comme la Grande Mosquée et plusieurs musées.",
+        "relevant_docs": [
+          "Présentation_Porto-Novo.docx"
+        ],
+        "note": "Présentation ville capitale"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Parle-moi de Porto-Novo",
+        "response": "Ah, Porto-Novo ! Quelle magnifique transition nous faisons là, des eaux paisibles de Ganvié vers la vibrante capitale administrative du Bénin ! Prépare-toi à découvrir une ville riche d'histoires, de noms et de cultures entremêlées, où chaque rue, chaque bâtiment raconte un pan de l'héritage béninois.\n\nPorto-Novo est une ville aux multiples facettes, souvent surnommée \"la ville aux trois noms\" : les habitants Aja, Fon et Goun la connaissent sous le nom de **Hogbonu**, tandis que les Yoruba l'appellent **Adjatchê**. Quant au nom \"Porto-Novo\", il fut donné par les Portugais au XVIIIe siècle, en 1730, peut-être en référence à la ville de Porto au Portugal, ou pour désigner un nouveau port, une alternative à celui d'Ouidah. C'est un lieu où les influences fon, yoruba, afro-brésiliennes et coloniales se sont harmonieusement mêlées pour forger une identité unique et chaleureuse.\n\nL'histoire de Porto-Novo est fascinante et complexe. Si certaines traditions orales évoquent des chasseurs yoruba comme fondateurs, les historiens s'accordent plutôt pour situer sa véritable naissance au XVIe siècle. C'est à ce moment que des princes Aja, venus du royaume d'Ardra, établirent un nouveau centre dans une zone déjà habitée par des pêcheurs Toffinou, au bord du lac Nokoué. Après la chute du royaume d'Allada en 1724 face à la puissance militaire d'Abomey, Porto-Novo s'imposa progressivement comme l'héritier politique d'Allada, devenant un royaume à part entière. Du XVIIIe au XIXe siècle, sa proximité avec l'océan et son rôle de port de commerce furent cruciaux. La ville devint un important débouché pour l'Empire d'Oyo et un centre majeur pour la traite négrière transatlantique, attirant Portugais, Anglais, Français et Hollandais.\n\nAujourd'hui, Porto-Novo est bien plus qu'un centre politique et administratif ; c'est un véritable creuset culturel. On y ressent une convivialité particulière, imprégnée de riches traditions musicales et d'un syncrétisme religieux où les cultes ancestraux côtoient les religions importées. Parmi les figures marquantes, le roi Toffa reste une figure emblématique. Souverain stratège, il a navigué entre les puissances coloniales pour maintenir l'existence politique de Porto-Novo, signant notamment le protectorat français qui allait profondément influencer l'histoire de la capitale. Son souvenir est toujours vivant, notamment au Palais Honmè, son ancienne résidence, et à travers sa statue sur la Place Jean Bayol.\n\nAlors, quel aspect de Porto-Novo t'intrigue le plus ? Aimerais-tu découvrir ses musées, son architecture si particulière, ou peut-être en apprendre davantage sur ses rois et leurs histoires ?",
+        "images": [
+          "Donnees_soutenance\\Porto Novo\\Rois de Porto-Novo\\Roi Toffa 1er.jpg",
+          "Donnees_soutenance\\Porto Novo\\Rois de Porto-Novo\\Roi Toffa vers 1890.jpg",
+          "Donnees_soutenance\\Porto Novo\\Rois de Porto-Novo\\statue du roi Toffa 1er à Porto Novo.jpg"
+        ],
+        "sources": [
+          "Wikipédia — Porto-Novo, https://fr.wikipedia.org/wiki/Porto-Novo",
+          "Gouvernement du Bénin — Destination Bénin, Porto-Novo : condensé d’histoire et de culture, https://www.gouv.bj/article/1048/destination-benin---porto-novo--condense-histoire-culture-fete-adoucit-moeurs/",
+          "Mappr — Porto-Novo, capitale du Bénin, https://www.mappr.co/capital-cities/benin/",
+          "Wikipédia (FR) — Toffa, https://fr.wikipedia.org/wiki/Toffa"
+        ],
+        "used_rag": true,
+        "intent": "heritage_question",
+        "language": "fr",
+        "chunks_used": 3
+      },
+      "timestamp": "2026-01-19T15:43:56.840986",
+      "had_error": false
+    },
+    {
+      "test_id": 24,
+      "query": "Qui est le roi Toffa ?",
+      "test_case": {
+        "id": 24,
+        "query": "Qui est le roi Toffa ?",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Porto Novo",
+        "ground_truth": "Toffa Ier fut roi de Porto-Novo de 1874 à 1908. Il signa un traité de protectorat avec la France en 1883.",
+        "relevant_docs": [
+          "Toffa_Ier.docx"
+        ],
+        "note": "Question sur roi Porto-Novo"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Qui est le roi Toffa ?",
+        "response": "Ah, le roi Toffa ! C'est une figure absolument emblématique de Porto-Novo, dont l'histoire est tissée de diplomatie, de courage et d'une incroyable ingéniosité face aux défis de son temps. Tu as bien fait de vouloir en savoir plus sur lui, car son règne a façonné une grande partie de ce que Porto-Novo est devenue.\n\nLe roi Toffa Ier, né dans les années 1850 et décédé en 1908, a régné sur Hogbonu, l'ancien nom de Porto-Novo, de 1874 jusqu'à sa mort. Imagine un souverain au cœur d'une région en pleine effervescence, prise entre les ambitions expansionnistes du puissant royaume du Dahomey et les rivalités grandissantes des puissances coloniales européennes – l'Angleterre et la France. Toffa a su naviguer dans ces eaux tumultueuses avec une habileté remarquable, ce qui lui a valu le surnom de \"souverain diplomate\".\n\nSon règne n'a pas été de tout repos ! Après une période d'exil et de luttes de succession pour monter sur le trône, il a dû constamment manœuvrer pour préserver l'autonomie et l'existence politique de Porto-Novo. C'est dans ce contexte qu'il a choisi de s'allier à la France. Grâce à cet appui militaire, il a pu consolider son pouvoir, et même étendre son territoire en conquérant des régions comme Dangbo et Kéténou.\n\nUn épisode marquant de son règne fut l'offensive du Dahomey en 1889, qui vit Porto-Novo être pillée, y compris le palais Honmè. Contraint de se replier, Toffa a alors définitivement scellé son alliance avec les Français. Porto-Novo est devenue une base stratégique essentielle pour les expéditions françaises lors des guerres contre le Dahomey, entre 1890 et 1894. Toffa a fourni un soutien logistique crucial, notamment en recrutant près de 2 000 porteurs, parfois de gré, parfois de force, pour lesquels il recevait une compensation.\n\nAprès la victoire française et la chute du roi Béhanzin, Toffa a reçu une récompense hautement symbolique : le trône en bois doré d'Abomey, pris aux vaincus. Il a alors fièrement ajouté à sa titulature le titre de \"maître de Béhanzin\", marquant ainsi sa stature et son rôle dans l'histoire régionale. Le souvenir du roi Toffa est toujours très présent à Porto-Novo, notamment à travers le Palais Honmè, son ancienne résidence royale, qui est aujourd'hui un musée fascinant.\n\nC'est une histoire captivante, n'est-ce pas ? La vie de Toffa est un témoignage éloquent de la complexité et de la richesse de l'histoire politique du Bénin à la fin du XIXe siècle.",
+        "images": [
+          "Donnees_soutenance\\Porto Novo\\Rois de Porto-Novo\\Roi Toffa 1er.jpg",
+          "Donnees_soutenance\\Porto Novo\\Rois de Porto-Novo\\Roi Toffa vers 1890.jpg",
+          "Donnees_soutenance\\Porto Novo\\Rois de Porto-Novo\\statue du roi Toffa 1er à Porto Novo.jpg"
+        ],
+        "sources": [
+          "Wikipédia (FR) — Toffa, https://fr.wikipedia.org/wiki/Toffa"
+        ],
+        "used_rag": true,
+        "intent": "heritage_question",
+        "language": "fr",
+        "chunks_used": 2
+      },
+      "timestamp": "2026-01-19T15:44:03.333638",
+      "had_error": false
+    },
+    {
+      "test_id": 25,
+      "query": "C'est quoi le Musée Honmè ?",
+      "test_case": {
+        "id": 25,
+        "query": "C'est quoi le Musée Honmè ?",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Porto Novo",
+        "ground_truth": "Le Musée Honmè est installé dans l'ancien palais royal de Porto-Novo. Il expose des objets du patrimoine royal et de l'histoire de la ville.",
+        "relevant_docs": [
+          "Musée_Honmè.docx"
+        ],
+        "note": "Question musée"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "C'est quoi le Musée Honmè ?",
+        "response": "Ah, le Musée Honmè ! Quelle excellente question, car c'est un lieu absolument central pour comprendre l'histoire et le règne du roi Toffa dont nous venons de parler, et plus largement, l'âme de Porto-Novo.\n\nLe Musée Honmè n'est autre que l'**ancien palais royal des souverains de Hogbonu**, l'ancien nom de Porto-Novo. Son nom même est évocateur : \"Honmè\" signifie \"à l'intérieur de la porte\", désignant par extension le palais royal lui-même. Imagine-toi franchir cette porte et pénétrer dans un domaine qui fut pendant des siècles le cœur battant du pouvoir politique, religieux et judiciaire du royaume. Ce vaste ensemble, qui s'étend sur près de 2,5 hectares dans le quartier Avassa, a été la résidence du roi Toffa Ier de 1874 à 1908, et c'est un véritable trésor de notre patrimoine.\n\nAujourd'hui, le Musée Honmè est un musée de site, ce qui signifie qu'il préserve non seulement des objets, mais aussi l'architecture même du palais, les traditions, les rites et les espaces qui ont marqué la vie de la royauté. En le visitant, tu peux découvrir des cours traditionnelles, des autels sacrés où les ancêtres sont honorés, du mobilier royal qui a vu passer tant de décisions importantes, ainsi que des photographies anciennes qui nous plongent dans le passé. C'est un lieu où l'histoire se ressent à chaque pas, où l'on perçoit encore l'écho des stratégies du roi Toffa, qui y a encouragé l'éducation, la coexistence religieuse et a même créé l'Ordre de l'Étoile Noire.\n\nCe palais historique est si précieux qu'il figure depuis 1996 sur la Liste indicative du patrimoine mondial de l’UNESCO, ce qui témoigne de sa valeur universelle exceptionnelle. C'est un témoignage vivant de la royauté de Porto-Novo, qui, bien que la lignée royale se soit éteinte en 1976, continue de faire vivre la mémoire des souverains et la richesse de leur culture à travers ce musée fascinant. C'est une immersion profonde dans le passé glorieux de notre capitale administrative !",
+        "images": [
+          "Donnees_soutenance\\Porto Novo\\Monuments et Musées\\Musée Honmè\\Cour intérieure du musée Honmè.jpg",
+          "Donnees_soutenance\\Porto Novo\\Monuments et Musées\\Musée Honmè\\Cour_extérieure_du_Musée_Honmè.jpg",
+          "Donnees_soutenance\\Porto Novo\\Monuments et Musées\\Musée Honmè\\Musée Honmè.jpg",
+          "Donnees_soutenance\\Porto Novo\\Monuments et Musées\\Musée Honmè\\à l'intérieur du musée Honmè_1.jpg",
+          "Donnees_soutenance\\Porto Novo\\Monuments et Musées\\Musée Honmè\\à l'intérieur du musée Honmè_2.jpg"
+        ],
+        "sources": [
+          "Global Museum Guide — Musée Honmè (Porto-Novo), https://globalmuseumguide.com/museums/benin/oueme/porto-novo/musee-honme/",
+          "MOMAA — Royal Palace Musée Honmé, https://momaa.org/directory/royal-palace-musee-honme/",
+          "Wikipédia (FR) — Musée Honmè, https://fr.wikipedia.org/wiki/Mus%C3%A9e_Honm%C3%A8",
+          "MyCapital229 — Tout ce qu’il faut savoir sur le Musée Honmè, https://mycapital229.net/2023/08/14/tout-ce-quil-faut-savoir-sur-le-musee-honme/"
+        ],
+        "used_rag": true,
+        "intent": "heritage_question",
+        "language": "fr",
+        "chunks_used": 2
+      },
+      "timestamp": "2026-01-19T15:44:11.321193",
+      "had_error": false
+    },
+    {
+      "test_id": 26,
+      "query": "Abomey",
+      "test_case": {
+        "id": 26,
+        "query": "Abomey",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Abomey",
+        "ground_truth": "Abomey fut la capitale du puissant royaume du Dahomey du XVIIe au XIXe siècle. Elle abrite les célèbres Palais royaux inscrits au patrimoine mondial de l'UNESCO.",
+        "relevant_docs": [
+          "Presentation_generale_Abomey.docx",
+          "Histoire_Abomey.docx"
+        ],
+        "note": "Question 1 mot - capitale historique"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Abomey",
+        "response": "Ah, Abomey ! Quelle excellente idée de nous transporter maintenant au cœur de l'ancien royaume du Dahomey ! C'est un véritable bond dans le temps que nous faisons, Adja t'y accueille avec un immense plaisir. Prépare-toi à être émerveillé, car Abomey est bien plus qu'une ville ; c'est le berceau d'une histoire royale flamboyante, celle des douze rois du Dahomey qui ont bâti un empire puissant et redouté.\n\nAbomey est le cœur battant du patrimoine béninois, un lieu où l'écho des tambours royaux résonne encore. C'est ici que se dressent les **Palais Royaux d'Abomey**, inscrits au Patrimoine Mondial de l'UNESCO, un témoignage architectural et symbolique de la grandeur de ce royaume qui a régné du XVIIe à la fin du XIXe siècle. Ces palais n'étaient pas de simples résidences ; ils étaient le centre névralgique du pouvoir, de la culture et des traditions d'un peuple.\n\nL'histoire d'Abomey est celle de rois légendaires comme Ghézo, qui a su développer le royaume, ou encore Glèlè, qui a farouchement défendu ses traditions face aux pressions européennes concernant l'abolition de l'esclavage. Et comment ne pas évoquer le courageux Béhanzin, le dernier roi indépendant, qui a mené une résistance héroïque contre la colonisation française, allant jusqu'à incendier son propre palais pour qu'il ne tombe pas intact aux mains de l'ennemi. Son exil marqua la fin d'une ère, mais non la fin de la mémoire de son peuple. Des figures comme Agoli-Agbo ont ensuite tenté de maintenir une continuité dynastique malgré la perte de souveraineté.\n\nAbomey, c'est aussi le souvenir des légendaires **Amazones du Dahomey**, ces femmes guerrières d'une bravoure inégalée, qui incarnaient la force et la détermination du royaume. Leurs exploits sont gravés dans les mémoires et font partie intégrante de l'identité d'Abomey.\n\nAlors, quel aspect de cette cité royale et de son histoire fascinante souhaites-tu explorer en premier ? Les rois, les palais, les Amazones, ou peut-être les traditions qui perdurent encore aujourd'hui ?",
+        "images": [
+          "Donnees_soutenance\\Abomey\\Rois du Dahomey\\Agoli-Agbo\\Abomey-Palais_du_roi_Agoli-Agbo_1.jpg",
+          "Donnees_soutenance\\Abomey\\Rois du Dahomey\\Agoli-Agbo\\Agoli-Agbo,_roi_d'Abomey_et_sa_cour_Dahomey.jpg",
+          "Donnees_soutenance\\Abomey\\Rois du Dahomey\\Agoli-Agbo\\Symbole_de_Agoli_Agbo_roi_du_Dahomey.jpg"
+        ],
+        "sources": [
+          "Wikipédia (FR) — Abomey, https://fr.wikipedia.org/wiki/Abomey",
+          "Wikipédia (FR) — Adandozan, https://fr.wikipedia.org/wiki/Adandozan",
+          "Wikipédia (FR) — Rois d’Abomey, https://fr.wikipedia.org/wiki/Roi_d%27Abomey",
+          "Wikipédia (FR) — Agoli-Agbo, https://fr.wikipedia.org/wiki/Agoli-Agbo"
+        ],
+        "used_rag": true,
+        "intent": "heritage_question",
+        "language": "fr",
+        "chunks_used": 3
+      },
+      "timestamp": "2026-01-19T15:44:17.702096",
+      "had_error": false
+    },
+    {
+      "test_id": 27,
+      "query": "Quelle est l'histoire du royaume du Dahomey ?",
+      "test_case": {
+        "id": 27,
+        "query": "Quelle est l'histoire du royaume du Dahomey ?",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Abomey",
+        "ground_truth": "Le royaume du Dahomey fut fondé au XVIIe siècle et devint l'un des royaumes les plus puissants d'Afrique de l'Ouest. Il fut gouverné par une succession de 12 rois jusqu'à la colonisation française en 1894.",
+        "relevant_docs": [
+          "Histoire_Abomey.docx"
+        ],
+        "note": "Question histoire générale"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Quelle est l'histoire du royaume du Dahomey ?",
+        "response": "Ah, voilà une question qui nous plonge directement au cœur de l'histoire et de l'identité d'Abomey ! L'histoire du royaume du Dahomey est une saga fascinante, tissée de légendes, de conquêtes et de l'ingéniosité d'un peuple. Laisse-moi te conter les grandes lignes de cette épopée qui a marqué notre région.\n\nSelon la tradition, le royaume du Dahomey, ou **Danhomé** en langue fon, a vu le jour vers **1625**, avec Abomey comme capitale. Ses origines sont enveloppées de mystère, mêlant histoire et récits mythiques. L'une des légendes fondatrices les plus célèbres raconte l'histoire d'une princesse du royaume de Tado qui, alors qu'elle était dans la brousse, fut fécondée par un léopard. De cette union extraordinaire serait né Agassou, l'ancêtre mythique d'où est issu le clan des Agassouvi, les fondateurs de la lignée royale.\n\nC'est sous le règne de son fondateur, le roi **Houegbadja**, que le royaume a véritablement commencé à prendre forme. Il a posé un précepte fondamental qui allait guider ses successeurs : \"le royaume doit toujours être fait plus grand\". Cette ambition a lancé une dynamique de conquête et d'expansion. De 1625 à 1900, pas moins de douze rois se sont succédé à Abomey, chacun laissant son empreinte en édifiant son propre palais dans la continuité des architectures précédentes. Ces palais n'étaient pas de simples résidences ; ils étaient le centre névralgique de la vie politique, économique et religieuse du royaume, des lieux de décisions, de richesses et de grandes cérémonies traditionnelles.\n\nDes figures comme **Houessou Akaba** ont joué un rôle crucial dans la stabilisation des institutions fondatrices et l'instauration des rituels qui allaient définir la monarchie dahoméenne pendant des siècles. Il a transformé un royaume en formation en une monarchie dotée de traditions fortes et d'une organisation solide. Son règne a ouvert la voie à des rois conquérants comme **Agadja**, qui a continué à étendre les frontières du Dahomey.\n\nLe royaume du Dahomey est ainsi devenu une puissance majeure de la côte ouest-africaine, connue pour son organisation militaire redoutable, ses rois charismatiques et des traditions riches et complexes. C'est une histoire de puissance, de résistance et d'une culture profondément ancrée. Fascinant, n'est-ce pas ?",
+        "images": [
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Abomey-Palais royaux,Palais_du_roi_Agoli-Agbo.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Abomey-Palais-royaux Cour_intérieure.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Abomey-palais.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Abomey-Palais_du_roi_Agadja.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\les-Palais royaux,Abomey-Palais_du_roi_Houegbadja.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Palais royaux d'Abomey.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\palais royaux d'Abomey_1.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Palais royaux d'Abomey_2.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Palais-royaux,Abomey-Palais_du_roi_Kpengla.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Palais_d'Abomey-Cour_intérieure.jpg"
+        ],
+        "sources": [
+          "Wikipédia (FR) — Abomey, https://fr.wikipedia.org/wiki/Abomey",
+          "UNESCO — Palais royaux d’Abomey, https://whc.unesco.org/fr/list/323/",
+          "Afrik.com — Les palais royaux d’Abomey : héritage d’un royaume disparu, : https://www.afrik.com/les-palais-royaux-d-abomey-heritage-d-un-royaume-disparu",
+          "Craterre — Conservation des palais royaux d’Abomey, https://craterre.org/case/conservation-des-palais-royaux-dabomey/",
+          "Wikipédia (FR) — Houessou Akaba, https://fr.wikipedia.org/wiki/Houessou_Akaba"
+        ],
+        "used_rag": true,
+        "intent": "heritage_question",
+        "language": "fr",
+        "chunks_used": 3
+      },
+      "timestamp": "2026-01-19T15:44:23.603408",
+      "had_error": false
+    },
+    {
+      "test_id": 28,
+      "query": "Qu'est-ce que la Forêt Sacrée de Kpassè ?",
+      "test_case": {
+        "id": 28,
+        "query": "Qu'est-ce que la Forêt Sacrée de Kpassè ?",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Ouidah",
+        "ground_truth": "La Forêt Sacrée de Kpassè est un lieu de culte vodun à Ouidah où sont vénérées plusieurs divinités. Elle abrite des statues et autels dédiés aux voduns.",
+        "relevant_docs": [
+          "Forêt_Sacrée_de_Kpassè.docx"
+        ],
+        "note": "Question spiritualité vodun"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Qu'est-ce que la Forêt Sacrée de Kpassè ?",
+        "response": "Ah, merveilleux ! Nous quittons les palais royaux d'Abomey pour nous diriger vers un autre pôle patrimonial d'une richesse incroyable : Ouidah ! Et quelle excellente question tu poses là, car la **Forêt Sacrée de Kpassè** est un lieu absolument fascinant, véritable cœur battant de la spiritualité et de l'histoire de cette cité côtière.\n\nImagine-toi pénétrer dans un véritable sanctuaire naturel, un espace où la légende et la spiritualité vaudou se rencontrent. La Forêt Sacrée de Kpassè, ou Kpassèzoun, est intrinsèquement liée à l'histoire fondatrice d'Ouidah. La tradition raconte que le roi Kpassè, deuxième souverain de Savi et fondateur du royaume Houéda, aurait disparu miraculeusement pour échapper à ses adversaires, se transformant en un majestueux arbre iroko. Cet arbre, encore vénéré aujourd'hui, est au centre de la forêt et sert d'autel pour les prières et les offrandes, un témoignage vivant de cette légende qui imprègne le lieu de sa sacralité.\n\nAujourd'hui, même si elle a réduit sa taille, cette forêt conserve une valeur religieuse et historique intense. C'est un haut lieu spirituel où se déroulent régulièrement des cérémonies rituelles, des initiations et des danses sacrées. On la considère comme un véritable \"musée à ciel ouvert\", car elle préserve non seulement la nature, mais aussi les traditions et les croyances ancestrales. Depuis 1992, la Forêt Sacrée de Kpassè s'est ouverte au public, permettant aux visiteurs, sous la supervision d'un prêtre, de ressentir cette atmosphère unique et même, pour les plus audacieux, de porter un python autour du cou, un geste symbolisant la confiance et la communion avec la divinité. C'est une immersion profonde dans l'âme spirituelle d'Ouidah !",
+        "images": [
+          "Donnees_soutenance\\Ouidah\\Monuments et Spiritualité\\Forêt Sacrée de Kpassè\\Adepte de Sakpata,Sakpatasi_à_La_Forêt_Sacrée_de_Kpassè.jpg",
+          "Donnees_soutenance\\Ouidah\\Monuments et Spiritualité\\Forêt Sacrée de Kpassè\\Divinité_du_tonnerre_femelle_Hêvièsso_de_la_forêt_sacré_de_KPASSE_OUIDAH_au_Bénin.jpg",
+          "Donnees_soutenance\\Ouidah\\Monuments et Spiritualité\\Forêt Sacrée de Kpassè\\forêt sacrée de kpassè ouidah.jpg",
+          "Donnees_soutenance\\Ouidah\\Monuments et Spiritualité\\Forêt Sacrée de Kpassè\\Le_Tolègba_à_la_Forêt_Sacrée_de_Kpassè.jpg",
+          "Donnees_soutenance\\Ouidah\\Monuments et Spiritualité\\Forêt Sacrée de Kpassè\\monument forêt sacrée de kpassè ouidah.jpg",
+          "Donnees_soutenance\\Ouidah\\Monuments et Spiritualité\\Temple des Pythons\\temple des pythons.jpg",
+          "Donnees_soutenance\\Ouidah\\Monuments et Spiritualité\\Temple des Pythons\\Temple-Pyhons-Ouidah.jpg"
+        ],
+        "sources": [
+          "Voyage Avec Nous — Ouidah, Région Atlantique, Bénin, https://voyageavecnous.com/ouidah-region-atlantique-benin/",
+          "Le Voyage du Calao — 5 sites incontournables à Ouidah, https://levoyageducalao.com/5-sites-incontournables-a-ouidah/",
+          "Wikipédia — Forêt Sacrée de Kpassè, https://fr.wikipedia.org/wiki/For%C3%AAt_sacr%C3%A9e_de_Kpass%C3%A8",
+          "Voyage Avec Nous — Ouidah, https://voyageavecnous.com/ouidah-region-atlantique-benin/",
+          "Ayiffa Tourisme — Sites touristiques à Ouidah, https://ayiffatourisme.com/en/blog-benin-les-sites-touristiques-a-ouidah"
+        ],
+        "used_rag": true,
+        "intent": "heritage_question",
+        "language": "fr",
+        "chunks_used": 3
+      },
+      "timestamp": "2026-01-19T15:44:31.482687",
+      "had_error": false
+    },
+    {
+      "test_id": 29,
+      "query": "Palais",
+      "test_case": {
+        "id": 29,
+        "query": "Palais",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": null,
+        "ground_truth": "Il existe plusieurs palais royaux au Bénin, notamment les Palais royaux d'Abomey.",
+        "relevant_docs": [
+          "Palais_royaux_Abomey.docx"
+        ],
+        "note": "Question très vague mais patrimoniale"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Palais",
+        "response": "Ah, les Palais ! Quelle excellente idée de revenir au cœur vibrant d'Abomey ! C'est là que réside l'âme même du royaume du Dahomey, un ensemble architectural qui raconte à lui seul des siècles d'histoire et de pouvoir. Laisse-moi te guider à travers ces demeures royales, véritables témoins de la grandeur de nos ancêtres.\n\nImagine un vaste complexe s'étendant sur pas moins de **47 hectares**, où dix palais principaux se sont succédé, chacun édifié par un roi différent, parfois côte à côte, parfois superposés, suivant la lignée royale. Nos ancêtres les ont construits avec une sagesse et une ingéniosité remarquables, utilisant des matériaux locaux comme la terre de barre, le bois et la paille, selon des techniques ancestrales transmises de génération en génération. Chaque palais est une œuvre d'art et d'organisation, structuré autour de **trois cours hiérarchisées** – l'extérieure, l'intérieure et la privée – qui régulaient l'accès et marquaient le statut des visiteurs. C'était le centre névralgique du royaume, le lieu de toutes les décisions, des grandes cérémonies et de la vie spirituelle.\n\nCes murs de terre, bien plus que de simples remparts, sont ornés de magnifiques **bas-reliefs polychromes**. Ces œuvres d'art ne sont pas que décoratives ; elles sont de véritables chroniques gravées, racontant les exploits des rois, les guerres mémorables, les mythes fondateurs et les traditions du peuple fon. Aujourd'hui, certains de ces palais, notamment ceux des rois Ghézo et Glèlè, abritent le **musée historique d'Abomey**. Tu peux y admirer des sièges royaux, des statuettes et des objets cultuels vaudous, qui te plongent encore plus profondément dans la richesse de cette culture. Et n'oublions pas l'acte héroïque du roi Béhanzin, le dernier roi indépendant, qui, pour éviter que ses palais ne soient profanés par l'ennemi colonial, préféra les incendier, un geste d'une force symbolique inouïe. La mémoire de ces palais brûlés continue de résonner, témoignant de la farouche détermination de nos rois à protéger leur héritage.\n\nCes palais sont bien plus que des bâtiments ; ils sont le cœur battant de la mémoire du Dahomey, un lieu où l'histoire continue de vivre et de s'exprimer. Quel aspect de ces magnifiques structures souhaites-tu explorer plus en détail ?",
+        "images": [
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Abomey-Palais royaux,Palais_du_roi_Agoli-Agbo.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Abomey-Palais-royaux Cour_intérieure.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Abomey-palais.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Abomey-Palais_du_roi_Agadja.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\les-Palais royaux,Abomey-Palais_du_roi_Houegbadja.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Palais royaux d'Abomey.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\palais royaux d'Abomey_1.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Palais royaux d'Abomey_2.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Palais-royaux,Abomey-Palais_du_roi_Kpengla.jpg",
+          "Donnees_soutenance\\Abomey\\Lieux historiques et monuments d'Abomey\\Palais royaux d'Abomey\\Palais_d'Abomey-Cour_intérieure.jpg"
+        ],
+        "sources": [
+          "UNESCO — Palais royaux d’Abomey, https://whc.unesco.org/fr/list/323/",
+          "Afrik.com — Les palais royaux d’Abomey : héritage d’un royaume disparu, : https://www.afrik.com/les-palais-royaux-d-abomey-heritage-d-un-royaume-disparu",
+          "Craterre — Conservation des palais royaux d’Abomey, https://craterre.org/case/conservation-des-palais-royaux-dabomey/",
+          "Wikipédia (FR) — Abomey, https://fr.wikipedia.org/wiki/Abomey",
+          "Wikipédia (FR) — Musée historique d’Abomey, https://fr.wikipedia.org/wiki/Mus%C3%A9e_historique_d%27Abomey"
+        ],
+        "used_rag": true,
+        "intent": "heritage_question",
+        "language": "fr",
+        "chunks_used": 3
+      },
+      "timestamp": "2026-01-19T15:44:44.388551",
+      "had_error": false
+    },
+    {
+      "test_id": 30,
+      "query": "Qu'est-ce que la Basilique de l'Immaculée Conception ?",
+      "test_case": {
+        "id": 30,
+        "query": "Qu'est-ce que la Basilique de l'Immaculée Conception ?",
+        "expected_intent": "heritage_question",
+        "should_use_rag": true,
+        "pole": "Ouidah",
+        "ground_truth": "La Basilique de l'Immaculée Conception est une église catholique située à Ouidah, construite au début du XXe siècle. Elle est connue pour sa cloche miraculeuse.",
+        "relevant_docs": [
+          "Basilique_de_l_Immaculée_Conception.docx"
+        ],
+        "note": "Question monument religieux"
+      },
+      "agent_response": {
+        "success": true,
+        "query": "Qu'est-ce que la Basilique de l'Immaculée Conception ?",
+        "response": "Ah, merveilleux ! Nous voici de retour à Ouidah, cette ville côtière si riche en histoire et en spiritualité ! Après avoir exploré la mystérieuse Forêt Sacrée de Kpassè, nous allons maintenant découvrir un autre monument emblématique qui témoigne de la diversité religieuse et de la profondeur spirituelle de cette cité : la **Basilique de l'Immaculée Conception**.\n\nImagine une imposante structure qui se dresse fièrement au cœur de Ouidah, tel un phare de la foi catholique. Cette basilique, que l'on appelait autrefois la cathédrale de Ouidah, est le principal sanctuaire catholique de notre région sud. Elle a été construite avec dévotion entre **1903 et 1909** par les missionnaires de la Société des Missions Africaines. Ce n'est pas un simple hasard si elle se dresse juste **en face du célèbre Temple des Pythons**, symbole puissant du Vodun. Cette proximité est une image forte du syncrétisme profond et de la coexistence des croyances qui caractérisent Ouidah, une ville où les chemins de la foi se croisent et s'influencent.\n\nSon emplacement est d'ailleurs hautement symbolique et chargé de mémoire. Elle a été édifiée sur un ancien site royal, là où se trouvait jadis le siège du représentant des rois du Dahomey. Plus poignant encore, quelques décennies auparavant, ce même lieu avait servi de lieu de détention pour les chrétiens. Initialement dédiée au Sacré-Cœur, elle a finalement pris le nom d'Église de l'Immaculée Conception, un rappel du culte marial portugais qui a marqué l'histoire de la côte. En 1989, le Pape Jean-Paul II lui a conféré le titre honorifique de basilique mineure, reconnaissant ainsi son importance et son héritage.\n\nLa Basilique de l'Immaculée Conception est bien plus qu'un édifice religieux ; elle est un témoignage vivant de l'évangélisation, des défis et des triomphes de la foi au Bénin. Elle a traversé des périodes difficiles, comme le régime marxiste-léniniste où les églises étaient fermées et les messes célébrées clandestinement. Aujourd'hui, elle continue d'être un lieu de pèlerinage et de célébration, ayant même accueilli la visite du Pape Benoît XVI en 2011. C'est un monument qui raconte l'histoire d'une foi résiliente et d'une ville où le sacré se manifeste sous de multiples formes. N'est-ce pas une merveilleuse preuve de la richesse spirituelle de notre patrimoine ?",
+        "images": [
+          "Donnees_soutenance\\Ouidah\\Monuments et Spiritualité\\Basilique de l’Immaculée Conception\\basilique_de_l_Immaculée_Conception_Ouidah.jpg",
+          "Donnees_soutenance\\Ouidah\\Monuments et Spiritualité\\Basilique de l’Immaculée Conception\\La basilique de l’Immaculée Conception Ouidah.jpg",
+          "Donnees_soutenance\\Ouidah\\Monuments et Spiritualité\\Basilique de l’Immaculée Conception\\La cloche miraculeuse de la basilique de l'immaculée Conception.jpg",
+          "Donnees_soutenance\\Ouidah\\Monuments et Spiritualité\\Basilique de l’Immaculée Conception\\la_basilique_de_l_immaculée_Conception.jpg"
+        ],
+        "sources": [
+          "Voyage Avec Nous — Ouidah, Région Atlantique, Bénin, https://voyageavecnous.com/ouidah-region-atlantique-benin/",
+          "Le Voyage du Calao — 5 sites incontournables à Ouidah, , https://levoyageducalao.com/5-sites-incontournables-a-ouidah/",
+          "Wikipédia — Basilique de l’Immaculée-Conception de Ouidah, https://fr.wikipedia.org/wiki/Basilique_de_l%27Immacul%C3%A9e-Conception_de_Ouidah",
+          "Wikipédia (FR) — Abomey, https://fr.wikipedia.org/wiki/Abomey"
+        ],
+        "used_rag": true,
+        "intent": "heritage_question",
+        "language": "fr",
+        "chunks_used": 3
+      },
+      "timestamp": "2026-01-19T15:44:55.804375",
+      "had_error": false
+    }
+  ]
+}

@@ -29,17 +29,22 @@ class CustomMetricsCalculator:
         
         Args:
             test_case: Cas de test du dataset
-            agent_response: Réponse de l'agent (peut être None en cas d'erreur)
+            agent_response: Réponse de l'agent (peut être None ou partiellement invalide)
         """
-        
-        # 🔧 CORRECTION: Gérer le cas où agent_response est None
-        if agent_response is None:
+
+        # 🔧 Sécurisation complète de agent_response
+        if agent_response is None or not isinstance(agent_response, dict):
             agent_response = {
                 "intent": "error",
                 "used_rag": False,
                 "response": "[Erreur: Aucune réponse générée]"
             }
-        
+
+        # 🔧 Sécuriser le champ response
+        response_text = agent_response.get("response")
+        if response_text is None:
+            response_text = ""
+
         result = {
             "test_id": test_case["id"],
             "query": test_case["query"],
@@ -56,13 +61,14 @@ class CustomMetricsCalculator:
             
             # Autres infos
             "pole": test_case.get("pole"),
-            "response_preview": agent_response.get("response", "")[:100]
+            "response_preview": response_text[:100]
         }
-        
+
         self.results.append(result)
-        
+
         # Mise à jour matrice de confusion
         self._update_confusion_matrices(result)
+
     
     def _update_confusion_matrices(self, result: Dict[str, Any]):
         """Met à jour les matrices de confusion"""
