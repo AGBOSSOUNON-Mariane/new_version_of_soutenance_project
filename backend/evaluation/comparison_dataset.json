@@ -1,0 +1,123 @@
+{
+  "metadata": {
+    "project": "Comparaison avec LLMs généralistes",
+    "version": "1.0",
+    "date_created": "2025-01-19",
+    "total_questions": 16,
+    "description": "Questions patrimoniales avec ground truth extraits des documents sources"
+  },
+  
+  "heritage_questions": [
+    {
+      "id": 1,
+      "question": "Qui est le roi Ghézo ?",
+      "pole": "Abomey",
+      "ground_truth": "Ghézo, né prince Gakpe, régna sur Abomey pendant quarante ans, de 1818 à 1858. Neuvième roi d'Abomey, il arrive au pouvoir après le renversement d'Adandozan, son demi-frère. Réformateur majeur, il réorganise le royaume, restaure la paix interne, renforce l'armée notamment le célèbre corps des Amazones, et affranchit le Dahomey du tribut imposé par l'État d'Oyo. Son règne est marqué par l'influence du marchand brésilien Francisco Félix de Souza. Ses symboles sont la jarre trouée et le buffle puissant."
+    },
+    
+    {
+      "id": 2,
+      "question": "Parle-moi du roi Béhanzin",
+      "pole": "Abomey",
+      "ground_truth": "Béhanzin, né Ahokponou en 1845, fut le dernier roi indépendant du Dahomey, régnant de janvier 1890 à janvier 1894. Fils du roi Glèlè, il est connu pour sa résistance acharnée à la colonisation française et l'organisation militaire de son armée incluant les célèbres Amazones du Dahomey. Défait malgré son courage, il fut exilé en Martinique puis en Algérie où il mourut en 1906. Béhanzin demeure un héros national au Bénin, symbole de courage et de refus de la soumission coloniale. Son emblème est l'œuf, le requin et deux cocotiers."
+    },
+    
+    {
+      "id": 3,
+      "question": "Raconte-moi l'histoire de Glèlè",
+      "pole": "Abomey",
+      "ground_truth": "Glèlè, né Badohoun, dirigea le royaume d'Abomey de 1858 à 1889 comme dixième roi. Fils et successeur du roi Ghézo, il poursuivit les expéditions militaires initiées par son père, notamment dans un esprit de vengeance. Son règne est marqué par un tournant majeur : en 1868, il signe un traité par lequel il cède Cotonou aux Français. Il meurt le 29 décembre 1889 et son fils Kondo lui succède sous le nom de Behanzin. Son symbole royal est le lion avec la devise : Le lionceau sème la terreur parmi ses ennemis dès que ses dents ont poussé."
+    },
+    
+    {
+      "id": 4,
+      "question": "Qui sont les Amazones du Dahomey ?",
+      "pole": "Abomey",
+      "ground_truth": "Les Mino, aussi appelées Agodjié, Ahosi ou surnommées Amazones du Dahomey par les Européens, constituent l'un des corps militaires féminins les plus célèbres de l'histoire africaine. Existant du XVIIᵉ siècle jusqu'à la fin du XIXᵉ siècle, elles furent créées sous le roi Houégbadja puis transformées en véritable régiment armé par la reine Tasi Hangbè. À leur apogée sous Ghézo, elles comptaient 4000 à 6000 guerrières, soit près d'un tiers de l'armée dahoméenne. Formées, disciplinées et redoutées, elles vivaient dans un camp fermé, le mariage et la maternité leur étaient interdits. Elles furent dissoutes en 1894 après la défaite face à la France."
+    },
+
+    {
+      "id": 5,
+      "question": "Qu'est-ce que les Palais royaux d'Abomey ?",
+      "pole": "Abomey",
+      "ground_truth": "Les palais royaux d'Abomey sont le témoignage matériel et symbolique du puissant royaume du Dahomey qui s'affirma entre le milieu du XVIIᵉ siècle et 1900. Douze rois s'y succédèrent, chacun édifiant son palais à l'intérieur de l'enceinte royale de 47 hectares, à l'exception du roi Akaba. Ces constructions, organisées selon les principes de la culture Aja-Fon, sont inscrites au patrimoine mondial de l'UNESCO. Les façades sont ornées de bas-reliefs polychromes illustrant les exploits militaires, les légendes royales et les valeurs du royaume, notamment la résistance à la colonisation."
+    },
+    
+    {
+      "id": 6,
+      "question": "Parle-moi de la Route des Esclaves à Ouidah",
+      "pole": "Ouidah",
+      "ground_truth": "La Route des Esclaves retrace les derniers pas de milliers d'Africains déportés vers les Amériques entre les XVIIᵉ et XIXᵉ siècles. Ce parcours de 4 km commence à la Place Chacha, ancien marché aux esclaves, et se termine à la Porte du Non-Retour au bord de la plage. Elle est jalonnée de monuments symboliques : l'Arbre de l'Oubli où les captifs devaient tourner pour effacer leurs origines, les Cases Zomaï d'enfermement dans l'obscurité, le Mémorial de Zoungbodji fosse commune, l'Arbre du Retour symbolisant le retour spirituel des âmes, et enfin la Porte du Non-Retour. Reconnu par l'UNESCO, c'est l'un des plus puissants lieux de mémoire de la traite négrière en Afrique de l'Ouest."
+    },
+    
+    {
+      "id": 7,
+      "question": "C'est quoi la Porte du Non-Retour ?",
+      "pole": "Ouidah",
+      "ground_truth": "La Porte du Non-Retour, inaugurée en 1995 à Ouidah, est l'un des sites les plus emblématiques de la traite négrière transatlantique. Elle marque la dernière étape de la Route des Esclaves, là où des centaines de milliers d'Africains embarquaient pour des destinations inconnues. Construite par l'architecte béninois Fortuné Bandeira, elle se présente comme une arche monumentale en béton orientée vers la mer, avec des bas-reliefs représentant des hommes, femmes et enfants enchaînés. Elle symbolise l'adieu définitif à l'Afrique et la rupture irréversible avec leur identité. Autour de la Porte se trouvent plusieurs sculptures commémoratives dont la Chaîne de l'Esclave, l'Esprit des Ancêtres et le Mémorial de la Réconciliation."
+    },
+
+    {
+      "id": 8,
+      "question": "Qu'est-ce que le Temple des Pythons ?",
+      "pole": "Ouidah",
+      "ground_truth": "Le Temple des Pythons est l'un des lieux sacrés les plus emblématiques de Ouidah, situé face à la Basilique de l'Immaculée Conception. C'est le principal temple vodun dédié à Dangbé, la divinité-serpent. Il abrite près de 200 pythons royaux, serpents sacrés et inoffensifs, respectés et protégés par les habitants. Selon la légende, le roi Kpassè fuyant une attaque fut sauvé par des pythons qui le guidèrent à travers la forêt, d'où leur sanctification. Chaque mois, les pythons sont relâchés dans la ville pour chasser avant de revenir d'eux-mêmes au sanctuaire. Le temple comprend une jarre sacrée utilisée tous les sept ans pour purifier la ville, une grande cuve d'eau cérémonielle et un arbre sacré incarnant l'esprit des anciens."
+    },
+    
+    {
+      "id": 9,
+      "question": "Raconte-moi l'histoire de Ganvié",
+      "pole": "Ganvié",
+      "ground_truth": "Ganvié est une cité lacustre construite sur le lac Nokoué au cœur du lac, au nord de Cotonou. Fondée au XVIIIᵉ siècle, elle doit sa naissance aux razzias esclavagistes : le peuple Toffinou, originaire de l'actuel Togo, fuyant les enlèvements et la violence du royaume du Dahomey, trouva refuge dans les marécages du lac. Selon la légende, le roi Agbogdobé se transforma en épervier pour repérer un endroit sûr, puis en crocodile pour transporter son peuple sur son dos jusqu'à l'île. Le nom Ganvié vient du fongbé : Gan (sauver) + vié (la collectivité), signifiant communauté sauvée. Aujourd'hui surnommée la Venise de l'Afrique, elle compte près de 30000 habitants et figure sur la liste indicative de l'UNESCO depuis 1996."
+    },
+    
+    {
+      "id": 10,
+      "question": "Comment vivent les habitants de Ganvié ?",
+      "pole": "Ganvié",
+      "ground_truth": "Les habitants de Ganvié, appelés Toffinous, vivent entièrement sur l'eau dans des maisons construites sur pilotis en bois ou bambou, recouvertes de pailles ou tôles. La pirogue est leur moyen de transport principal et les enfants apprennent très tôt à ramer, certains se déplaçant seuls dès l'âge de dix ans. Leur mode de vie est adapté à l'environnement lacustre avec la pêche comme activité principale pratiquée par plus de 70% de la population, utilisant des techniques transmises de père en fils et l'entretien des acadjas. Le marché flottant est emblématique : à l'aube, les femmes installent leurs marchandises dans leurs pirogues créant un ballet aquatique vivant. La cité comprend des infrastructures complètes : églises, écoles, marché et cimetière, tous sur pilotis."
+    },
+    
+    {
+      "id": 11,
+      "question": "Parle-moi de Porto-Novo",
+      "pole": "Porto-Novo",
+      "ground_truth": "Porto-Novo, capitale officielle du Bénin, est située au sud-est du pays, à 30 km de Cotonou. Fondée au XVIᵉ siècle par des princes Aja, elle fut d'abord connue sous les noms de Hogbonu et Adjatchê avant de recevoir en 1730 le nom de Porto-Novo donné par le Portugais Eucaristo de Campos. La ville reflète un mélange unique d'influences fon, yoruba, afro-brésiliennes et coloniales. En 1882, le roi Toffa Ier signe un protectorat avec la France et en 1894, Porto-Novo devient capitale de la colonie du Dahomey. Elle abrite l'Assemblée Nationale, la Cour suprême et plusieurs musées dont le Musée Honmè, le Musée ethnographique Alexandre Sènou Adandé et le Musée Da Silva. La ville compte environ 300000 habitants majoritairement Goun et Yoruba."
+    },
+    
+    {
+      "id": 12,
+      "question": "Qui est le roi Toffa ?",
+      "pole": "Porto-Novo",
+      "ground_truth": "Toffa Ier, né dans les années 1850 et mort en 1908, régna sur Porto-Novo de 1874 à 1908. Fils du roi Sodji, il fut contraint à l'exil à Lagos puis à la cour d'Abomey avant de revenir avec 200 soldats envoyés par le Dahomey pour prendre le trône le 16 septembre 1874. En 1882, il signe avec la France un protectorat pour se protéger des ambitions du Dahomey et des manœuvres britanniques. Porto-Novo devint une base stratégique pour les expéditions françaises lors des guerres du Dahomey (1890-1894), Toffa fournissant environ 2000 porteurs. Après la victoire française, il reçut le trône en bois doré d'Abomey pris après la chute de Béhanzin. Il s'opposa aux lois coloniales jusqu'à sa mort en 1908, date à laquelle Porto-Novo fut annexée à la colonie du Dahomey."
+    },
+    
+    {
+      "id": 13,
+      "question": "C'est quoi le Musée Honmè ?",
+      "pole": "Porto-Novo",
+      "ground_truth": "Le Musée Honmè, installé dans l'ancien palais royal des souverains de Hogbonou (aujourd'hui Porto-Novo), est l'un des plus importants sites patrimoniaux du Bénin. Localisé dans le quartier Avassa, ce palais historique s'étend sur 2,5 hectares et fut la résidence du roi Toffa Ier de 1874 à 1908. Honmè signifie à l'intérieur de la porte. Le musée présente plus de 230 objets, des espaces rituels, des cours traditionnelles, des autels, du mobilier royal et des photographies anciennes. Il comprend plusieurs cours : cour des reines, cour du roi, cour de la reine-mère, cour d'initiation, cour du peuple, cour du conseil et cour de justice. Le site figure sur la Liste indicative du patrimoine mondial de l'UNESCO depuis 1996."
+    },
+   
+    {
+      "id": 14,
+      "question": "Quelle est l'histoire du royaume du Dahomey ?",
+      "pole": "Abomey",
+      "ground_truth": "Le royaume du Dahomey fut fondé en 1625 à Abomey, appelée Danhomé en langue fon. Selon la légende, une princesse du royaume de Tado fut fécondée par un léopard donnant naissance à Agassou, ancêtre fondateur du clan des Agassouvi. Houegbadja est reconnu comme le véritable fondateur politique au début du XVIIᵉ siècle : il dota le royaume de 41 lois, instaura une structure administrative solide et établit sa capitale à Abomey. Entre 1625 et 1900, douze rois se succédèrent. Le royaume se distingua par son organisation militaire exceptionnelle, s'étendant vers la côte pour le commerce d'armes et la traite des esclaves. Il conquit plusieurs royaumes voisins dont Ouidah. Le royaume chuta en 1894 après les guerres contre la France : le roi Béhanzin fut contraint à l'abdication et exilé."
+    },
+    
+    {
+      "id": 15,
+      "question": "Qu'est-ce que la Forêt Sacrée de Kpassè ?",
+      "pole": "Ouidah",
+      "ground_truth": "La Forêt Sacrée de Kpassè, également appelée Kpassèzoun, est l'un des lieux les plus emblématiques de la spiritualité vaudou à Ouidah. Véritable sanctuaire naturel, elle est associée à la légende du roi Kpassè, fondateur de la ville, qui se serait transformé en iroko sacré pour échapper à ses adversaires. Ouverte au public depuis le Festival du Vodun de 1992, elle couvre aujourd'hui 4 hectares. C'est un haut lieu spirituel où se déroulent cérémonies rituelles, initiations, danses sacrées et invocations des divinités. On y trouve des statues représentant les principales divinités vodun : Tolègba, Mami Wata, Gu/Ogoun, Sakpata et Hêvièsso. L'iroko sacré du roi Kpassè au cœur de la forêt est entouré d'offrandes. La forêt abrite 36 espèces végétales dont plusieurs médicinales."
+    },
+    
+    {
+      "id": 16,
+      "question": "Qu'est-ce que la Basilique de l'Immaculée Conception ?",
+      "pole": "Ouidah",
+      "ground_truth": "La Basilique de l'Immaculée Conception, anciennement cathédrale de Ouidah, est l'un des lieux religieux les plus emblématiques du Bénin. Construite entre 1903 et 1909 par les missionnaires de la Société des Missions Africaines, elle s'élève face au Temple des Pythons. Élevée au rang de basilique mineure en 1989 par le pape Jean-Paul II, elle fut consacrée le 9 mai 1909 devant près de 4000 personnes. Son architecture néo-gothique comprend une nef unique de 58m de long et 14m de large, culminant à 17,5m de hauteur, avec des vitraux européens et des briques rouges fabriquées avec la terre de Ouidah. Son emplacement est symbolique : ancien siège du représentant des rois du Dahomey et lieu de détention de chrétiens. Elle est connue pour sa cloche miraculeuse qui aurait sonné seule durant la construction."
+    }
+  ]
+}
