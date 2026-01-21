@@ -580,31 +580,3 @@ async def global_exception_handler(request: Request, exc: Exception):
         }
     )
 
-# =============================================================================
-# DÉMARRAGE
-# =============================================================================
-
-if __name__ == "__main__":
-    import uvicorn
-    
-    # Vérifier les variables d'environnement
-    if not os.getenv("PINECONE_API_KEY"):
-        print("❌ PINECONE_API_KEY manquante dans .env")
-        exit(1)
-    
-    if not os.getenv("GEMINI_API_KEY"):
-        print("❌ GEMINI_API_KEY manquante dans .env")
-        exit(1)
-    
-    print("🚀 Démarrage de l'API Adjä avec TTS...")
-    print(f"📍 URL de base: {BASE_URL}")
-    print("📖 Documentation: http://localhost:8000/docs")
-    print("🔊 Audio: http://localhost:8000/audio/{filename}")
-    
-    uvicorn.run(
-        "api_with_tts:app",
-        host="0.0.0.0",
-        port=8000,
-        reload=True,
-        log_level="info"
-    )
