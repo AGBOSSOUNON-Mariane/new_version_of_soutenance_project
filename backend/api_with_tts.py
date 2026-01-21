@@ -2,6 +2,7 @@
 API FastAPI pour Agent Conversationnel Adjä
 Patrimoine Béninois - Version Production avec TTS
 Endpoints : Chat, Chat+Audio, Historique, Reset, Health Check
+VERSION PRODUCTION - URL Dynamique
 """
 
 from fastapi import FastAPI, HTTPException, Request
@@ -24,6 +25,9 @@ from rag_conversational_agent_correction import BeninHeritageConversationalAgent
 from tts_service import TTSService, AudioResponse
 
 load_dotenv()
+
+# ✅ URL DE BASE (local ou production) - CORRECTION CRITIQUE
+BASE_URL = os.getenv("BASE_URL", "http://localhost:8000")
 
 # =============================================================================
 # DÉTECTION AUTOMATIQUE DE LANGUE
@@ -347,8 +351,10 @@ async def chat(request: ChatRequest):
                 audio_duration = audio_result.get('duration_seconds')
                 
                 if audio_filename:
-                    audio_url = f"http://10.229.92.13:8000/audio/{audio_filename}"
+                    # ✅ CORRECTION CRITIQUE : URL DYNAMIQUE
+                    audio_url = f"{BASE_URL}/audio/{audio_filename}"
                     print(f"✅ Audio: {audio_filename} ({audio_duration}s)")
+                    print(f"✅ URL: {audio_url}")
             else:
                 error_msg = audio_result.get('error', 'Erreur inconnue') if isinstance(audio_result, dict) else 'Erreur audio'
                 print(f"⚠️ Audio non généré: {error_msg}")
@@ -418,7 +424,8 @@ async def generate_audio(request: AudioGenerateRequest):
                 detail=result.error
             )
         
-        audio_url = f"http://localhost:8000/audio/{result.audio_filename}"
+        # ✅ CORRECTION CRITIQUE : URL DYNAMIQUE
+        audio_url = f"{BASE_URL}/audio/{result.audio_filename}"
         
         return {
             "success": True,
@@ -590,7 +597,7 @@ if __name__ == "__main__":
         exit(1)
     
     print("🚀 Démarrage de l'API Adjä avec TTS...")
-    print("📍 URL: http://localhost:8000")
+    print(f"📍 URL de base: {BASE_URL}")
     print("📖 Documentation: http://localhost:8000/docs")
     print("🔊 Audio: http://localhost:8000/audio/{filename}")
     
@@ -601,6 +608,3 @@ if __name__ == "__main__":
         reload=True,
         log_level="info"
     )
-
-
-    
