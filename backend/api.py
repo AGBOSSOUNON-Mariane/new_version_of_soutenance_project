@@ -101,15 +101,20 @@ app.add_middleware(
 # En production : Utiliser Redis ou une base de données
 sessions: Dict[str, BeninHeritageConversationalAgent] = {}
 
+# Agent global initialisé au démarrage (évite le rechargement à chaque requête)
+print("🚀 Initialisation de l'agent global au démarrage...")
+default_agent = BeninHeritageConversationalAgent(
+    pinecone_api_key=os.getenv("PINECONE_API_KEY"),
+    gemini_api_key=os.getenv("GEMINI_API_KEY"),
+    index_name=os.getenv("INDEX_NAME", "benin-heritage"),
+    max_history=5
+)
+print("✅ Agent global prêt\n")
+
 def get_or_create_agent(session_id: str) -> BeninHeritageConversationalAgent:
     """Récupère ou crée un agent pour une session"""
     if session_id not in sessions:
-        sessions[session_id] = BeninHeritageConversationalAgent(
-            pinecone_api_key=os.getenv("PINECONE_API_KEY"),
-            gemini_api_key=os.getenv("GEMINI_API_KEY"),
-            index_name=os.getenv("INDEX_NAME", "benin-heritage"),
-            max_history=5
-        )
+        sessions[session_id] = default_agent
     return sessions[session_id]
 
 def cleanup_old_sessions():
