@@ -580,3 +580,21 @@ async def global_exception_handler(request: Request, exc: Exception):
         }
     )
 
+# =============================================================================
+# LANCEMENT DU SERVEUR
+# =============================================================================
+
+if __name__ == "__main__":
+    import uvicorn
+    
+    # ✅ Port dynamique pour Render
+    port = int(os.getenv("PORT", 8000))
+    
+    print(f"🚀 Démarrage du serveur sur le port {port}")
+    
+    uvicorn.run(
+        app, 
+        host="0.0.0.0", 
+        port=port,
+        timeout_keep_alive=120  # Timeout plus long pour les requêtes lentes
+    )
