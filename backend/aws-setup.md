@@ -221,7 +221,7 @@ sudo nano /etc/nginx/sites-available/benin-heritage
 
 Remplacez `server_name _;` par votre domaine ou IP:
 ```nginx
-server_name votre-domaine.com;  # ou VOTRE_ELASTIC_IP
+server_name 54.88.20.85;  # Votre IP Elastic
 ```
 
 ### 7.3 Activer le Site
