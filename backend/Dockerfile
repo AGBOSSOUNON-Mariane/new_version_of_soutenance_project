@@ -17,9 +17,14 @@ RUN apt-get update && apt-get install -y \
 # Créer répertoire de travail
 WORKDIR /app
 
-# Copier requirements et installer les dépendances
+# Copier requirements
 COPY requirements.txt .
-RUN pip install --user -r requirements.txt
+
+# 1. Installer PyTorch CPU en premier (pour éviter de télécharger la version GPU énorme)
+RUN pip install --user --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+
+# 2. Installer le reste des dépendances
+RUN pip install --user --no-cache-dir -r requirements.txt
 
 # =============================================================================
 # Stage final
@@ -63,10 +68,10 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
 
 # Commande de démarrage avec Gunicorn
 CMD ["gunicorn", "api_with_tts:app", \
-     "--workers", "2", \
-     "--worker-class", "uvicorn.workers.UvicornWorker", \
-     "--bind", "0.0.0.0:8000", \
-     "--timeout", "120", \
-     "--access-logfile", "-", \
-     "--error-logfile", "-", \
-     "--log-level", "info"]
+    "--workers", "2", \
+    "--worker-class", "uvicorn.workers.UvicornWorker", \
+    "--bind", "0.0.0.0:8000", \
+    "--timeout", "120", \
+    "--access-logfile", "-", \
+    "--error-logfile", "-", \
+    "--log-level", "info"]

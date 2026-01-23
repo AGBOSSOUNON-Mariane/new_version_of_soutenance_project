@@ -114,10 +114,69 @@ sudo systemctl start nginx
 
 ## Étape 6: Déployer l'Application
 
+maintenan tu dois connecter ton github à l'intance en cour:
+ÉTAPE 1 — Générer une clé SSH sur ton serveur
+
+Sur ton EC2 (tu es déjà connecté) :
+
+ssh-keygen -t ed25519 -C "ec2-server"
+
+
+Appuie sur Entrée à toutes les questions
+
+Pas besoin de mot de passe
+
+🟢 ÉTAPE 2 — Copier la clé publique
+cat ~/.ssh/id_ed25519.pub
+
+
+👉 Copie TOUT ce qui s’affiche
+(ça commence par ssh-ed25519 et finit par ec2-server)
+
+🟢 ÉTAPE 3 — Ajouter la clé sur GitHub
+
+Sur ton navigateur (GitHub) :
+
+Va sur GitHub → Settings
+
+SSH and GPG keys
+
+Clique New SSH key
+
+Title : EC2 Server
+
+Key : colle la clé
+
+Add SSH key
+
+✅ Terminé côté GitHub.
+
+🟢 ÉTAPE 4 — Tester la connexion
+
+Retour sur ton EC2 :
+
+ssh -T git@github.com
+
+
+Réponds :
+
+yes
+
+
+Si tu vois :
+
+Hi AGBOSSOUNON-Mariane! You've successfully authenticated
+
+
+🎉 c’est bon.
+
+
+
 ### 6.1 Cloner le Projet
 ```bash
 cd ~
-git clone https://github.com/AGBOSSOUNON-Mariane/new_version_of_soutenance_project.git
+ggit clone git@github.com:Dossou2003/new_version_of_soutenance_project.git
+
 cd new_version_of_soutenance_project/backend
 ```
 
