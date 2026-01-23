@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: benin-heritage-api
+    ports:
+      - "8000:8000"
+    environment:
+      # Variables d'environnement - À configurer
+      - PINECONE_API_KEY=${PINECONE_API_KEY}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - INDEX_NAME=${INDEX_NAME:-benin-heritage}
+      - BASE_URL=${BASE_URL:-http://localhost:8000}
+      - PORT=8000
+    volumes:
+      # Volumes pour persistance des données
+      - ./audio_outputs:/app/audio_outputs
+      - ./chunks_backup:/app/chunks_backup
+      - ./Donnees_soutenance:/app/Donnees_soutenance:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - benin-network
+
+networks:
+  benin-network:
+    driver: bridge
