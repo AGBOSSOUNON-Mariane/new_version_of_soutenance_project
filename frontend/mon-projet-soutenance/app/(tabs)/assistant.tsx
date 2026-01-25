@@ -14,13 +14,14 @@ import {
   Dimensions,
   Keyboard,
   Pressable,
-  Linking, // 🆕 Import pour ouvrir les liens
+  Linking,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Audio } from "expo-av";
 import { Header } from "../../components/common/Header";
 import { Colors } from "../../constants/Colors";
 import { ChatService } from "../../services/chatService";
+import { TypingIndicator } from "../../components/common/TypingIndicator"; // 🔥 NOUVEAU
 
 const { width } = Dimensions.get("window");
 const IMAGE_SIZE = (width - 60) / 3;
@@ -63,8 +64,8 @@ export default function AssistantScreen() {
   const [sound, setSound] = useState<Audio.Sound | null>(null);
   const [playingMessageId, setPlayingMessageId] = useState<string | null>(null);
   const scrollViewRef = useRef<ScrollView>(null);
-  const [keyboardVisible, setKeyboardVisible] = useState(false); // 🆕 Ajouter cette ligne
-  const inputRef = useRef<TextInput>(null); // 🆕 Ajouter cette ligne
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+  const inputRef = useRef<TextInput>(null);
 
   useEffect(() => {
     checkApiConnection();
@@ -75,7 +76,6 @@ export default function AssistantScreen() {
       staysActiveInBackground: false,
     });
 
-    // 🆕 Écouter le clavier
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
       () => {
@@ -169,32 +169,23 @@ export default function AssistantScreen() {
   };
 
   const getImageName = (imagePath: string): string => {
-    // Ex: "Donnees_soutenance\Abomey\...\palais du roi Ghézo.jpg"
-    const parts = imagePath.split(/[\\\/]/); // Split par \ ou /
-    const filename = parts[parts.length - 1]; // Dernier élément
-
-    // Enlever l'extension (.jpg, .jpeg, .png, etc.)
+    const parts = imagePath.split(/[\\\/]/);
+    const filename = parts[parts.length - 1];
     let name = filename.replace(/\.(jpg|jpeg|png|gif|webp)$/i, "");
-
-    // Remplacer TOUS les underscores par des espaces
     name = name.replace(/_/g, " ");
-
-    // Simplifications supplémentaires
     name = name
-      .replace(/^image des /i, "") // Enlever "image des" au début
-      .replace(/^une image des /i, "") // Enlever "une image des"
-      .replace(/^la /i, "") // Enlever "la" au début
-      .replace(/extraite du film/gi, "-") // Remplacer "extraite du film" par "-"
-      .replace(/érigée à/gi, "à") // Simplifier "érigée à"
-      .replace(/\s+/g, " ") // Enlever espaces multiples
+      .replace(/^image des /i, "")
+      .replace(/^une image des /i, "")
+      .replace(/^la /i, "")
+      .replace(/extraite du film/gi, "-")
+      .replace(/érigée à/gi, "à")
+      .replace(/\s+/g, " ")
       .trim();
 
-    // Capitaliser la première lettre
     if (name.length > 0) {
       name = name.charAt(0).toUpperCase() + name.slice(1);
     }
 
-    // Limiter la longueur pour éviter débordement
     if (name.length > 40) {
       name = name.substring(0, 37) + "...";
     }
@@ -202,16 +193,6 @@ export default function AssistantScreen() {
     return name;
   };
 
-  // 🆕 Fonction pour extraire le nom du fichier depuis le chemin
-  //const getImageName = (imagePath: string): string => {
-  // Ex: "Donnees_soutenance\Abomey\...\palais du roi Ghézo.jpg"
-  // Retourne: "palais du roi Ghézo"
-  //const parts = imagePath.split(/[\\\/]/); // Split par \ ou /
-  //const filename = parts[parts.length - 1]; // Dernier élément
-  //return filename.replace(/\.(jpg|jpeg|png|gif|webp)$/i, ''); // Enlever l'extension
-  //};
-
-  // 🆕 Fonction pour ouvrir un lien
   const openLink = async (url: string) => {
     try {
       const supported = await Linking.canOpenURL(url);
@@ -227,9 +208,7 @@ export default function AssistantScreen() {
     }
   };
 
-  // 🆕 Fonction pour extraire le titre et l'URL d'une source
   const parseSource = (source: string): { title: string; url?: string } => {
-    // Format attendu: "Wikipédia (FR) — Ghézo, https://fr.wikipedia.org/..."
     const match = source.match(/(.*?),\s*(https?:\/\/[^\s]+)/);
 
     if (match) {
@@ -239,7 +218,6 @@ export default function AssistantScreen() {
       };
     }
 
-    // Si pas de lien, retourner juste le texte
     return { title: source };
   };
 
@@ -269,9 +247,10 @@ export default function AssistantScreen() {
     setMessages((prev) => [...prev, userMessage]);
     setInputText("");
 
+    // 🔥 MODIFICATION : Message de chargement avec animation
     const loadingMessage: Message = {
       id: (Date.now() + 1).toString(),
-      text: "Je réfléchis...",
+      text: "", // 🔥 Texte vide maintenant
       sender: "assistant",
       timestamp: "",
       isLoading: true,
@@ -354,10 +333,10 @@ export default function AssistantScreen() {
         style={styles.messagesContainer}
         contentContainerStyle={[
           styles.messagesContent,
-          keyboardVisible && { paddingBottom: 300 }, // 🆕
+          keyboardVisible && { paddingBottom: 300 },
         ]}
         showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="handled" // 🆕
+        keyboardShouldPersistTaps="handled"
       >
         {messages.map((message) => (
           <View
@@ -377,26 +356,23 @@ export default function AssistantScreen() {
                   : styles.assistantBubble,
               ]}
             >
-              <Text
-                style={[
-                  styles.messageText,
-                  message.sender === "user"
-                    ? styles.userText
-                    : styles.assistantText,
-                ]}
-              >
-                {message.text}
-              </Text>
-
-              {message.isLoading && (
-                <ActivityIndicator
-                  size="small"
-                  color={Colors.primary}
-                  style={styles.loadingIndicator}
-                />
+              {/* 🔥 MODIFICATION : Afficher TypingIndicator si isLoading */}
+              {message.isLoading ? (
+                <TypingIndicator />
+              ) : (
+                <Text
+                  style={[
+                    styles.messageText,
+                    message.sender === "user"
+                      ? styles.userText
+                      : styles.assistantText,
+                  ]}
+                >
+                  {message.text}
+                </Text>
               )}
 
-              {/* 🔧 IMAGES AVEC NOM */}
+              {/* IMAGES */}
               {message.images && message.images.length > 0 && (
                 <View style={styles.imagesContainer}>
                   <Text style={styles.sectionTitle}>
@@ -410,7 +386,6 @@ export default function AssistantScreen() {
                           style={styles.image}
                           resizeMode="cover"
                         />
-                        {/* 🆕 NOM DE L'IMAGE */}
                         <Text style={styles.imageName} numberOfLines={2}>
                           {getImageName(img)}
                         </Text>
@@ -425,7 +400,7 @@ export default function AssistantScreen() {
                 </View>
               )}
 
-              {/* 🔧 SOURCES CLIQUABLES */}
+              {/* SOURCES */}
               {message.sources && message.sources.length > 0 && (
                 <View style={styles.sourcesContainer}>
                   <Text style={styles.sectionTitle}>📚 Sources :</Text>
@@ -466,7 +441,7 @@ export default function AssistantScreen() {
                 </View>
               )}
 
-              {/* BOUTON AUDIO */}
+              {/* AUDIO */}
               {message.hasAudio && message.audioUrl && (
                 <Pressable
                   style={({ pressed }) => [
@@ -536,7 +511,7 @@ export default function AssistantScreen() {
 
       <View style={styles.inputContainer}>
         <TextInput
-          ref={inputRef} // 🆕
+          ref={inputRef}
           style={styles.textInput}
           placeholder="Pose ta question..."
           placeholderTextColor={Colors.gray}
@@ -545,7 +520,7 @@ export default function AssistantScreen() {
           multiline
           maxLength={500}
           editable={isConnected !== false}
-          onFocus={() => {// 🆕
+          onFocus={() => {
             setTimeout(() => {
               scrollViewRef.current?.scrollToEnd({ animated: true });
             }, 300);
@@ -582,7 +557,9 @@ export default function AssistantScreen() {
   );
 }
 
+// Styles identiques (pas de changement)
 const styles = StyleSheet.create({
+  // ... tous vos styles existants restent identiques
   container: {
     flex: 1,
     backgroundColor: Colors.background,
@@ -673,7 +650,6 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     gap: 10,
   },
-  // 🆕 Wrapper pour image + nom
   imageWrapper: {
     width: IMAGE_SIZE,
   },
@@ -683,7 +659,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: Colors.lightGray,
   },
-  // 🆕 Nom de l'image
   imageName: {
     fontSize: 10,
     color: Colors.gray,
@@ -703,7 +678,6 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: Colors.lightGray,
   },
-  // 🆕 Item source cliquable
   sourceItem: {
     flexDirection: "row",
     alignItems: "center",
@@ -716,7 +690,6 @@ const styles = StyleSheet.create({
     color: Colors.gray,
     lineHeight: 18,
   },
-  // 🆕 Style pour source cliquable
   sourceTextClickable: {
     color: Colors.primary,
     textDecorationLine: "underline",

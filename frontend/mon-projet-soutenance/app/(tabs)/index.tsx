@@ -36,29 +36,7 @@ export default function HomeScreen() {
         subtitle="Explorez l'héritage vivant de 4 grands pôles culturels"
       />
       
-      {/* Boutons de navigation rapide */}
-      <View style={styles.quickButtons}>
-        <Link href="./assistant" asChild>
-          <TouchableOpacity style={styles.quickButton}>
-            <Ionicons name="chatbubbles" size={24} color={Colors.white} />
-            <Text style={styles.quickButtonText}>Assistant IA</Text>
-          </TouchableOpacity>
-        </Link>
-        
-        <Link href="./favoris" asChild>
-          <TouchableOpacity style={styles.quickButton}>
-            <Ionicons name="heart" size={24} color={Colors.white} />
-            <Text style={styles.quickButtonText}>Favoris</Text>
-          </TouchableOpacity>
-        </Link>
-        
-        <Link href="./historique" asChild>
-          <TouchableOpacity style={styles.quickButton}>
-            <Ionicons name="time" size={24} color={Colors.white} />
-            <Text style={styles.quickButtonText}>Historique</Text>
-          </TouchableOpacity>
-        </Link>
-      </View>
+      
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {/* Section Sites culturels */}

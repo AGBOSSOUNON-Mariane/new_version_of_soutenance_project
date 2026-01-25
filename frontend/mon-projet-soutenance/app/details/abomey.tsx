@@ -34,15 +34,6 @@ export default function AbomeyDetailsScreen() {
             <Ionicons name="arrow-back" size={24} color={Colors.white} />
           </TouchableOpacity>
 
-          <View style={styles.rightButtons}>
-            <TouchableOpacity style={styles.headerButton}>
-              <Ionicons name="heart-outline" size={24} color={Colors.white} />
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.headerButton}>
-              <Ionicons name="share-outline" size={24} color={Colors.white} />
-            </TouchableOpacity>
-          </View>
         </View>
       </View>
 
