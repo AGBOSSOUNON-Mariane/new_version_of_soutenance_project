@@ -13,12 +13,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { Header } from '../../components/common/Header';
 import { Colors } from '../../constants/Colors';
 import { HistoryService, HistoryItem } from '../../services/historyService';
+import { UserService } from '../../services/userService'; // 🔥 NOUVEAU
 
 export default function HistoriqueScreen() {
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  const [userId] = useState('anonymous'); // Tu peux le rendre dynamique plus tard
+  const [userId, setUserId] = useState<string>('anonymous'); // 🔥 MODIFIÉ
   const [stats, setStats] = useState({
     totalConversations: 0,
     sitesVisited: new Set<string>(),
@@ -26,10 +27,23 @@ export default function HistoriqueScreen() {
     totalTime: 0,
   });
 
-  // Charger l'historique au démarrage
+  // 🔥 NOUVEAU : Charger l'ID utilisateur au démarrage
   useEffect(() => {
-    loadHistory();
+    initializeUser();
   }, []);
+
+  // 🔥 NOUVEAU : Fonction d'initialisation
+  const initializeUser = async () => {
+    try {
+      const id = await UserService.getOrCreateUserId();
+      setUserId(id);
+      console.log('📱 Historique initialisé pour:', id);
+      await loadHistory(id); // Charger avec le bon ID
+    } catch (error) {
+      console.error('❌ Erreur initialisation utilisateur:', error);
+      setLoading(false);
+    }
+  };
 
   // Calculer les statistiques
   useEffect(() => {
@@ -59,13 +73,18 @@ export default function HistoriqueScreen() {
     }
   }, [history]);
 
-  const loadHistory = async () => {
+  // 🔥 MODIFIÉ : Accepte userId en paramètre
+  const loadHistory = async (userIdToLoad?: string) => {
+    const idToUse = userIdToLoad || userId;
+    
     try {
       setLoading(true);
-      const response = await HistoryService.getUserHistory(userId, 50, 0, false);
+      console.log('📊 Chargement historique pour:', idToUse);
+      const response = await HistoryService.getUserHistory(idToUse, 50, 0, false);
       setHistory(response.conversations);
+      console.log('✅ Historique chargé:', response.conversations.length, 'conversations');
     } catch (error: any) {
-      console.error('Erreur chargement historique:', error);
+      console.error('❌ Erreur chargement historique:', error);
       Alert.alert(
         'Erreur',
         'Impossible de charger l\'historique. Vérifiez que le backend est lancé.'
@@ -90,12 +109,27 @@ export default function HistoriqueScreen() {
         {
           text: 'Effacer',
           style: 'destructive',
-          onPress: () => {
-            // TODO: Implémenter l'endpoint de suppression
-            Alert.alert('Info', 'Fonctionnalité bientôt disponible');
+          onPress: async () => {
+            try {
+              await HistoryService.clearUserHistory(userId);
+              await loadHistory(); // Recharger (vide)
+              Alert.alert('Succès', 'Historique effacé avec succès');
+            } catch (error: any) {
+              Alert.alert('Erreur', error.message);
+            }
           },
         },
       ]
+    );
+  };
+
+  // 🔥 NOUVEAU : Fonction de debug (optionnel)
+  const showDebugInfo = async () => {
+    const debugInfo = await UserService.getDebugInfo();
+    Alert.alert(
+      'Informations de debug',
+      `ID utilisateur: ${debugInfo.userId}\nProfil: ${debugInfo.profile}\nConversations: ${history.length}`,
+      [{ text: 'OK' }]
     );
   };
 
@@ -108,7 +142,6 @@ export default function HistoriqueScreen() {
         {
           text: 'Voir dans le chat',
           onPress: () => {
-            // TODO: Naviguer vers le chat avec cette conversation
             Alert.alert('Info', 'Navigation bientôt disponible');
           },
         },
@@ -159,6 +192,13 @@ export default function HistoriqueScreen() {
             <Text style={styles.emptySubtitle}>
               Vos conversations avec l'assistant apparaîtront ici
             </Text>
+            {/* 🔥 NOUVEAU : Bouton de debug optionnel (peut être retiré en prod) */}
+            <TouchableOpacity 
+              style={styles.debugButton} 
+              onPress={showDebugInfo}
+            >
+              <Text style={styles.debugButtonText}>ℹ️ Infos technique</Text>
+            </TouchableOpacity>
           </View>
         ) : (
           <View style={styles.historyContainer}>
@@ -255,7 +295,7 @@ export default function HistoriqueScreen() {
 
             {/* Bouton pour charger plus */}
             {history.length >= 50 && (
-              <TouchableOpacity style={styles.loadMoreButton} onPress={loadHistory}>
+              <TouchableOpacity style={styles.loadMoreButton} onPress={() => loadHistory()}>
                 <Text style={styles.loadMoreText}>Charger plus</Text>
                 <Ionicons name="chevron-down-outline" size={20} color={Colors.primary} />
               </TouchableOpacity>
@@ -304,6 +344,14 @@ export default function HistoriqueScreen() {
             <TouchableOpacity style={styles.clearButton} onPress={clearHistory}>
               <Ionicons name="trash-outline" size={20} color={Colors.secondary} />
               <Text style={styles.clearButtonText}>Effacer l'historique</Text>
+            </TouchableOpacity>
+            
+            {/* 🔥 NOUVEAU : Bouton de debug (optionnel) */}
+            <TouchableOpacity 
+              style={styles.debugButton} 
+              onPress={showDebugInfo}
+            >
+              <Text style={styles.debugButtonText}>ℹ️ Infos technique</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -510,11 +558,24 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     borderWidth: 1,
     borderColor: Colors.secondary,
+    marginBottom: 10, // 🔥 NOUVEAU
   },
   clearButtonText: {
     fontSize: 16,
     color: Colors.secondary,
     fontWeight: '600',
     marginLeft: 8,
+  },
+  // 🔥 NOUVEAUX STYLES
+  debugButton: {
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    borderRadius: 20,
+    backgroundColor: Colors.lightGray,
+    marginTop: 10,
+  },
+  debugButtonText: {
+    fontSize: 14,
+    color: Colors.gray,
   },
 });

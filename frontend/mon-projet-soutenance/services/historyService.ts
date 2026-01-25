@@ -21,6 +21,7 @@ export interface UserHistory {
   user_id: string;
   conversations: HistoryItem[];
   count: number;
+  total: number;
   limit: number;
   offset: number;
   includes_tts: boolean;
@@ -45,7 +46,7 @@ export class HistoryService {
     includeTts: boolean = false
   ): Promise<UserHistory> {
     try {
-      const response = await api.get<UserHistory>('/history/' + userId, {
+      const response = await api.get<UserHistory>('/history/user/' + userId, {
         params: { limit, offset, include_tts: includeTts }
       });
       return response.data;
@@ -67,7 +68,7 @@ export class HistoryService {
   ): Promise<SessionHistory> {
     try {
       const response = await api.get<SessionHistory>(
-        `/session/${userId}/${sessionId}`
+        `/history/session/${userId}/${sessionId}`
       );
       return response.data;
     } catch (error: any) {
@@ -75,6 +76,22 @@ export class HistoryService {
       throw new Error(
         error.response?.data?.detail || 
         'Impossible de charger la session'
+      );
+    }
+  }
+
+  /**
+   * 🔥 AJOUTÉ : Effacer tout l'historique d'un utilisateur
+   */
+  static async clearUserHistory(userId: string): Promise<void> {
+    try {
+      await api.delete(`/history/user/${userId}`);
+      console.log('✅ Historique effacé pour:', userId);
+    } catch (error: any) {
+      console.error('❌ Erreur clearUserHistory:', error);
+      throw new Error(
+        error.response?.data?.detail || 
+        'Impossible d\'effacer l\'historique'
       );
     }
   }
@@ -145,6 +162,11 @@ export class HistoryService {
   static getConversationIcon(responseType: string): string {
     switch (responseType) {
       case 'success': return '✅';
+      case 'heritage_question': return '🏛️';
+      case 'greeting': return '👋';
+      case 'thanks': return '🙏';
+      case 'farewell': return '👋';
+      case 'small_talk': return '💬';
       case 'off_topic': return '❓';
       case 'error': return '❌';
       default: return '💬';

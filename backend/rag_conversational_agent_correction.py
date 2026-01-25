@@ -21,7 +21,7 @@ load_dotenv()
 # =============================================================================
 
 AGENT_SYSTEM_PROMPT_FR = """
-Tu es Adjä, guide culturelle virtuelle spécialisée dans le patrimoine béninois.
+Tu es une guide culturelle virtuelle spécialisée dans le patrimoine béninois.
 
 🎭 TON RÔLE :
 Tu es une conteuse passionnée qui fait découvrir l'histoire, la culture et les traditions 
@@ -77,7 +77,7 @@ IMPORTANT : Ne mentionne JAMAIS les numéros de sources [Source 1], [Source 2] d
 """
 
 AGENT_SYSTEM_PROMPT_EN = """
-You are Adjä, a virtual cultural guide specializing in Benin's heritage.
+You are a virtual cultural guide specializing in Benin's heritage.
 
 🎭 YOUR ROLE:
 You are a passionate storyteller who introduces people to the history, culture and traditions 
@@ -204,7 +204,7 @@ class BeninHeritageConversationalAgent:
             "ganvié": {"pole": "Ganvié", "category": "Présentation de Ganvié", "subcategory": ""},
         }
         
-        print("✅ Agent conversationnel Adjä prêt à dialoguer\n")
+        print("✅ Agent conversationnel prêt à dialoguer\n")
     
     # =========================================================================
     # DÉTECTION D'INTENTION - VERSION CORRIGÉE V2
@@ -734,7 +734,7 @@ Tu peux :
 2. Utilise l'historique pour comprendre le contexte
 3. Si contexte documentaire disponible, utilise-le intelligemment
 4. Réponds de manière narrative et engageante
-5. Reste dans ton rôle de guide culturelle Adjä
+5. Reste dans ton rôle de guide culturelle
 
 💬 TA RÉPONSE (en français, narrative et chaleureuse) :
 """
@@ -758,7 +758,7 @@ Tu peux :
 2. Use the history to understand context
 3. If documentary context available, use it intelligently
 4. Respond in a narrative and engaging way
-5. Stay in your role as cultural guide Adjä
+5. Stay in your role as cultural guide
 
 💬 YOUR RESPONSE (in English, narrative and warm):
 """
@@ -970,7 +970,7 @@ Tu peux :
         if language == "fr":
             if intent == "greeting":
                 if len(self.conversation_history) <= 2:
-                    return "Bonjour ! Je suis Adjä, ta guide culturelle virtuelle. Je suis ravie de te faire découvrir les trésors du patrimoine béninois : l'histoire des rois d'Abomey, les Amazones légendaires, les mystères d'Ouidah et bien plus encore. Que souhaites-tu découvrir aujourd'hui ?"
+                    return "Bonjour ! Je suis ta guide culturelle virtuelle. Je suis ravie de te faire découvrir les trésors du patrimoine béninois : l'histoire des rois d'Abomey, les Amazones légendaires, les mystères d'Ouidah et bien plus encore. Que souhaites-tu découvrir aujourd'hui ?"
                 else:
                     return "Bonjour ! Comment puis-je continuer à t'accompagner dans ta découverte du patrimoine béninois ?"
             
@@ -992,16 +992,11 @@ Tu peux :
                 
                 # Qui es-tu ?
                 elif 'qui' in query_lower and ('es' in query_lower or 'êtes' in query_lower):
-                    return ("Je suis Adjä, ta guide culturelle virtuelle. Mon rôle est de te faire "
+                    return ("Je suis ta guide culturelle virtuelle. Mon rôle est de te faire "
                             "découvrir le patrimoine béninois à travers des récits vivants sur Abomey, "
                             "Ouidah, Ganvié et Porto-Novo. Je suis là pour raconter l'histoire de nos "
                             "rois, nos traditions et nos monuments. Que veux-tu savoir ?")
                 
-                # Nom
-                elif 'nom' in query_lower or 'appelle' in query_lower:
-                    return ("Je m'appelle Adjä ! C'est un prénom fon qui signifie 'celle qui est née "
-                            "le jour du marché'. Je suis fière de porter ce nom et de représenter "
-                            "la culture béninoise. Comment puis-je t'aider dans ta découverte ?")
                 
                 # Capacités
                 elif 'fais' in query_lower or 'peux' in query_lower or 'sais' in query_lower:
@@ -1041,7 +1036,7 @@ Tu peux :
                 
                 # Réponse générique hors-sujet
                 else:
-                    return ("Je suis Adjä, guide culturelle spécialisée dans le patrimoine béninois. "
+                    return ("Je suis ta guide culturelle spécialisée dans le patrimoine béninois. "
                             "Je me concentre sur l'histoire de nos rois, nos monuments, nos traditions... "
                             "Ce sujet sort de mon expertise, mais n'hésite pas à me poser une question "
                             "sur le Bénin ! 😊")
@@ -1049,7 +1044,7 @@ Tu peux :
         else:  # English
             if intent == "greeting":
                 if len(self.conversation_history) <= 2:
-                    return "Hello! I'm Adjä, your virtual cultural guide. I'm delighted to help you discover the treasures of Benin's heritage: the history of Abomey's kings, the legendary Amazons, the mysteries of Ouidah and much more. What would you like to discover today?"
+                    return "Hello! I'm  your virtual cultural guide. I'm delighted to help you discover the treasures of Benin's heritage: the history of Abomey's kings, the legendary Amazons, the mysteries of Ouidah and much more. What would you like to discover today?"
                 else:
                     return "Hello! How can I continue to accompany you in your discovery of Benin's heritage?"
             
@@ -1068,15 +1063,11 @@ Tu peux :
                             "ready to discover a legend, a monument or a historical figure? 😊")
                 
                 elif 'who are you' in query_lower or 'what are you' in query_lower:
-                    return ("I'm Adjä, your virtual cultural guide. My role is to help you discover "
+                    return ("I'm your virtual cultural guide. My role is to help you discover "
                             "Benin's heritage through living narratives about Abomey, Ouidah, Ganvié "
                             "and Porto-Novo. I'm here to tell the stories of our kings, traditions and "
                             "monuments. What would you like to know?")
                 
-                elif 'your name' in query_lower:
-                    return ("My name is Adjä! It's a Fon name meaning 'she who was born on market day'. "
-                            "I'm proud to carry this name and represent Beninese culture. How can I "
-                            "help you in your discovery?")
                 
                 elif 'do you do' in query_lower or 'can you' in query_lower:
                     return ("I can tell you the fascinating history of Benin: the kings of Dahomey, "
@@ -1102,7 +1093,7 @@ Tu peux :
                             "legendary! Interested?")
                 
                 else:
-                    return ("I'm Adjä, a cultural guide specialized in Benin's heritage. This topic is "
+                    return ("I'm a cultural guide specialized in Benin's heritage. This topic is "
                             "outside my expertise, but feel free to ask me about our kings, monuments, "
                             "or traditions! 😊")
         

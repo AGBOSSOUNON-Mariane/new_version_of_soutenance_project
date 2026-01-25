@@ -5,6 +5,7 @@
 
 import api, { API_BASE_URL } from './api';
 import { ChatRequest, ChatResponse, HealthStatus } from '../types/api';
+import { UserService } from './userService'; // 🔥 NOUVEAU
 
 export class ChatService {
   
@@ -12,19 +13,29 @@ export class ChatService {
   private static sessionId: string = `mobile-${Date.now()}`;
 
   /**
-   * 🔥 Envoyer un message à Adjä
+   * 🔥 Envoyer un message à Adjä (avec user_id automatique)
    */
   static async sendMessage(message: string, generateAudio: boolean = true): Promise<ChatResponse> {
     try {
+      // 🔥 NOUVEAU : Récupérer l'ID utilisateur
+      const userId = await UserService.getOrCreateUserId();
+      const userProfile = await UserService.getUserProfile();
+      
       const requestBody: ChatRequest = {
         message: message.trim(),
         session_id: this.sessionId,
-        language: null,              // Auto-détection
+        user_id: userId,              // 🔥 NOUVEAU
+        user_profile: userProfile,    // 🔥 NOUVEAU
+        language: null,
         generate_audio: generateAudio,
         verbose: true,
       };
       
-      console.log('📤 Envoi à /chat:', requestBody);
+      console.log('📤 Envoi à /chat:', {
+        message: requestBody.message,
+        user_id: userId,
+        user_profile: userProfile
+      });
       
       const response = await api.post<ChatResponse>('/chat', requestBody);
       
@@ -76,17 +87,14 @@ export class ChatService {
     }
   }
 
+
   /**
    * Obtenir l'URL complète d'un fichier audio
-   * ✅ CORRIGÉ : Gère les URLs complètes du backend
    */
   static getAudioUrl(audioFilename: string): string {
     console.log('🎵 getAudioUrl appelé avec:', audioFilename);
     
-    // Si l'URL est déjà complète, remplacer l'IP du backend par celle de l'app
     if (audioFilename.startsWith('http://') || audioFilename.startsWith('https://')) {
-      // Extraire juste le nom du fichier depuis l'URL complète
-      // Ex: http://10.229.92.13:8000/audio/99e1706fedcd_fr.mp3 → 99e1706fedcd_fr.mp3
       const filename = audioFilename.split('/audio/').pop() || audioFilename;
       const finalUrl = `${API_BASE_URL}/audio/${filename}`;
       
@@ -97,7 +105,6 @@ export class ChatService {
       return finalUrl;
     }
     
-    // Sinon, construire l'URL normalement
     const finalUrl = `${API_BASE_URL}/audio/${audioFilename}`;
     console.log('🎵 URL construite:', finalUrl);
     return finalUrl;
@@ -111,13 +118,9 @@ export class ChatService {
       return imagePath;
     }
     
-    // Nettoyer le chemin (remplacer \ par /)
     let cleanPath = imagePath.replace(/\\/g, '/');
-    
-    // 🔥 IMPORTANT : Enlever le préfixe "Donnees_soutenance/"
     cleanPath = cleanPath.replace(/^Donnees_soutenance\//, '');
     
-    // Construire l'URL finale
     const finalUrl = `${API_BASE_URL}/images/${cleanPath}`;
     
     console.log('🖼️ Image path:', imagePath);

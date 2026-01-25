@@ -8,11 +8,13 @@
 // ============================================================================
 
 export interface ChatRequest {
-  message: string;                 // ← Message de l'utilisateur
-  session_id?: string;             // ← Session (optionnel)
-  language?: string | null;        // ← null = auto-détection
-  generate_audio?: boolean;        // ← Générer l'audio ?
-  verbose?: boolean;               // ← Debug
+  message: string;
+  session_id: string | null;
+  user_id?: string;           // 🔥 NOUVEAU
+  user_profile?: string;       // 🔥 NOUVEAU
+  language: string | null;
+  generate_audio: boolean;
+  verbose: boolean;
 }
 
 // ============================================================================
