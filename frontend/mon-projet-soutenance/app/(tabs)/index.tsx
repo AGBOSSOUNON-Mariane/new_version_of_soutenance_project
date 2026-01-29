@@ -21,10 +21,10 @@ export default function HomeScreen() {
   // Fonction pour mapper les noms de sites vers leurs routes
   const getSiteRoute = (siteName: string): string => {
     const routes: { [key: string]: string } = {
-      'Abomey': 'abomey',
       'Porto-Novo': 'portonovo',
       'Ganvié': 'ganvie',
-      'Ouidah': 'ouidah'
+      'Ouidah': 'ouidah',
+      'Abomey': 'abomey'
     };
     return routes[siteName] || 'ouidah';
   };
