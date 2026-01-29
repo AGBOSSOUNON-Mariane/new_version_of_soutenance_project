@@ -18,11 +18,14 @@ import { sites } from '../../data/sites';
 const { width } = Dimensions.get('window');
 
 export default function HomeScreen() {
+
+  throw new Error('DO I RELOAD?');
+
   // Fonction pour mapper les noms de sites vers leurs routes
   const getSiteRoute = (siteName: string): string => {
     const routes: { [key: string]: string } = {
-      'Abomey': 'abomey',
       'Porto-Novo': 'portonovo',
+      'Abomey': 'abomey',
       'Ganvié': 'ganvie',
       'Ouidah': 'ouidah'
     };
@@ -32,7 +35,7 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <Header 
-        title="Récits, rois et monuments du Bénin" 
+        title="Récits, rois et monumsents du Bénin"
         subtitle="Explorez l'héritage vivant de 4 grands pôles culturels"
       />
       

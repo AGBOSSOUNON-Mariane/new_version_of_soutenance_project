@@ -83,6 +83,7 @@ export class ChatService {
       const health = await this.checkHealth();
       return health.status === 'healthy';
     } catch (error) {
+      console.log(error)
       return false;
     }
   }
