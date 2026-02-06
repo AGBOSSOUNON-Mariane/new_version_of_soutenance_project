@@ -1,7 +1,13 @@
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '../../constants/Colors';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Platform } from 'react-native';
+
 export default function TabLayout() {
+  // 🔥 AJOUT : Récupérer les insets pour adapter le menu
+  const insets = useSafeAreaInsets();
+
   return (
     <Tabs
       screenOptions={{
@@ -12,9 +18,16 @@ export default function TabLayout() {
           backgroundColor: Colors.white,
           borderTopWidth: 1,
           borderTopColor: Colors.lightGray,
-          height: 60,
-          paddingBottom: 8,
+          // 🔥 MODIFICATION : Hauteur adaptative selon le téléphone
+          height: 60 + insets.bottom,
+          paddingBottom: Math.max(insets.bottom, 8), // Au moins 8px, ou la hauteur de la safe area
           paddingTop: 8,
+          // 🔥 AJOUT : Élévation pour bien distinguer le menu
+          elevation: 8,
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: -2 },
+          shadowOpacity: 0.1,
+          shadowRadius: 3,
         },
         tabBarLabelStyle: {
           fontSize: 12,

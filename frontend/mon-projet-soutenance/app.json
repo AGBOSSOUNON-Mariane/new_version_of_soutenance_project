@@ -26,7 +26,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.mariane.recitsdubenin",
-      "versionCode": 1,
+      "versionCode": 3,
       "permissions": [
         "INTERNET",
         "READ_EXTERNAL_STORAGE",

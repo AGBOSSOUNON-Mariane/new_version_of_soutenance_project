@@ -18,10 +18,12 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Audio } from "expo-av";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Header } from "../../components/common/Header";
 import { Colors } from "../../constants/Colors";
 import { ChatService } from "../../services/chatService";
-import { TypingIndicator } from "../../components/common/TypingIndicator"; // 🔥 NOUVEAU
+import { TypingIndicator } from "../../components/common/TypingIndicator";
+import { ImageViewer } from "../../components/common/ImageViewer";
 
 const { width } = Dimensions.get("window");
 const IMAGE_SIZE = (width - 60) / 3;
@@ -47,6 +49,8 @@ const quickQuestions = [
 ];
 
 export default function AssistantScreen() {
+  const insets = useSafeAreaInsets();
+  
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
@@ -64,8 +68,13 @@ export default function AssistantScreen() {
   const [sound, setSound] = useState<Audio.Sound | null>(null);
   const [playingMessageId, setPlayingMessageId] = useState<string | null>(null);
   const scrollViewRef = useRef<ScrollView>(null);
-  const [keyboardVisible, setKeyboardVisible] = useState(false);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false); // 🔥 AJOUT
   const inputRef = useRef<TextInput>(null);
+  
+  const [isImageViewerVisible, setIsImageViewerVisible] = useState(false);
+  const [selectedImages, setSelectedImages] = useState<string[]>([]);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   useEffect(() => {
     checkApiConnection();
@@ -76,10 +85,12 @@ export default function AssistantScreen() {
       staysActiveInBackground: false,
     });
 
+    // 🔥 AMÉLIORATION : Meilleure gestion du clavier
     const keyboardDidShowListener = Keyboard.addListener(
-      "keyboardDidShow",
-      () => {
-        setKeyboardVisible(true);
+      Platform.OS === 'ios' ? "keyboardWillShow" : "keyboardDidShow",
+      (e) => {
+        setKeyboardHeight(e.endCoordinates.height);
+        setIsKeyboardVisible(true); // 🔥 AJOUT
         setTimeout(() => {
           scrollViewRef.current?.scrollToEnd({ animated: true });
         }, 100);
@@ -87,9 +98,10 @@ export default function AssistantScreen() {
     );
 
     const keyboardDidHideListener = Keyboard.addListener(
-      "keyboardDidHide",
+      Platform.OS === 'ios' ? "keyboardWillHide" : "keyboardDidHide",
       () => {
-        setKeyboardVisible(false);
+        setKeyboardHeight(0);
+        setIsKeyboardVisible(false); // 🔥 AJOUT
       }
     );
 
@@ -169,6 +181,10 @@ export default function AssistantScreen() {
   };
 
   const getImageName = (imagePath: string): string => {
+    if (!imagePath || typeof imagePath !== 'string') {
+      return 'Image sans nom';
+    }
+    
     const parts = imagePath.split(/[\\\/]/);
     const filename = parts[parts.length - 1];
     let name = filename.replace(/\.(jpg|jpeg|png|gif|webp)$/i, "");
@@ -190,7 +206,7 @@ export default function AssistantScreen() {
       name = name.substring(0, 37) + "...";
     }
 
-    return name;
+    return name || 'Image';
   };
 
   const openLink = async (url: string) => {
@@ -221,6 +237,12 @@ export default function AssistantScreen() {
     return { title: source };
   };
 
+  const openImageViewer = (images: string[], index: number) => {
+    setSelectedImages(images);
+    setSelectedImageIndex(index);
+    setIsImageViewerVisible(true);
+  };
+
   const sendMessage = async (text: string) => {
     if (!text.trim()) return;
 
@@ -247,10 +269,9 @@ export default function AssistantScreen() {
     setMessages((prev) => [...prev, userMessage]);
     setInputText("");
 
-    // 🔥 MODIFICATION : Message de chargement avec animation
     const loadingMessage: Message = {
       id: (Date.now() + 1).toString(),
-      text: "", // 🔥 Texte vide maintenant
+      text: "",
       sender: "assistant",
       timestamp: "",
       isLoading: true,
@@ -308,11 +329,7 @@ export default function AssistantScreen() {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
-      keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 0}
-    >
+    <View style={styles.container}>
       <Header
         title="Assistant"
         subtitle={isConnected ? "✅ En ligne" : "❌ Hors ligne"}
@@ -333,7 +350,12 @@ export default function AssistantScreen() {
         style={styles.messagesContainer}
         contentContainerStyle={[
           styles.messagesContent,
-          keyboardVisible && { paddingBottom: 300 },
+          // 🔥 CORRECTION : Padding adaptatif pour laisser de la place à l'input
+          { 
+            paddingBottom: isKeyboardVisible 
+              ? keyboardHeight + 80 // Clavier visible : hauteur clavier + input
+              : 100 // Clavier caché : hauteur input + marge
+          }
         ]}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
@@ -356,7 +378,6 @@ export default function AssistantScreen() {
                   : styles.assistantBubble,
               ]}
             >
-              {/* 🔥 MODIFICATION : Afficher TypingIndicator si isLoading */}
               {message.isLoading ? (
                 <TypingIndicator />
               ) : (
@@ -380,7 +401,12 @@ export default function AssistantScreen() {
                   </Text>
                   <View style={styles.imagesGrid}>
                     {message.images.slice(0, 6).map((img, index) => (
-                      <View key={index} style={styles.imageWrapper}>
+                      <TouchableOpacity 
+                        key={index} 
+                        style={styles.imageWrapper}
+                        onPress={() => openImageViewer(message.images!, index)}
+                        activeOpacity={0.7}
+                      >
                         <Image
                           source={{ uri: ChatService.getImageUrl(img) }}
                           style={styles.image}
@@ -389,7 +415,10 @@ export default function AssistantScreen() {
                         <Text style={styles.imageName} numberOfLines={2}>
                           {getImageName(img)}
                         </Text>
-                      </View>
+                        <View style={styles.imageOverlay}>
+                          <Ionicons name="expand-outline" size={16} color="#fff" />
+                        </View>
+                      </TouchableOpacity>
                     ))}
                   </View>
                   {message.images.length > 6 && (
@@ -509,7 +538,32 @@ export default function AssistantScreen() {
         )}
       </ScrollView>
 
-      <View style={styles.inputContainer}>
+      <ImageViewer
+        visible={isImageViewerVisible}
+        images={selectedImages}
+        initialIndex={selectedImageIndex}
+        onClose={() => setIsImageViewerVisible(false)}
+        getImageUrl={ChatService.getImageUrl}
+        getImageName={getImageName}
+      />
+
+      {/* 🔥 NOUVEAU : Input container en position absolute pour Android */}
+      <View style={[
+        styles.inputContainer,
+        Platform.OS === 'android' && isKeyboardVisible && {
+          position: 'absolute',
+          bottom: keyboardHeight,
+          left: 0,
+          right: 0,
+        },
+        { 
+          paddingBottom: Platform.OS === 'ios' 
+            ? Math.max(insets.bottom, 10)
+            : isKeyboardVisible 
+              ? 10 
+              : Math.max(insets.bottom + 5, 10)
+        }
+      ]}>
         <TextInput
           ref={inputRef}
           style={styles.textInput}
@@ -530,6 +584,7 @@ export default function AssistantScreen() {
               sendMessage(inputText);
             }
           }}
+          blurOnSubmit={false}
         />
 
         <TouchableOpacity
@@ -553,13 +608,11 @@ export default function AssistantScreen() {
           />
         </TouchableOpacity>
       </View>
-    </KeyboardAvoidingView>
+    </View>
   );
 }
 
-// Styles identiques (pas de changement)
 const styles = StyleSheet.create({
-  // ... tous vos styles existants restent identiques
   container: {
     flex: 1,
     backgroundColor: Colors.background,
@@ -584,7 +637,6 @@ const styles = StyleSheet.create({
   messagesContent: {
     paddingHorizontal: 20,
     paddingTop: 20,
-    paddingBottom: 20,
   },
   messageContainer: {
     marginBottom: 15,
@@ -652,12 +704,24 @@ const styles = StyleSheet.create({
   },
   imageWrapper: {
     width: IMAGE_SIZE,
+    position: 'relative',
   },
   image: {
     width: IMAGE_SIZE,
     height: IMAGE_SIZE,
     borderRadius: 8,
     backgroundColor: Colors.lightGray,
+  },
+  imageOverlay: {
+    position: 'absolute',
+    top: 5,
+    right: 5,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    borderRadius: 12,
+    width: 24,
+    height: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   imageName: {
     fontSize: 10,
@@ -750,7 +814,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "flex-end",
     paddingHorizontal: 20,
-    paddingVertical: 15,
+    paddingTop: 15,
     backgroundColor: Colors.white,
     borderTopWidth: 1,
     borderTopColor: Colors.lightGray,
