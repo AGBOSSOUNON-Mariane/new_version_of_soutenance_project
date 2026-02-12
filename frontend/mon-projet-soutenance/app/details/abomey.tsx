@@ -133,7 +133,7 @@ export default function AbomeyDetailsScreen() {
                   Notre assistant IA peut vous en dire plus
                 </Text>
 
-                <Link href="../assistant" asChild>
+                <Link href={{ pathname: "../assistant", params: { pole: "Abomey" } }} asChild>
                   <TouchableOpacity style={styles.askButton}>
                     <Text style={styles.askButtonText}>Poser une question</Text>
                   </TouchableOpacity>

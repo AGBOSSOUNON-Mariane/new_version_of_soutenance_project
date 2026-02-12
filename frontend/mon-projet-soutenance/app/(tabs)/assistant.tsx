@@ -19,11 +19,14 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { Audio } from "expo-av";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useLocalSearchParams } from 'expo-router'; // AJOUT
 import { Header } from "../../components/common/Header";
 import { Colors } from "../../constants/Colors";
 import { ChatService } from "../../services/chatService";
 import { TypingIndicator } from "../../components/common/TypingIndicator";
 import { ImageViewer } from "../../components/common/ImageViewer";
+import { FormattedText } from "../../components/common/FormattedText";
+
 
 const { width } = Dimensions.get("window");
 const IMAGE_SIZE = (width - 60) / 3;
@@ -41,20 +44,58 @@ interface Message {
   audioDuration?: number;
 }
 
-const quickQuestions = [
-  "Qui est le roi Ghézo ?",
-  "Parle-moi des Amazones",
-  "Parle moi de Porto-Novo",
-  "Histoire de Ganvié",
-];
+// QUESTIONS RAPIDES PAR POLE
+const quickQuestionsByPole = {
+  Abomey: [
+    "Qui est le roi Ghézo ?",
+    "Parle-moi des Amazones",
+    "Que puis-je voir à Abomey ?",
+    "Qui était Béhanzin ?",
+  ],
+  Ouidah: [
+    "C'est quoi la Route des Esclaves ?",
+    "Parle-moi de la Porte du Non-Retour",
+    "Qu'est-ce que le Temple des Pythons ?",
+    "L'arbre de l'Oubli, c'est quoi ?",
+  ],
+  Ganvié: [
+    "Pourquoi Ganvié est sur l'eau ?",
+    "Comment vivent les habitants ?",
+    "Histoire de la cité lacustre de Ganvié",
+    "Que faire à Ganvié ?",
+  ],
+  "Porto-Novo": [
+    "Parle-moi de Porto-Novo",
+    "C'est quoi le Musée Honmè ?",
+    "Quels endroits visiter à Porto-Novo ?",
+    "Histoire de Porto-Novo",
+  ],
+  general: [
+    "Qui est le roi Ghézo ?",
+    "Parle-moi des Amazones",
+    "Parle moi de Porto-Novo",
+    "Histoire de Ganvié",
+  ],
+};
+
+// MESSAGES D'ACCUEIL PAR POLE
+const welcomeMessagesByPole = {
+  Abomey: "Bonjour ! Je suis ravie de te parler d'Abomey, royaume du Dahomey. Que veux-tu savoir sur ses rois légendaires et ses Amazones ?",
+  Ouidah: "Bonjour ! Bienvenue à Ouidah, ville chargée d'histoire. Que souhaites-tu découvrir sur la Route des Esclaves ou ses monuments ?",
+  Ganvié: "Bonjour ! Ganvié, la Venise d'Afrique, t'attend ! Pose-moi tes questions sur cette cité lacustre fascinante.",
+  "Porto-Novo": "Bonjour ! Porto-Novo, capitale culturelle du Bénin. Que veux-tu explorer : ses musées, son architecture ou son histoire ?",
+  general: "Bonjour ! Je suis ta guide culturelle virtuelle. Que souhaites-tu savoir sur le patrimoine béninois ?",
+};
 
 export default function AssistantScreen() {
   const insets = useSafeAreaInsets();
+  const params = useLocalSearchParams(); // RECUPERER LES PARAMS
+  const pole = (params.pole as string) || 'general'; // DEFAULT: general
   
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
-      text: "Bonjour ! Je suis ta guide culturelle virtuelle. Que souhaites-tu savoir sur le patrimoine béninois ?",
+      text: welcomeMessagesByPole[pole as keyof typeof welcomeMessagesByPole] || welcomeMessagesByPole.general,
       sender: "assistant",
       timestamp: new Date().toLocaleTimeString("fr-FR", {
         hour: "2-digit",
@@ -69,12 +110,15 @@ export default function AssistantScreen() {
   const [playingMessageId, setPlayingMessageId] = useState<string | null>(null);
   const scrollViewRef = useRef<ScrollView>(null);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
-  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false); // 🔥 AJOUT
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
   const inputRef = useRef<TextInput>(null);
   
   const [isImageViewerVisible, setIsImageViewerVisible] = useState(false);
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+
+  // SELECTIONNER LES BONNES QUESTIONS
+  const currentQuickQuestions = quickQuestionsByPole[pole as keyof typeof quickQuestionsByPole] || quickQuestionsByPole.general;
 
   useEffect(() => {
     checkApiConnection();
@@ -85,12 +129,11 @@ export default function AssistantScreen() {
       staysActiveInBackground: false,
     });
 
-    // 🔥 AMÉLIORATION : Meilleure gestion du clavier
     const keyboardDidShowListener = Keyboard.addListener(
       Platform.OS === 'ios' ? "keyboardWillShow" : "keyboardDidShow",
       (e) => {
         setKeyboardHeight(e.endCoordinates.height);
-        setIsKeyboardVisible(true); // 🔥 AJOUT
+        setIsKeyboardVisible(true);
         setTimeout(() => {
           scrollViewRef.current?.scrollToEnd({ animated: true });
         }, 100);
@@ -101,7 +144,7 @@ export default function AssistantScreen() {
       Platform.OS === 'ios' ? "keyboardWillHide" : "keyboardDidHide",
       () => {
         setKeyboardHeight(0);
-        setIsKeyboardVisible(false); // 🔥 AJOUT
+        setIsKeyboardVisible(false);
       }
     );
 
@@ -127,18 +170,18 @@ export default function AssistantScreen() {
 
       if (!isOk) {
         Alert.alert(
-          "⚠️ Connexion API",
+          "Connexion API",
           "Impossible de contacter le serveur. Vérifie que ton backend est lancé."
         );
       }
     } catch (error) {
       setIsConnected(false);
-      console.error("❌ Test connexion:", error);
+      console.error("Test connexion:", error);
     }
   };
 
   const playAudio = async (audioUrl: string, messageId: string) => {
-    console.log("▶️ playAudio appelé:", { audioUrl, messageId });
+    console.log("playAudio appelé:", { audioUrl, messageId });
 
     try {
       if (sound) {
@@ -148,7 +191,7 @@ export default function AssistantScreen() {
         setPlayingMessageId(null);
       }
 
-      console.log("🔊 Lecture:", audioUrl);
+      console.log("Lecture:", audioUrl);
 
       const { sound: newSound } = await Audio.Sound.createAsync(
         { uri: audioUrl },
@@ -164,13 +207,13 @@ export default function AssistantScreen() {
         }
       });
     } catch (error) {
-      console.error("❌ Erreur audio:", error);
+      console.error("Erreur audio:", error);
       Alert.alert("Erreur", "Impossible de lire l'audio");
     }
   };
 
   const stopAudio = async () => {
-    console.log("⏸️ stopAudio appelé");
+    console.log("stopAudio appelé");
 
     if (sound) {
       await sound.stopAsync();
@@ -219,7 +262,7 @@ export default function AssistantScreen() {
         Alert.alert("Erreur", `Impossible d'ouvrir ce lien : ${url}`);
       }
     } catch (error) {
-      console.error("❌ Erreur ouverture lien:", error);
+      console.error("Erreur ouverture lien:", error);
       Alert.alert("Erreur", "Impossible d'ouvrir le lien");
     }
   };
@@ -247,7 +290,7 @@ export default function AssistantScreen() {
     if (!text.trim()) return;
 
     if (isConnected === false) {
-      Alert.alert("❌ Pas de connexion", "Le serveur n'est pas accessible.", [
+      Alert.alert("Pas de connexion", "Le serveur n'est pas accessible.", [
         { text: "Réessayer", onPress: checkApiConnection },
         { text: "Annuler", style: "cancel" },
       ]);
@@ -315,7 +358,7 @@ export default function AssistantScreen() {
 
       const errorMessage: Message = {
         id: (Date.now() + 3).toString(),
-        text: `❌ Erreur : ${error.message}`,
+        text: `Erreur : ${error.message}`,
         sender: "assistant",
         timestamp: new Date().toLocaleTimeString("fr-FR", {
           hour: "2-digit",
@@ -324,7 +367,7 @@ export default function AssistantScreen() {
       };
 
       setMessages((prev) => [...prev, errorMessage]);
-      console.error("❌ Erreur:", error);
+      console.error("Erreur:", error);
     }
   };
 
@@ -332,7 +375,7 @@ export default function AssistantScreen() {
     <View style={styles.container}>
       <Header
         title="Assistant"
-        subtitle={isConnected ? "✅ En ligne" : "❌ Hors ligne"}
+        subtitle={isConnected ? "En ligne" : "Hors ligne"}
       />
 
       {isConnected === false && (
@@ -350,11 +393,10 @@ export default function AssistantScreen() {
         style={styles.messagesContainer}
         contentContainerStyle={[
           styles.messagesContent,
-          // 🔥 CORRECTION : Padding adaptatif pour laisser de la place à l'input
           { 
             paddingBottom: isKeyboardVisible 
-              ? keyboardHeight + 80 // Clavier visible : hauteur clavier + input
-              : 100 // Clavier caché : hauteur input + marge
+              ? keyboardHeight + 80
+              : 100
           }
         ]}
         showsVerticalScrollIndicator={false}
@@ -381,7 +423,7 @@ export default function AssistantScreen() {
               {message.isLoading ? (
                 <TypingIndicator />
               ) : (
-                <Text
+                <FormattedText
                   style={[
                     styles.messageText,
                     message.sender === "user"
@@ -390,14 +432,13 @@ export default function AssistantScreen() {
                   ]}
                 >
                   {message.text}
-                </Text>
+                </FormattedText>
               )}
 
-              {/* IMAGES */}
               {message.images && message.images.length > 0 && (
                 <View style={styles.imagesContainer}>
                   <Text style={styles.sectionTitle}>
-                    📸 Images ({message.images.length})
+                    Images ({message.images.length})
                   </Text>
                   <View style={styles.imagesGrid}>
                     {message.images.slice(0, 6).map((img, index) => (
@@ -429,10 +470,9 @@ export default function AssistantScreen() {
                 </View>
               )}
 
-              {/* SOURCES */}
               {message.sources && message.sources.length > 0 && (
                 <View style={styles.sourcesContainer}>
-                  <Text style={styles.sectionTitle}>📚 Sources :</Text>
+                  <Text style={styles.sectionTitle}>Sources :</Text>
                   {message.sources.map((source, index) => {
                     const { title, url } = parseSource(source);
 
@@ -470,7 +510,6 @@ export default function AssistantScreen() {
                 </View>
               )}
 
-              {/* AUDIO */}
               {message.hasAudio && message.audioUrl && (
                 <Pressable
                   style={({ pressed }) => [
@@ -479,7 +518,7 @@ export default function AssistantScreen() {
                   ]}
                   onPress={(e) => {
                     e?.stopPropagation?.();
-                    console.log("🔊 CLIC sur bouton audio !");
+                    console.log("CLIC sur bouton audio !");
 
                     if (playingMessageId === message.id) {
                       stopAudio();
@@ -521,10 +560,10 @@ export default function AssistantScreen() {
         {messages.length === 1 && (
           <View style={styles.quickQuestionsContainer}>
             <Text style={styles.quickQuestionsTitle}>
-              💡 Questions rapides :
+              Questions rapides :
             </Text>
             <View style={styles.quickQuestions}>
-              {quickQuestions.map((question, index) => (
+              {currentQuickQuestions.map((question, index) => (
                 <TouchableOpacity
                   key={index}
                   style={styles.quickQuestion}
@@ -547,7 +586,6 @@ export default function AssistantScreen() {
         getImageName={getImageName}
       />
 
-      {/* 🔥 NOUVEAU : Input container en position absolute pour Android */}
       <View style={[
         styles.inputContainer,
         Platform.OS === 'android' && isKeyboardVisible && {

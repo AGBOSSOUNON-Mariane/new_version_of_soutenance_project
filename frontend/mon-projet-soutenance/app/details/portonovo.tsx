@@ -135,7 +135,7 @@ export default function PortoNovoDetailsScreen() {
                   Notre assistant IA peut vous en dire plus
                 </Text>
 
-                <Link href="../assistant" asChild>
+                <Link href={{ pathname: "../assistant", params: { pole: "Porto-Novo" } }} asChild>
                   <TouchableOpacity style={styles.askButton}>
                     <Text style={styles.askButtonText}>Poser une question</Text>
                   </TouchableOpacity>
