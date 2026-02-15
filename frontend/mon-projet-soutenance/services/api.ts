@@ -12,7 +12,7 @@ import axios from 'axios';
 // Pour téléphone physique: http://192.168.X.X:8000 (remplace par ton IP)
 // const API_BASE_URL = 'http://54.88.20.85:8000'; // Change ça selon ton cas
 
-const API_BASE_URL = 'http://192.168.1.104:8000'; // Change ça selon ton cas
+const API_BASE_URL = 'http://54.88.20.85:8000'; // Change ça selon ton cas
 
 // Créer une instance axios configurée
 const api = axios.create({
